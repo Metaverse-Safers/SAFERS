@@ -8,7 +8,7 @@
     <th><a href="https://github.com/eona1301">당현아</a></th>
     <th>안상훈</th>
     <th>이상현</th>
-    <th>이영주</th>
+    <th><a href="https://github.com/0JUUU">이영주</a></th>
     <th>정원석</th>
   </tr>
   <tr>
@@ -48,8 +48,7 @@
     <td>- EC2 MySQL 세팅<br>- https SSL Key 설정<br>- S3 세팅 및 Key 발급 정리</td>
     <td>- vue2 세팅<br>- 메인페이지</td>
     <td></td>
-    <td></td>
+    <td>- Jenkins 자동화 배포 설정 중🔍</td>
     <td>- 로컬환경에서 Unity-Web 서버 통신 테스트<br>- webgl 빌드 후 Unity-Web 서버 통신 테스트</td>
   </tr>
 </table>
-
