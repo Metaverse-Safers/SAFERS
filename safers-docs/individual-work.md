@@ -49,6 +49,7 @@
     <td>- vue2 세팅<br>- 메인페이지</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 로컬환경에서 Unity-Web 서버 통신 테스트<br>- webgl 빌드 후 Unity-Web 서버 통신 테스트</td>
   </tr>
 </table>
+
