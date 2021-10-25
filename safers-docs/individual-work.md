@@ -46,7 +46,7 @@
   <tr>
     <td align="center">2021-10-25(월)</td>
     <td>- EC2 MySQL 세팅<br>- https SSL Key 설정<br>- S3 세팅 및 Key 발급 정리</td>
-    <td></td>
+    <td>- vue2 세팅<br>- 메인페이지</td>
     <td></td>
     <td></td>
     <td></td>
