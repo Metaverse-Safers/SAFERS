@@ -1,6 +1,5 @@
 <template>
     <div id='main'>
-        <Particles id="tsparticles" lineLinked="true"/>
         <div id='wrap'>
             <img id='qM' src="@/assets/images/questionMark.png">
             <router-link to=/login><img id='login' src="@/assets/images/loginBtn.png"></router-link>
@@ -12,10 +11,8 @@
 </template>
 
 <script>
-    import Particles from "particles.vue";
     export default {
         components:{
-            Particles
         }
     }
 

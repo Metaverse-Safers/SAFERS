@@ -20,6 +20,16 @@ export default new router({
             path: '/mypage',
             name: 'mypage',
             component: () => import("@/views/MyPage.vue")
-        }
+        },
+        {
+            path: '/board',
+            name: 'board',
+            component: () => import("@/views/Board.vue")
+        },
+        {
+            path: '/board/boarddetail/:no',
+            name: 'boarddetail',
+            component: () => import("@/components/Board/BoardDetail.vue")
+        },
     ]
 })
