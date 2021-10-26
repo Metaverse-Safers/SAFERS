@@ -53,7 +53,7 @@
   </tr>
   <tr>
     <td align="center">2021-10-26(화)</td>
-    <td></td>
+    <td>- 비회원 설문조사 콘텐츠 정리</td>
     <td></td>
     <td></td>
     <td>- 여전히 Jenkins 자동화 배포 설정 중 😡</td>
