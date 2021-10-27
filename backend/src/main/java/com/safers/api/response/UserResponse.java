@@ -1,6 +1,6 @@
 package com.safers.api.response;
 
-import com.safers.db.entity.User;
+import com.safers.db.entity.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

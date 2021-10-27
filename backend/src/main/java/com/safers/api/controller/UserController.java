@@ -3,7 +3,6 @@ package com.safers.api.controller;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
 import com.safers.api.service.UserService;
-import com.safers.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
