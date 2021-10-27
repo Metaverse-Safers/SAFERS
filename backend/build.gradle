@@ -1,8 +1,27 @@
+buildscript{
+    ext {
+        springBootVer = '2.5.6'
+        springDependencyMgmtVer = '1.0.11'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVer}"
+        classpath "io.spring.gradle:dependency-management-plugin:${springDependencyMgmtVer}.RELEASE"
+        classpath "com.github.node-gradle:gradle-node-plugin:3.1.0"
+    }
+}
+
 plugins {
-    id 'org.springframework.boot' version '2.5.6'
+    id 'org.springframework.boot' version "${springBootVer}"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
+
+apply plugin: 'io.spring.dependency-management'
 
 group = 'com.safers'
 version = '0.0.1-SNAPSHOT'
@@ -36,6 +55,13 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    // 추가 dependency
+    implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
+
+    // Json Parsing을 위한 dependency
+    // implementation 'com.google.code.gson:gson:2.3.1'
+
 }
 
 test {
