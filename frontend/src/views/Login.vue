@@ -2,7 +2,7 @@
     <div id='main'>
         <div id='wrap'>
             <img id='qM' src="@/assets/images/questionMark.png">
-            <router-link to=/main><img id='home' src="@/assets/images/homeBtn.png"></router-link>
+            <router-link to=/><img id='home' src="@/assets/images/homeBtn.png"></router-link>
         </div>
         <img id='img' src="@/assets/images/loginImg.png">
     </div>
