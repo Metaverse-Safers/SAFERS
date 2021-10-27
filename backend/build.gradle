@@ -63,6 +63,17 @@ dependencies {
     // 추가 dependency
     implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
 
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("com.google.guava:guava:29.0-jre")
+    annotationProcessor("com.google.guava:guava:29.0-jre")
+
+    // swagger 관련 의존성 추가
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("io.springfox:springfox-data-rest:3.0.0")
+    implementation("io.springfox:springfox-bean-validators:3.0.0")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+
     // Json Parsing을 위한 dependency
     implementation 'com.google.code.gson:gson:2.8.5'
 

@@ -1,4 +1,4 @@
-package com.safers.db.entity;
+package com.safers.db.entity.user;
 
 import lombok.*;
 

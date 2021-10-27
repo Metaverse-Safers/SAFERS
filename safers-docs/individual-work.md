@@ -59,5 +59,13 @@
     <td>- 여전히 Jenkins 자동화 배포 설정 중 😡</td>
     <td>- photon 학습 및 demo 프로젝트 진행 중</td>
   </tr>
+  <tr>
+    <td align="center">2021-10-27(수)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- photon 학습 및 demo 프로젝트 진행 중 😂</td>
+  </tr>
 </table>
 
