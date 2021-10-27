@@ -14,6 +14,10 @@ configurations {
     }
 }
 
+bootJar {
+    mainClass = 'com.safers.BackendApplication'
+}
+
 repositories {
     mavenCentral()
 }
