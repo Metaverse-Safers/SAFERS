@@ -5,12 +5,24 @@
             <router-link to=/><img id='home' src="@/assets/images/homeBtn.png"></router-link>
         </div>
         <img id='img' src="@/assets/images/loginImg.png">
-        <img id='kakaoLogin' src='@/assets/images/kakaoLogin.png'>
+        <img id='kakaoLogin' src='@/assets/images/kakaoLogin.png' @click="clickLogin">
     </div>
 </template>
 
 <script>
-
+export default{
+    methods: {
+        clickLogin(){
+            if (!Kakao.isInitialized()) {
+                Kakao.init("2920ed8322509d97bcdb698cad022b10");
+            }
+            Kakao.Auth.authorize({
+            redirectUri: "http://localhost:8081/login/callback"
+            //redirectUri: "https://k5a403.p.ssafy.io/login/callback" //배포용
+            });
+        } 
+    },
+}
 </script>
 
 <style>
@@ -45,5 +57,6 @@
         position:absolute;
         top:68%; left:50%;
         transform: translate(-50%, -50%);
+        cursor: pointer;
     }
 </style>
