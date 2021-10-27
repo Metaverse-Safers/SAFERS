@@ -13,8 +13,10 @@ configurations {
         extendsFrom annotationProcessor
     }
 }
+project.buildDir = 'build'
 
 bootJar {
+    destinationDirectory = file(project.buildDir)
     mainClass = 'com.safers.BackendApplication'
 }
 
