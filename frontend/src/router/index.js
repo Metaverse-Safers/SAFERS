@@ -41,6 +41,11 @@ export default new router({
                     path: '/mypage',
                     name: 'mypage',
                     component: () => import("@/views/MyPage.vue")
+                },
+                {
+                    path: '/sidebar',
+                    name: 'sidebar',
+                    component: () => import("@/components/Common/SideBar.vue")
                 }
             ]
         

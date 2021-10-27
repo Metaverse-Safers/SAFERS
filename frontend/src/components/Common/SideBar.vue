@@ -1,58 +1,42 @@
 <template>
-    <div class='container'>
-        <div class="sidebar">
-            <div class="title">
-                Safers
-            </div>
-            <div class="menu-items">
-                <router-link to='main' active-class="active" tag='button'>
-                    <div class="link-container">
-                        Main
-                    </div>
-                </router-link>
-            </div>
-            <div class="menu-items">
-                <router-link to='board' active-class="active" tag='button'>
-                    <div class="link-container">
-                        게시판
-                    </div>
-                </router-link>
-            </div>
-            <div class="menu-items">
-                <router-link to='personality' active-class="active" tag='button'>
-                    <div class="link-container">
-                        성격테스트
-                    </div>
-                </router-link>
-            </div>
-            <div class="menu-items">
-                <router-link to='mypage' active-class="active" tag='button'>
-                    <div class="link-container">
-                        마이페이지
-                    </div>
-                </router-link>
-            </div>
-        </div>
-        <router-view/>
+    <div class="icon-bar">
+        <router-link to="/"><i class="fas fa-home"></i></router-link>
+        <router-link to="/about"><i class="fas fa-question"></i></router-link>
     </div>
+
 </template>
 
-<script>
-export default {
-    
-}
-</script>
+<style>
+    .icon-bar {
+        height: 100%;
+        width: 90px;
+        background-color: #555;
+        position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+        /*z-index: 1;*/ /* Stay on top */
+        top: 0; /* Stay at the top */
+        left: 0;
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 0;
+    }
 
-<style scoped>
-    .container, .sidebar, .title{
-        margin:0;
+    .icon-bar a {
+        display: block;
+        text-align: center;
+        padding: 16px;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 36px;
+
     }
-    .menu-items{
-        width: 10px;
-        height: 5vh;
+
+    .icon-bar a:hover {
+        background-color: #858585;
     }
-    .container{
-        display: grid;
-        grid-template-columns: 1fr 5fr;
+
+    .active {
+        background-color: #5eaf13;
     }
+
+
+
 </style>
