@@ -10,7 +10,7 @@ import lombok.Setter;
 @Builder
 public class UserResponse extends BaseResponse{
 
-    String id; // 사용자의 kakao ID
+    String id;
     String nickName;
     String profileUrl;
 

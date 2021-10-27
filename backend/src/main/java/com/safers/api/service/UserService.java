@@ -1,6 +1,6 @@
 package com.safers.api.service;
 
-import com.safers.db.entity.User;
+import com.safers.db.entity.user.User;
 import com.safers.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,6 @@
 package com.safers.db.entity.user;
 
+import com.safers.db.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -12,11 +13,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-    @Id
-    @Column(name = "id")
-    String id; // 사용자의 kakao ID
+public class User extends BaseEntity {
 
     @Column(name = "profile_url")
     String profileUrl;

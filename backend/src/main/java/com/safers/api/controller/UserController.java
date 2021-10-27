@@ -4,11 +4,11 @@ import com.safers.api.response.UserProfileResponse;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
 import com.safers.api.service.UserService;
+import com.safers.db.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 
 import static java.util.Objects.isNull;
