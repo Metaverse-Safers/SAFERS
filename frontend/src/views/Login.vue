@@ -5,6 +5,7 @@
             <router-link to=/><img id='home' src="@/assets/images/homeBtn.png"></router-link>
         </div>
         <img id='img' src="@/assets/images/loginImg.png">
+        <img id='kakaoLogin' src='@/assets/images/kakaoLogin.png'>
     </div>
 </template>
 
@@ -37,6 +38,12 @@
         width: 70vh;
         position:absolute;
         top:50%; left:50%;
+        transform: translate(-50%, -50%);
+    }
+    #kakaoLogin{
+        width: 35vh;
+        position:absolute;
+        top:68%; left:50%;
         transform: translate(-50%, -50%);
     }
 </style>
