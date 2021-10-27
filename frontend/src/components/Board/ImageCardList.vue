@@ -22,13 +22,7 @@
         props:{
             images: Array
         },
-        mounted(){
-            this.ab();
-        },
         methods:{
-            ab(){
-                console.log(this.images)
-            },
             detail() {
                 this.$router.push({name: 'boarddetail'});
             }
@@ -45,8 +39,11 @@
         display: grid;
         column-gap: 10px;
         row-gap: 7px;
-        grid-template-columns: repeat(3, 400px);
+        grid-template-columns: repeat(5, 200px);
         justify-content: center;
         max-width: var(--card-container-width);
+    }
+    h1 {
+        font-family: 'IBMPlexSansKR-SemiBold';
     }
 </style>
