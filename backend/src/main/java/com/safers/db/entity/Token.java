@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name="token", schema = "safer")
+@Table(name="token", schema = "safers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

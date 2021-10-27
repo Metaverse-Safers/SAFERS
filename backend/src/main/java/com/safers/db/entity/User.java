@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user", schema = "safer")
+@Table(name="user", schema = "safers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -64,7 +64,7 @@ dependencies {
     implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
 
     // Json Parsing을 위한 dependency
-    // implementation 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
 }
 
