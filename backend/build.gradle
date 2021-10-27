@@ -34,6 +34,10 @@ configurations {
 }
 project.buildDir = 'build'
 
+jar {
+    enabled = false
+}
+
 bootJar {
     destinationDirectory = file(project.buildDir)
     mainClass = 'com.safers.BackendApplication'
