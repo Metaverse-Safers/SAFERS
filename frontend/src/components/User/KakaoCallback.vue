@@ -3,17 +3,30 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
+
     methods: {
-        getAccessToken(code){
-            this.$store.dispatch("user/requestAccessToken", code);
+        async getAccessToken(code){
+            await this.$store.dispatch("user/requestAccessToken", {"code" : code});
+            await this.$store.dispatch("user/requestProfile", this.token);
+            await this.$router.push({ name: 'main' });
         }
     },
 
-    created() {
+    computed: {
+        ...mapGetters({
+            token: "user/token"
+        })
+    },
+
+    mounted() {
         const code = this.$route.query.code; // url에서 code값을 빼오기
         this.getAccessToken(code);
+
     }
+
 }
 </script>
 

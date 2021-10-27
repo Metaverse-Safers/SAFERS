@@ -13,30 +13,11 @@
 export default{
     methods: {
         kakaoLogin(){
-            /*if (!Kakao.isInitialized()) {
-                //Kakao.init("2920ed8322509d97bcdb698cad022b10");
-                Kakao.init("87b730a1b8865066cd4a4aba71a23371"); // 상훈 key
-            }
             Kakao.Auth.authorize({
-            redirectUri: "http://localhost:8080/login/callback"
+            redirectUri: "http://localhost:8081/login/callback"
             //redirectUri: "https://k5a403.p.ssafy.io/login/callback" //배포용
-            });*/
-            window.Kakao.Auth.login({
-                scope: 'profile_nickname, profile_image, account_email',
-                success: this.getProfile
             });
         },
-        getProfile(authObj) {
-            console.log(authObj);
-            window.Kakao.API.request({
-                url: '/v2/user/me',
-                success: res => {
-                    const kakao_account = res.kakao_account;
-                    console.log(kakao_account);
-                    alert('로그인 성공');
-                }
-            });
-        }
     },
 }
 </script>
