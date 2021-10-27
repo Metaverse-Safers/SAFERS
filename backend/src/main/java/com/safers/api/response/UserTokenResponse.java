@@ -12,7 +12,7 @@ public class UserTokenResponse extends BaseResponse{
     String accessToken;
     String refreshToken;
 
-    public static UserTokenResponse of(Integer statusCode, String statusMessage, String accessToken, String refreshToken){
+    public static UserTokenResponse of(String accessToken, String refreshToken){
         return UserTokenResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
