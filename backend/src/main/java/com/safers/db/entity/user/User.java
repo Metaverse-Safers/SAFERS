@@ -9,6 +9,7 @@ import com.safers.db.entity.unityLog.MapLog;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class User extends BaseEntity implements Serializable{
 
     @Column(name = "profile_url")
     String profileUrl;
@@ -27,7 +28,6 @@ public class User extends BaseEntity {
     @Column(name = "nick_name", length = 15)
     String nickName;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "code")
     Code code;
