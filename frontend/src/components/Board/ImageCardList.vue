@@ -4,7 +4,7 @@
       <h1>Safers 게시판</h1>
     </div>
     <div class="cards" v-if="images.length">
-      <image-card v-for="image in images" :key="image.id" :image="image" @click="detail()" />
+      <image-card v-for="image in images" :key="image.id" :image="image" />
     </div>
     <div class="cards-loading" v-else>
       Loading image....
@@ -21,11 +21,6 @@
         },
         props:{
             images: Array
-        },
-        methods:{
-            detail() {
-                this.$router.push({name: 'boarddetail'});
-            }
         }
     }
 </script>
@@ -46,4 +41,5 @@
     h1 {
         font-family: 'IBMPlexSansKR-SemiBold';
     }
+    
 </style>

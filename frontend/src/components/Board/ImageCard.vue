@@ -2,9 +2,10 @@
     <div :style="{       
             width: '100%',
             height: tH + 'px',
-            gridRowEnd: gap}">
+            gridRowEnd: gap}"
+            @click='boardDetail(image)'>
         <img :src="image.urls.small" style="borderRadius: 10px" width="100%"/>
-        <p>{{image.description}}</p>
+        <p id='imageCardText'>{{image.description}}</p>
     </div>
 </template>
 
@@ -25,12 +26,17 @@
             this.tH = Math.round(this.image.height / (this.image.width / 200)) + 20
             const gap = Math.round(this.tH / 10)
             this.gap = `span ${gap}`
+        },
+        methods:{
+            boardDetail(image) {
+                this.$router.push({name: 'boarddetail', query: {image: image}});
+            }
         }
     }
 </script>
 
 <style>
-    p {
+    #imageCardText{
         margin:0;
         font-family: 'NEXON Lv1 Gothic OTF Bold';
         display: block;

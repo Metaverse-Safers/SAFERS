@@ -6,47 +6,42 @@ vue.use(router)
 export default new router({
     mode: 'history',
     routes: [
-        
+        {
+            path: '/',
+            component: () => import("@/components/Common/SideBar.vue"),
+            children:[
                 {
-                    path: '/',
-                    name: 'main',
-                    component: () => import("@/views/Main.vue")
-                },
-                {
-                    path: '/login',
-                    name: 'login',
-                    component: () => import("@/views/Login.vue")
-                },
-                {
-                    path: '/mypage',
+                    path: 'mypage',
                     name: 'mypage',
                     component: () => import("@/views/MyPage.vue")
                 },
                 {
-                    path: '/board',
+                    path: 'board',
                     name: 'board',
                     component: () => import("@/views/Board.vue")
                 },
                 {
-                    path: '/board/boarddetail/:no',
+                    path: 'board/boarddetail',
                     name: 'boarddetail',
                     component: () => import("@/components/Board/BoardDetail.vue")
                 },
                 {
-                    path: '/personality',
+                    path: 'personality',
                     name: 'personality',
                     component: () => import("@/views/Personality.vue")
-                },
-                {
-                    path: '/mypage',
-                    name: 'mypage',
-                    component: () => import("@/views/MyPage.vue")
-                },
-                {
-                    path: '/sidebar',
-                    name: 'sidebar',
-                    component: () => import("@/components/Common/SideBar.vue")
                 }
             ]
+        },
+        {
+            path: '/main',
+            name: 'main',
+            component: () => import("@/views/Main.vue")
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: () => import("@/views/Login.vue")
+        }
+    ]
         
 })

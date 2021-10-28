@@ -14,7 +14,6 @@
             imageCardList
         },
         methods:{
-
             async getRandomImages(count){
                 try {
                     const {data} = await axios.get(this.url,{
