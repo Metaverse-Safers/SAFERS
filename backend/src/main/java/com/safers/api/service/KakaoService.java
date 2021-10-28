@@ -31,8 +31,9 @@ public class KakaoService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=63fef795ebfab5d54a1a08a9ee878b12");
-            // sb.append("&redirect_uri=http://localhost:8081/login/callback");
-            sb.append("&redirect_uri=https://k5a403.p.ssafy.io/login/callback"); // 배포용
+            // sb.append("&redirect_uri=http://localhost:8080/login/callback");
+            sb.append("&redirect_uri=http://localhost:8081/login/callback");
+            // sb.append("&redirect_uri=https://k5a403.p.ssafy.io/login/callback"); // 배포용
 
             sb.append("&code=" + authorize_code);
             bw.write(sb.toString());
@@ -112,5 +113,31 @@ public class KakaoService {
             e.printStackTrace();
         }
         return userInfo;
+    }
+
+    public void logout(String accessToken){
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

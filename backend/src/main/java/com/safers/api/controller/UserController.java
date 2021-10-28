@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
 import java.util.HashMap;
 
 import static java.util.Objects.isNull;
@@ -56,4 +58,10 @@ public class UserController {
         return ResponseEntity.ok(UserProfileResponse.of(kakaoId, profileUrl, nickname));
     }
 
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(@CookieValue(value = "accessToken", required = false) Cookie accessToken) {
+        System.out.println("accessToken : " + accessToken.getValue());
+        kakaoService.logout(accessToken.getValue());
+        return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
 }
