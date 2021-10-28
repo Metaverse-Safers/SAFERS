@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript{
     ext {
         springBootVer = '2.5.6'
@@ -22,6 +24,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.safers'
 version = '0.0.1-SNAPSHOT'
@@ -47,6 +50,50 @@ repositories {
     mavenCentral()
 }
 
+node {
+    download = true
+    version = '10.19.0'
+    // Set the work directory where node_modules should be located
+    nodeModulesDir = file("${project.projectDir}/../frontend")
+}
+
+configurations {
+    providedRuntime
+}
+
+task webpack(type: NpmTask, dependsOn: 'npmInstall') {
+    args = ['run','build']
+}
+
+processResources.dependsOn 'webpack'
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd_HHmm')
+    return formattedDate
+}
+
+project.ext.set("build.date", buildTime())
+
+processResources {
+    with copySpec {
+        from "src/main/resources"
+        include "**/application*.yml"
+        include "**/application*.yaml"
+        include "**/application*.properties"
+
+        duplicatesStrategy = 'include'
+        project.properties.findAll().each {
+            prop ->
+                if (prop.value != null) {
+                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
+                }
+        }
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
@@ -63,8 +110,19 @@ dependencies {
     // 추가 dependency
     implementation("org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE")
 
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("com.google.guava:guava:29.0-jre")
+    annotationProcessor("com.google.guava:guava:29.0-jre")
+
+    // swagger 관련 의존성 추가
+    implementation("io.springfox:springfox-swagger2:3.0.0")
+    implementation("io.springfox:springfox-swagger-ui:3.0.0")
+    implementation("io.springfox:springfox-data-rest:3.0.0")
+    implementation("io.springfox:springfox-bean-validators:3.0.0")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+
     // Json Parsing을 위한 dependency
-    // implementation 'com.google.code.gson:gson:2.3.1'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
 }
 

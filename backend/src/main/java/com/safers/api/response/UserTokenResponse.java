@@ -7,12 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class UserTokenResponse extends BaseResponse{
+public class UserTokenResponse {
 
     String accessToken;
     String refreshToken;
 
-    public static UserTokenResponse of(Integer statusCode, String statusMessage, String accessToken, String refreshToken){
+    public static UserTokenResponse of(String accessToken, String refreshToken){
         return UserTokenResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)

@@ -15,11 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-    @Id
-    @Column(name = "id", length = 13)
-    String id;
+public class User extends BaseEntity {
 
     @Column(name = "profile_url")
     String profileUrl;

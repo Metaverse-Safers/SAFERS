@@ -10,11 +10,11 @@ import lombok.Setter;
 @Builder
 public class UserResponse extends BaseResponse{
 
-    String id; // 사용자의 kakao ID
+    String id;
     String nickName;
     String profileUrl;
 
-    public static UserResponse of(Integer statusCode, String statusMessage, User user){
+    public static UserResponse of(User user){
         return UserResponse.builder()
                 .id(user.getId())
                 .nickName(user.getNickName())
