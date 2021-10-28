@@ -3,7 +3,7 @@ module.exports = {
       compress: true,
       disableHostCheck: true,
       https: true,
-      port: 8080,
+      port: 8081,
       open: true,
   
       proxy: {
@@ -14,5 +14,5 @@ module.exports = {
       historyApiFallback: true,
       hot: true
     },
-  
+    outputDir: '../backend/src/main/resources/dist'
   }

@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript{
     ext {
         springBootVer = '2.5.6'
@@ -22,6 +24,7 @@ plugins {
 }
 
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.node-gradle.node'
 
 group = 'com.safers'
 version = '0.0.1-SNAPSHOT'
@@ -45,6 +48,50 @@ bootJar {
 
 repositories {
     mavenCentral()
+}
+
+node {
+    download = true
+    version = '10.19.0'
+    // Set the work directory where node_modules should be located
+    nodeModulesDir = file("${project.projectDir}/../frontend")
+}
+
+configurations {
+    providedRuntime
+}
+
+task webpack(type: NpmTask, dependsOn: 'npmInstall') {
+    args = ['run','build']
+}
+
+processResources.dependsOn 'webpack'
+
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd_HHmm')
+    return formattedDate
+}
+
+project.ext.set("build.date", buildTime())
+
+processResources {
+    with copySpec {
+        from "src/main/resources"
+        include "**/application*.yml"
+        include "**/application*.yaml"
+        include "**/application*.properties"
+
+        duplicatesStrategy = 'include'
+        project.properties.findAll().each {
+            prop ->
+                if (prop.value != null) {
+                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
+                }
+        }
+    }
 }
 
 dependencies {
