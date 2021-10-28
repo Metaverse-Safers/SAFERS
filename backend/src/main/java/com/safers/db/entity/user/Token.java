@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Token extends BaseEntity {
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id") // 외래키 컬럼의 이름, 매핑할 컬럼의 이름
     User userId;
 
     @Column(name = "refresh_token")

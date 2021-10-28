@@ -7,10 +7,8 @@ import com.safers.api.service.UserService;
 import com.safers.db.entity.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import java.util.HashMap;
 
 import static java.util.Objects.isNull;
@@ -51,17 +49,30 @@ public class UserController {
         // 해당 회원이 사이트에 가입한 기록이 있는지 체크
         User user = userService.getUserByKakaoId(kakaoId);
 
-        // 회원가입이 되어있지 않은 경우, 회원 정보 저장
-        if(isNull(user))
-            userService.createUser(accessToken, refreshToken, profile);
+        if(isNull(user)) // 회원가입이 되어있지 않은 경우, 회원 정보 저장
+            user = userService.createUser(accessToken, refreshToken, profile);
+        else if("A02".equals(user.getCode())) // 탈퇴회원인 경우, code만 변경
+            user = userService.reconnectUser(user);
+
+        // accessToken과 refreshToken 저장
+        userService.saveToken(user, accessToken, refreshToken);
 
         return ResponseEntity.ok(UserProfileResponse.of(kakaoId, profileUrl, nickname));
     }
 
     @GetMapping("/logout")
-    public ResponseEntity<String> logout(@CookieValue(value = "accessToken", required = false) Cookie accessToken) {
-        System.out.println("accessToken : " + accessToken.getValue());
-        kakaoService.logout(accessToken.getValue());
+    public ResponseEntity<String> logout(@RequestHeader String authorization) {
+        // Request Header의 Authorization에 AccessToken을 담아서 보낸다.
+        kakaoService.logout(authorization);
         return ResponseEntity.ok("로그아웃 되었습니다.");
+    }
+
+    @GetMapping("/disconnect")
+    public ResponseEntity<String> disconnect(@RequestHeader String authorization) {
+        Long kakaoId = kakaoService.disconnect(authorization);
+        User user = userService.getUserByKakaoId(kakaoId);
+        userService.disconnectUser(user);
+
+        return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
 }
