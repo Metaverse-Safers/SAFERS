@@ -30,6 +30,7 @@ const user = {
         }
     },
     actions: {
+        /* AccessToken 요청 */
         async requestAccessToken({ commit }, code) {
             await http.post("/user/token", code)
             .then(function(result) {
@@ -41,6 +42,7 @@ const user = {
             })
         },
 
+        /* 사용자 정보 요청 */
         async requestProfile({ commit }, token) {
             await http.post("/user/login", token)
             .then(function(result) {
@@ -53,6 +55,7 @@ const user = {
             })
         },
 
+        /* 로그아웃 */
         async requestLogout({ commit }) {
             await http.get("/user/logout")
             .then(function(result) {
@@ -60,6 +63,19 @@ const user = {
                 commit("SET_USER_PROFILE", {});
                 commit("SET_TOKEN", {});
                 commit("SET_IS_AUTHENTICATED", false);
+                alert("로그아웃 되었습니다!");
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+        },
+
+        /* AccessToken 갱신 요청 */
+        async refreshToken({ commit }, refreshToken) {
+            await http.post("/user/token/refresh", refreshToken)
+            .then(function(result) {
+                console.log(result.data);  
+                commit("SET_TOKEN", result.data);
             })
             .catch(function(error) {
                 console.log(error);
