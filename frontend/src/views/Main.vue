@@ -2,7 +2,11 @@
     <div id='main'>
         <div id='wrap'>
             <img id='qM' src="@/assets/images/questionMark.png">
-            <router-link to=/login><img id='login' src="@/assets/images/loginBtn.png"></router-link>
+            <router-link to=/login>
+                <img id='login' src="@/assets/images/loginBtn.png">
+            </router-link>
+            <img id='logout' src="@/assets/images/logoutBtn.png" @click="clickLogout">
+
         </div>
         <p id='p1'>함께 지구별에서 살아가는 친구들을 지켜주세요</p>
         <p id='p2'>Safers</p>
@@ -11,9 +15,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'; 
     export default {
         components:{
-        }
+        },
+
+        computed: {
+            ...mapGetters({
+                userProfile : "user/userProfile",
+            })
+        },
+
+        methods: {
+            isLogin() {
+                // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
+                if(this.userProfile == undefined || Object.keys(this.userProfile).length == 0)
+                    return false;
+                else
+                    return true;
+            },
+
+            async clickLogout() {
+                await this.$store.dispatch("user/requestLogout");
+            }
+        },
     }
 
 </script>
@@ -38,6 +63,12 @@
         margin: 3vh;
         width: 16vh;
         height: 5vh;
+    }
+    #logout{
+        margin: 3vh;
+        width: 16vh;
+        height: 5vh;
+        cursor: pointer;
     }
     #p1{
         color: white; 

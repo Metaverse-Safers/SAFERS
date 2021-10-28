@@ -45,6 +45,18 @@ const user = {
             })
         },
 
+        async requestLogout({ commit }) {
+            await axios.get("/user/logout")
+            .then(function(result) {
+                console.log(result)
+                commit("SET_USER_PROFILE", {});
+                commit("SET_TOKEN", {});
+            })
+            .catch(function(error) {
+                console.log(error);
+            })
+        }
+
     }
 }
 export default user;
