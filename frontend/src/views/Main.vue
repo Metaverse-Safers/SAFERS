@@ -5,7 +5,7 @@
             <router-link to=/login>
                 <img id='login' src="@/assets/images/loginBtn.png">
             </router-link>
-            <img id='logout' src="@/assets/images/logoutBtn.png" @click="clickLogout">
+            <!-- <img id='logout' src="@/assets/images/logoutBtn.png" @click="clickLogout"> -->
 
         </div>
         <p id='p1'>함께 지구별에서 살아가는 친구들을 지켜주세요</p>
