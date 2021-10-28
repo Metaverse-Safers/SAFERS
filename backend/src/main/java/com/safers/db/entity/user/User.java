@@ -2,6 +2,7 @@ package com.safers.db.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.safers.db.entity.BaseEntity;
 import com.safers.db.entity.code.Code;
 import com.safers.db.entity.unityLog.AnimalsLog;
 import com.safers.db.entity.unityLog.MapLog;
