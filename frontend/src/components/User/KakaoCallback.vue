@@ -1,5 +1,5 @@
 <template>
-    <h3>kakao callback</h3>
+    <div></div>
 </template>
 
 <script>
@@ -24,9 +24,7 @@ export default {
     mounted() {
         const code = this.$route.query.code; // url에서 code값을 빼오기
         this.getAccessToken(code);
-
     }
-
 }
 </script>
 
