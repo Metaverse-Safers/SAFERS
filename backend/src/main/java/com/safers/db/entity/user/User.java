@@ -1,12 +1,14 @@
 package com.safers.db.entity.user;
 
-import com.safers.db.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.safers.db.entity.code.Code;
+import com.safers.db.entity.unityLog.AnimalsLog;
+import com.safers.db.entity.unityLog.MapLog;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="user", schema = "safers")
@@ -21,9 +23,20 @@ public class User extends BaseEntity {
     @Column(name = "kakao_id")
     Long kakaoId;
 
-    @Column(name = "nick_name")
+    @Column(name = "nick_name", length = 15)
     String nickName;
 
-    @Column(name = "code")
-    String code;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "code")
+    Code code;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<MapLog> mapLog;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
+    private List<AnimalsLog> animalsLog;
+
 }
