@@ -67,5 +67,13 @@
     <td></td>
     <td>- photon 학습 및 demo 프로젝트 진행 중 😂</td>
   </tr>
+  <tr>
+    <td align="center">2021-10-28(목)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- photon 채팅 기능 구현 및 버그 픽스 진행</td>
+  </tr>
 </table>
 
