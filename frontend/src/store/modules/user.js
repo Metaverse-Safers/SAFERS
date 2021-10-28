@@ -1,10 +1,11 @@
-import axios from "@/common/axios";
+import http from "@/common/axios";
 
 const user = {
     namespaced: true,
     state: {
         token: {},
         userProfile: {},
+        isAuthenticated: false,
     },
     getters: {
         token({ token }) {
@@ -12,7 +13,10 @@ const user = {
         },
         userProfile({ userProfile }) {
             return userProfile;
-        }
+        },
+        isAuthenticated({ isAuthenticated }) {
+            return isAuthenticated;
+        },
     },
     mutations: {
         async SET_TOKEN (state, payload) {
@@ -20,11 +24,14 @@ const user = {
         }, 
         async SET_USER_PROFILE(state, payload) {
             state.userProfile = payload;
+        },
+        async SET_IS_AUTHENTICATED(state, payload) {
+            state.isAuthenticated = payload;
         }
     },
     actions: {
         async requestAccessToken({ commit }, code) {
-            await axios.post("/user/token", code)
+            await http.post("/user/token", code)
             .then(function(result) {
                 console.log(result.data);
                 commit("SET_TOKEN", result.data);
@@ -35,10 +42,11 @@ const user = {
         },
 
         async requestProfile({ commit }, token) {
-            await axios.post("/user/login", token)
+            await http.post("/user/login", token)
             .then(function(result) {
                 console.log(result.data);  
                 commit("SET_USER_PROFILE", result.data);
+                commit("SET_IS_AUTHENTICATED", true);
             })
             .catch(function(error) {
                 console.log(error);
@@ -46,11 +54,12 @@ const user = {
         },
 
         async requestLogout({ commit }) {
-            await axios.get("/user/logout")
+            await http.get("/user/logout")
             .then(function(result) {
                 console.log(result)
                 commit("SET_USER_PROFILE", {});
                 commit("SET_TOKEN", {});
+                commit("SET_IS_AUTHENTICATED", false);
             })
             .catch(function(error) {
                 console.log(error);
