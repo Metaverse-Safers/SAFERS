@@ -54,11 +54,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
        registry.addInterceptor(new KakaoAuthenticationHandler())
-               .excludePathPatterns("/swagger-ui/**")  // swagger 관련 Patterns
-               .excludePathPatterns("/v2/**")
-               .excludePathPatterns("/swagger-resources/**")
-               .excludePathPatterns("/api/user/login") // api 관련 Patterns
+               .excludePathPatterns("/**")
+
+               .addPathPatterns("/api") // api 관련 Patterns
+               .excludePathPatterns("/api/user/login")
                .excludePathPatterns("/api/user/token")
                .excludePathPatterns("/api/user/token/refresh");
+
     }
 }
