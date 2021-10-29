@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +37,9 @@ public class BoardService {
 
     @Autowired
     BoardCommentRepository boardCommentRepository;
+
+    @Autowired
+    S3Service s3Service;
 
     /**
      * 게시글 전체 목록 조회 (삭제 처리 x)
@@ -60,7 +64,7 @@ public class BoardService {
      * @param boardRegisterPostRequest
      * @return Board
      */
-    public Board registerBoard(BoardRegisterPostRequest boardRegisterPostRequest) {
+    public Board registerBoard(BoardRegisterPostRequest boardRegisterPostRequest) throws IOException {
         Board board = new Board();
         String id = "";
 
@@ -81,10 +85,10 @@ public class BoardService {
 
         for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
             BoardImage image = new BoardImage();
-            String saveUrl = "";
+            String saveUrl = s3Service.upload(multipartFile, "board");
             image.setBoard(board);
             image.setFileName(saveUrl);
-            image.setFilePath("https://"+"/"+saveUrl);
+            // image.setFilePath("https://"+S3Service"/"+saveUrl);
             boardImageRepository.save(image);
         }
         return board;
