@@ -72,7 +72,7 @@ public class UserController {
 
         if(isNull(user)) // 회원가입이 되어있지 않은 경우, 회원 정보 저장
             user = userService.createUser(accessToken, refreshToken, profile);
-        else if("A02".equals(user.getCode())) // 탈퇴회원인 경우, code만 변경
+        else if("A02".equals(user.getCode().getCode())) // 탈퇴회원인 경우, code만 변경
             user = userService.reconnectUser(user);
 
         // accessToken과 refreshToken 저장
