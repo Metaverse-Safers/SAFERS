@@ -67,7 +67,6 @@ public class UserService {
 
         if(isNull(token)) {
             token = new Token();
-            token.setId(RandomIdUtil.makeRandomId(13));
             token.setUserId(user);
         }
 

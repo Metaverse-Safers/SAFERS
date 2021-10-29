@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity implements Serializable{
+public class User extends BaseEntity {
 
     @Column(name = "profile_url")
     String profileUrl;
@@ -31,6 +31,9 @@ public class User extends BaseEntity implements Serializable{
     @ManyToOne
     @JoinColumn(name = "code")
     Code code;
+
+    @OneToOne(mappedBy = "userId")
+    Token token;
 
     @JsonIgnore
     @OneToMany(mappedBy="user", cascade = {CascadeType.REMOVE}, orphanRemoval = true)

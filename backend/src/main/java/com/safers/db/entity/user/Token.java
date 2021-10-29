@@ -14,8 +14,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Token extends BaseEntity {
+public class Token implements Serializable{
 
+    @Id
+    String id;
+
+    @MapsId
     @OneToOne
     @JoinColumn(name = "user_id") // 외래키 컬럼의 이름, 매핑할 컬럼의 이름
     User userId;
