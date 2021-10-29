@@ -17,6 +17,16 @@ export default new router({
                     component: () => import("@/views/Unity.vue")
                 },
                 {
+                    path: '/login',
+                    name: 'login',
+                    component: () => import("@/views/Login.vue"),
+                },
+                {
+                    path: '/login/callback',
+                    name: 'kakaoCallback',
+                    component: () => import("@/components/User/KakaoCallback.vue")
+                },
+                {
                     path: 'mypage',
                     name: 'mypage',
                     component: () => import("@/views/MyPage.vue")
@@ -45,7 +55,7 @@ export default new router({
                     path: 'mypage',
                     name: 'mypage',
                     component: () => import("@/views/MyPage.vue")
-                }
+                },
             ]
         },
         {

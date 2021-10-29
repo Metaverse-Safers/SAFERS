@@ -12,9 +12,11 @@
     "core-js": "^3.6.5",
     "particles.vue": "^2.19.0",
     "vue": "2",
+    "vue-kakao-sdk": "^0.2.0",
     "vue-router": "^3.5.2",
     "vue-unity-webgl": "git+https://github.com/votetake/vue-unity-webgl.git",
-    "vuex-persistedstate": "^4.1.0",
+    "vuex": "^3.6.2",
+    "vuex-persist": "^3.1.3",
     "yarn": "^1.22.17"
   },
   "devDependencies": {
