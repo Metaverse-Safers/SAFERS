@@ -84,4 +84,16 @@ public class UserService {
         if(!isNull(token))
             userTokenRepository.delete(token);
     }
+
+    /**
+     * id로 User 정보 반환
+     * @param id
+     * @return User
+     */
+    public Optional<User> getUserById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent())
+            return user;
+        return null;
+    }
 }
