@@ -53,7 +53,7 @@
   </tr>
   <tr>
     <td align="center">211026(화)</td>
-    <td>- 비회원 설문조사 콘텐츠 정리</td>
+    <td>- 비회원 콘텐츠 1차 조사</td>
     <td></td>
     <td>- 여전히 Jenkins 자동화 배포 설정 중 😡</td>
     <td>- photon 학습 및 demo 프로젝트 진행 중</td>
@@ -68,7 +68,7 @@
   </tr>
   <tr>
     <td align="center">211028(목)</td>
-    <td>- 공통코드 설계<br>- Meta Data 1차 정리<br>- JPA Mapping 및 ERD 산출물</td>
+    <td>- 공통코드 설계<br>- Meta Data 1차 정리<br>- JPA Mapping<br>- ERD 산출물 📝</td>
     <td></td>
     <td>- Kakao 로그아웃/회원탈퇴 API <br> - 예외처리 😫</td>
     <td>- 프로젝트 https 설정 <br> - webpack 설정 <br> - 게시판 목록 API 구현 중 🎮</td>
@@ -76,7 +76,7 @@
   </tr>
   <tr>
     <td align="center">211029(금)</td>
-    <td>- 비회원 설문조사 설계 정리</td>
+    <td>- 비회원 콘텐츠 기획 정리</td>
     <td></td>
     <td>- 로그인/로그아웃 Frontend 연결 <br> - 사용자 프로필 조회/변경 API </td>
     <td></td>
