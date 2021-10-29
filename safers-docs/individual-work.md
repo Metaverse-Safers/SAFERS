@@ -4,12 +4,12 @@
 
 <table>
   <tr>
-    <th></th>
-    <th align="center"><a href="https://github.com/eona1301">당현아</a></th>
-    <th align="center"><a href="https://github.com/ahnsang9">안상훈</a></th>
-    <th align="center"><a href="https://github.com/kimkuan">이상현</a></th>
-    <th align="center"><a href="https://github.com/0JUUU">이영주</a></th>
-    <th align="center"><a href="https://github.com/JWeonseok">정원석</a></th>
+    <td></td>
+    <td align="center"><b><a href="https://github.com/eona1301">당현아</a></b></td>
+    <td align="center"><b><a href="https://github.com/ahnsang9">안상훈</a></b></td>
+    <td align="center"><b><a href="https://github.com/kimkuan">이상현</a></b></td>
+    <td align="center"><b><a href="https://github.com/0JUUU">이영주</a></b></td>
+    <td align="center"><b><a href="https://github.com/JWeonseok">정원석</a></b></td>
   </tr>
   <tr>
     <td align="center">2021-10-13(수)</td>
