@@ -8,8 +8,14 @@ export default new router({
     routes: [
         {
             path: '/',
+            redirect: 'main',
             component: () => import("@/components/Common/SideBar.vue"),
             children:[
+                {
+                    path: 'unity',
+                    name: 'unity',
+                    component: () => import("@/views/Unity.vue")
+                },
                 {
                     path: 'mypage',
                     name: 'mypage',
@@ -26,9 +32,19 @@ export default new router({
                     component: () => import("@/components/Board/BoardDetail.vue")
                 },
                 {
+                    path: 'board/boardwrite',
+                    name: 'boardwrite',
+                    component: () => import("@/components/Board/BoardWrite.vue")
+                },
+                {
                     path: 'personality',
                     name: 'personality',
                     component: () => import("@/views/Personality.vue")
+                },
+                {
+                    path: 'mypage',
+                    name: 'mypage',
+                    component: () => import("@/views/MyPage.vue")
                 }
             ]
         },

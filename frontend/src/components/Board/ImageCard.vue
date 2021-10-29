@@ -4,7 +4,7 @@
             height: tH + 'px',
             gridRowEnd: gap}"
             @click='boardDetail(image)'>
-        <img :src="image.urls.small" style="borderRadius: 10px" width="100%"/>
+        <img id='imageCardImage' :src="image.urls.small" style="borderRadius: 10px" width="100%"/>
         <p id='imageCardText'>{{image.description}}</p>
     </div>
 </template>
@@ -36,6 +36,9 @@
 </script>
 
 <style>
+    #imageCardImage:hover{
+        filter: brightness(50%);
+    }
     #imageCardText{
         margin:0;
         font-family: 'NEXON Lv1 Gothic OTF Bold';
