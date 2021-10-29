@@ -1,14 +1,12 @@
 package com.safers.api.controller;
 
-import com.safers.api.response.UserProfileResponse;
+import com.safers.api.response.UserResponse;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
 import com.safers.api.service.UserService;
 import com.safers.db.entity.user.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,18 +54,16 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "카카오 로그인", notes = "로그인 후, 사용자 정보를 반환한다.")
-    public ResponseEntity<UserProfileResponse> login(@RequestBody HashMap<String, Object> map) {
+    public ResponseEntity<UserResponse> login(@RequestBody HashMap<String, Object> map) {
 
         String accessToken = (String)map.get("accessToken");
         String refreshToken = (String)map.get("refreshToken");
 
         // accessToken을 이용한 사용자 정보 조회
         HashMap<String, Object> profile = kakaoService.getUserProfile(accessToken, refreshToken);
-        Long kakaoId = (Long) profile.get("kakaoId");
-        String nickname = (String) profile.get("nickname");
-        String profileUrl = (String) profile.get("profileUrl");
 
         // 해당 회원이 사이트에 가입한 기록이 있는지 체크
+        Long kakaoId = (Long) profile.get("kakaoId");
         User user = userService.getUserByKakaoId(kakaoId);
 
         if(isNull(user)) // 회원가입이 되어있지 않은 경우, 회원 정보 저장
@@ -78,7 +74,7 @@ public class UserController {
         // accessToken과 refreshToken 저장
         userService.saveToken(user, accessToken, refreshToken);
 
-        return ResponseEntity.ok(UserProfileResponse.of(kakaoId, profileUrl, nickname));
+        return ResponseEntity.ok(UserResponse.of(user));
     }
 
     @GetMapping("/logout")
@@ -98,4 +94,5 @@ public class UserController {
 
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
+
 }

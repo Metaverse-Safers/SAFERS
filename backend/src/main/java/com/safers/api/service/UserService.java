@@ -49,6 +49,18 @@ public class UserService {
         return null;
     }
 
+    public User updateUser(HashMap<String, Object> profile){
+        String id = (String) profile.get("id");
+        String nickname = (String) profile.get("nickname");
+        String profileUrl = (String) profile.get("profileUrl");
+
+        User user = userRepository.findById(id).orElse(null);
+        user.setNickName(nickname);
+        user.setProfileUrl(profileUrl);
+
+        return user;
+    }
+
     public User disconnectUser(User user) {
         user.setCode(codeRepository.findById("A02").get()); // 탈퇴회원으로 변경
         userRepository.save(user);

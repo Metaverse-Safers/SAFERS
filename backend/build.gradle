@@ -81,6 +81,7 @@ processResources {
         include "**/application*.yml"
         include "**/application*.yaml"
         include "**/application*.properties"
+        include "**/application-aws.properties"
 
         duplicatesStrategy = 'include'
         project.properties.findAll().each {
@@ -123,6 +124,9 @@ dependencies {
 
     // Json Parsing을 위한 dependency
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Amazon S3를 위한 dependency
+    implementation("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
 
 }
 
