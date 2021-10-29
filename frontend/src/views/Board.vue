@@ -1,6 +1,9 @@
 <template>
     <div>
         <image-card-list :images="images"/>
+        <router-link to='/board/boardwrite' >
+            <i id='plus' class="fas fa-plus fa-5x"></i>
+        </router-link>
     </div>
 </template>
 
@@ -14,7 +17,6 @@
             imageCardList
         },
         methods:{
-
             async getRandomImages(count){
                 try {
                     const {data} = await axios.get(this.url,{
@@ -42,5 +44,14 @@
 </script>
 
 <style>
-    
+    #plus{
+        position : fixed;
+        left: 25px;
+        bottom: 30px;
+        z-index: 11;
+        color: #c86b98a6;
+    }
+    #plus:hover{
+        color: #c86b98fd;
+    }
 </style>
