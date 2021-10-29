@@ -4,15 +4,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.safers.db.entity.BaseEntity;
 import com.safers.db.entity.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,10 +28,10 @@ public class Board extends BaseEntity {
     String content;
 
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
-    Date regDt;
+    LocalDateTime regDt;
 
     @Column(name = "is_delete")
-    boolean isDelete;
+    Boolean isDelete;
 
     @JsonIgnore
     @OneToMany(mappedBy="board", cascade = {CascadeType.REMOVE}, orphanRemoval = true)

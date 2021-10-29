@@ -5,12 +5,9 @@ import com.safers.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name="board_comment", schema = "safers")
@@ -28,10 +25,10 @@ public class BoardComment extends BaseEntity {
     String nickName;
 
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
-    Date regDt;
+    LocalDateTime regDt;
 
     @Column(name = "is_delete")
-    boolean isDelete;
+    Boolean isDelete;
 
     @JsonBackReference
     @ManyToOne
