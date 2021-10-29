@@ -1,21 +1,23 @@
 package com.safers.db.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.safers.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name="token", schema = "safers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Token extends BaseEntity {
+public class Token extends BaseEntity{
 
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "user_id") // 외래키 컬럼의 이름, 매핑할 컬럼의 이름
     User userId;
 
     @Column(name = "refresh_token")

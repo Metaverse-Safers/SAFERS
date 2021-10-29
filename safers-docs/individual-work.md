@@ -63,17 +63,25 @@
     <td align="center">2021-10-27(수)</td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
+    <td>- Kakao 로그인/회원가입 API</td>
+    <td>- Jenkins 자동화 배포 완료 🎉 <br> - .p12 키 발급 🔑</td>
     <td>- photon 학습 및 demo 프로젝트 진행 중 😂</td>
   </tr>
   <tr>
     <td align="center">2021-10-28(목)</td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
+    <td>- Kakao 로그아웃/회원탈퇴 API <br> - 예외처리 😫</td>
+    <td>- 프로젝트 https 설정 <br> - webpack 설정 <br> - 게시판 목록 API 구현 중 🎮</td>
     <td>- photon 채팅 기능 구현 및 버그 픽스 진행</td>
+  </tr>
+  <tr>
+    <td align="center">2021-10-29(금)</td>
+    <td></td>
+    <td></td>
+    <td>- 로그인/로그아웃 Frontend 연결 <br> - 사용자 프로필 조회/변경 API </td>
+    <td></td>
+    <td></td>
   </tr>
 </table>
 

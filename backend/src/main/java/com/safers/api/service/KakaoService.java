@@ -31,7 +31,7 @@ public class KakaoService {
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=63fef795ebfab5d54a1a08a9ee878b12");
-            // sb.append("&redirect_uri=http://localhost:8081/login/callback");
+            // sb.append("&redirect_uri=https://localhost:8081/login/callback");
             sb.append("&redirect_uri=https://k5a403.p.ssafy.io/login/callback"); // 배포용
 
             sb.append("&code=" + authorize_code);
@@ -58,6 +58,76 @@ public class KakaoService {
 
             String accessToken = element.getAsJsonObject().get("access_token").getAsString();
             String refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+            token.put("accessToken", accessToken);
+            token.put("refreshToken", refreshToken);
+
+            br.close();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return token;
+    }
+
+    // Token 정보 보기 (토큰 만료 여부)
+    public int checkAccessToken(String accessToken) {
+        int responseCode = -1;
+        String reqURL = "https://kapi.kakao.com/v1/user/access_token_info";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responseCode;
+    }
+
+    public HashMap<String, String> refreshTokens(String refreshToken) {
+        HashMap<String, String> token = new HashMap<>();
+        String reqURL = "https://kapi.kakao.com/oauth/token";
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+
+            // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=refresh_token");
+            sb.append("&client_id=63fef795ebfab5d54a1a08a9ee878b12");
+            sb.append("&refresh_token=" + refreshToken);
+            bw.write(sb.toString());
+            bw.flush();
+
+            // 결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
+
+            // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+
+            String accessToken = element.getAsJsonObject().get("access_token").getAsString();
 
             token.put("accessToken", accessToken);
             token.put("refreshToken", refreshToken);
@@ -112,5 +182,64 @@ public class KakaoService {
             e.printStackTrace();
         }
         return userInfo;
+    }
+
+    public void logout(String accessToken){
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+        try {
+
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Long disconnect(String accessToken){
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+        Long kakaoId = -1L;
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String result = "";
+            String line = "";
+
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println(result);
+
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            kakaoId = element.getAsJsonObject().get("id").getAsLong();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return kakaoId;
     }
 }
