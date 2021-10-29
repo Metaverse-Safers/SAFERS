@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class UserResponse extends BaseResponse{
+public class UserResponse{
 
     String id;
     String nickName;

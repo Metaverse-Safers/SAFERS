@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserTokenRepository extends JpaRepository<Token, String> {
+public interface UserTokenRepository extends JpaRepository<Token, User> {
     Optional<Token> findByUserId(User user);
 }
