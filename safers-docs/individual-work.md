@@ -1,15 +1,15 @@
-[↩ Main README로 돌아가기](../README.md)
+[↩ Main로 돌아가기](https://lab.ssafy.com/s05-final/S05P31A403)
 
 ## 떡잎방범대 Safers 빚는 과정 한눈에보기
 
 <table>
   <tr>
     <th></th>
-    <th><a href="https://github.com/eona1301">당현아</a></th>
-    <th>안상훈</th>
-    <th>이상현</th>
-    <th><a href="https://github.com/0JUUU">이영주</a></th>
-    <th>정원석</th>
+    <th align="center"><a href="https://github.com/eona1301">당현아</a></th>
+    <th align="center"><a href="https://github.com/ahnsang9">안상훈</a></th>
+    <th align="center"><a href="https://github.com/kimkuan">이상현</a></th>
+    <th align="center"><a href="https://github.com/0JUUU">이영주</a></th>
+    <th align="center"><a href="https://github.com/JWeonseok">정원석</a></th>
   </tr>
   <tr>
     <td align="center">2021-10-13(수)</td>
@@ -47,7 +47,7 @@
     <td align="center">2021-10-25(월)</td>
     <td>- EC2 MySQL 세팅<br>- https SSL Key 설정<br>- S3 세팅 및 Key 발급 정리</td>
     <td>- vue2 세팅<br>- 메인페이지</td>
-    <td></td>
+    <td align="center" rowspan="2"><b>공가</b></td>
     <td>- Jenkins 자동화 배포 설정 중🔍</td>
     <td>- 로컬환경에서 Unity-Web 서버 통신 테스트<br>- webgl 빌드 후 Unity-Web 서버 통신 테스트</td>
   </tr>
@@ -55,13 +55,12 @@
     <td align="center">2021-10-26(화)</td>
     <td>- 비회원 설문조사 콘텐츠 정리</td>
     <td></td>
-    <td></td>
     <td>- 여전히 Jenkins 자동화 배포 설정 중 😡</td>
     <td>- photon 학습 및 demo 프로젝트 진행 중</td>
   </tr>
   <tr>
     <td align="center">2021-10-27(수)</td>
-    <td></td>
+    <td>- application proerties 설정<br>- Entity JPA 기본 작업</td>
     <td></td>
     <td>- Kakao 로그인/회원가입 API</td>
     <td>- Jenkins 자동화 배포 완료 🎉 <br> - .p12 키 발급 🔑</td>
@@ -69,7 +68,7 @@
   </tr>
   <tr>
     <td align="center">2021-10-28(목)</td>
-    <td></td>
+    <td>- 공통코드 설계<br>- Meta Data 1차 정리<br>- JPA Mapping 및 ERD 산출물</td>
     <td></td>
     <td>- Kakao 로그아웃/회원탈퇴 API <br> - 예외처리 😫</td>
     <td>- 프로젝트 https 설정 <br> - webpack 설정 <br> - 게시판 목록 API 구현 중 🎮</td>
@@ -77,7 +76,7 @@
   </tr>
   <tr>
     <td align="center">2021-10-29(금)</td>
-    <td></td>
+    <td>- 비회원 설문조사 설계 정리</td>
     <td></td>
     <td>- 로그인/로그아웃 Frontend 연결 <br> - 사용자 프로필 조회/변경 API </td>
     <td></td>
