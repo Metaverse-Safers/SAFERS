@@ -2,6 +2,7 @@ package com.safers.api.service;
 
 import com.safers.api.request.BoardCommentPostRequest;
 import com.safers.api.request.BoardRegisterPostRequest;
+import com.safers.api.response.BoardCommentGetResponse;
 import com.safers.api.response.BoardGetResponse;
 import com.safers.common.util.RandomIdUtil;
 import com.safers.db.entity.board.Board;
@@ -42,7 +43,7 @@ public class BoardService {
     S3Service s3Service;
 
     /**
-     * 게시글 전체 목록 조회 (삭제 처리 x)
+     * 게시글 전체 목록 조회 (삭제 처리 x) : 완료 (O)
      * @param page
      * @return List<BoardGetResponse> 
      */
@@ -50,17 +51,11 @@ public class BoardService {
         PageRequest pageRequest = PageRequest.of(page, 30, Sort.Direction.DESC, "regDt");
         List<BoardGetResponse> boardGetResponseList = new ArrayList<>();
         Page<Board> boardPage = boardRepository.findAllByIsDeleteEquals(false, pageRequest);
-        for(Board board : boardPage) {
-            System.out.println("board >> " + board.getTitle());
-            Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(board.getId());
-            if(fileList.isPresent())
-                boardGetResponseList.add(BoardGetResponse.of(board,fileList.get()));
-        }
-        return boardGetResponseList;
+        return getBoardGetResponses(boardGetResponseList, boardPage);
     }
 
     /**
-     * 게시글 등록
+     * 게시글 등록 : 완료
      * @param boardRegisterPostRequest
      * @return Board
      */
@@ -95,13 +90,13 @@ public class BoardService {
     }
 
     /**
-     * 상세 글 정보 가져오기 / 댓글 정보는 없음
+     * 상세 글 정보 가져오기 / 댓글 정보는 없음 : 완료 (O)
      * @param boardId
      * @return BoardGetResponse
      */
     public BoardGetResponse findBoard(String boardId) {
         Board board = boardRepository.getById(boardId);
-        Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(boardId);
+        Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(board);
 //        if(fileList.isPresent())
 //            return BoardGetResponse.of(board, fileList.get());
 //        return null;
@@ -116,26 +111,66 @@ public class BoardService {
      */
     public Board updateBoard(String boardId, BoardRegisterPostRequest boardRegisterPostRequest) {
         Board board = boardRepository.getById(boardId);
+
+        if(board != null) {
+            // 기존 등록된 이미지 모두 제거
+
+            // 다시 등록하기
+            board.setContent(boardRegisterPostRequest.getContent());
+        }
         return board;
     }
 
+
     /**
-     * 게시글 삭제하기
+     * 게시글 삭제하기 -> 완료
      * @param boardId
      * @return Board
      */
     public Board deleteBoard(String boardId) {
-        Board board = new Board();
+        Board board = boardRepository.getById(boardId);
+        if(board == null)
+            return null;
+        board.setIsDelete(true);
+        boardRepository.save(board);
         return board;
     }
 
+    /**
+     * 내가 쓴 글 가져오기 : 완료 (O)
+     * @param page
+     * @param userId
+     * @return List<BoardGetResponse>
+     */
     public List<BoardGetResponse> findBoardListByPageAndUserId(int page, String userId) {
         List<BoardGetResponse> boardGetResponseList = new ArrayList<>();
+        PageRequest pageRequest = PageRequest.of(page, 30, Sort.Direction.DESC, "regDt");
+        Optional<User> user = userService.getUserById(userId);
+
+        if(!user.isPresent())
+            return null;
+        Page<Board> boardPage = boardRepository.findAllByIsDeleteEqualsAndUserEquals(false, user.get(), pageRequest);
+        return getBoardGetResponses(boardGetResponseList, boardPage);
+    }
+
+    /**
+     * 반환할 게시글 정보 넣기 (전체 게시글 / 내가 쓴 게시글 조회 시 사용) -> 완료
+     * @param boardGetResponseList
+     * @param boardPage
+     * @return List<BoardGetResponse>
+     */
+    private List<BoardGetResponse> getBoardGetResponses(List<BoardGetResponse> boardGetResponseList, Page<Board> boardPage) {
+        for(Board board : boardPage) {
+            System.out.println("board >> " + board.getTitle());
+            Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(board);
+            if(fileList.isPresent())
+                boardGetResponseList.add(BoardGetResponse.of(board,fileList.get()));
+        }
         return boardGetResponseList;
     }
 
     /**
-     * 댓글 등록
+     * 댓글 등록 : 완료 (O)
      * @param boardId
      * @param boardCommentPostRequest
      * @return BoardComment
@@ -161,4 +196,52 @@ public class BoardService {
         return boardComment;
     }
 
+    /**
+     * 댓글 수정 : 완료 (O)
+     * @param commentId
+     * @param boardCommentPostRequest
+     * @return BoardComment
+     */
+    public BoardComment updateBoardComment(String commentId, BoardCommentPostRequest boardCommentPostRequest) {
+        BoardComment boardComment = boardCommentRepository.getById(commentId);
+        if(boardComment != null) {  // boardComment를 sout하는 순간 에러남 => 왜?
+            boardComment.setComment(boardCommentPostRequest.getComment());
+            boardCommentRepository.save(boardComment);
+            return boardComment;
+        }
+        return null;
+    }
+
+    /**
+     * 댓글 삭제 : 완료 (O)
+     * @param commentId
+     * @return BoardComment
+     */
+    public BoardComment deleteBoardComment(String commentId) {
+        BoardComment boardComment = boardCommentRepository.getById(commentId);
+        boardComment.setIsDelete(true);
+        boardCommentRepository.save(boardComment);
+        return boardComment;
+    }
+
+    /**
+     * 특정 게시글 댓글 목록 : 완료 (O)
+     * @param boardId 
+     * @return List<BoardCommentGetResponse>
+     */
+    public List<BoardCommentGetResponse> findBoardCommentList(String boardId) {
+        List<BoardCommentGetResponse> boardCommentGetResponses = new ArrayList<>();
+        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByUserIdEqualsAndIsDeleteEquals(boardId, false);
+        if(!commentList.isPresent())
+            return null;
+        for(BoardComment boardComment : commentList.get()) {
+            Optional<User> user = userService.getUserById(boardComment.getUserId());
+            if(!user.isPresent()) {
+                boardComment.setIsDelete(false);
+                continue;
+            }
+            boardCommentGetResponses.add(BoardCommentGetResponse.of(boardComment, user.get()));
+        }
+        return boardCommentGetResponses;
+    }
 }

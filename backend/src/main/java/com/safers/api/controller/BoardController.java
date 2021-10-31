@@ -3,6 +3,7 @@ package com.safers.api.controller;
 import com.safers.api.request.BoardCommentPostRequest;
 import com.safers.api.request.BoardRegisterPostRequest;
 import com.safers.api.response.BaseResponse;
+import com.safers.api.response.BoardCommentGetResponse;
 import com.safers.api.response.BoardGetResponse;
 import com.safers.api.service.BoardService;
 import com.safers.db.entity.board.Board;
@@ -33,7 +34,7 @@ public class BoardController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    @GetMapping("/{page}")
+    @GetMapping("/list/{page}")
     public ResponseEntity<List<BoardGetResponse>> findBoardListByPage(@PathVariable("page") int page) {
         List<BoardGetResponse> boardList = boardService.findBoardListByPage(page);
         return new ResponseEntity<>(boardList, HttpStatus.OK);
@@ -128,5 +129,48 @@ public class BoardController {
         BoardComment boardComment = boardService.registerBoardComment(boardId, boardCommentPostRequest);
 
         return new ResponseEntity<>(BaseResponse.of(200, "댓글이 정상적으로 등록되었습니다"), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "게시글 댓글 수정", notes="특정 게시글에 댓글 수정")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "댓글 수정 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @PatchMapping("/comment/{comment_id}")
+    public ResponseEntity<? extends BaseResponse> updateBoardComment(@PathVariable("comment_id") String commentId, @ApiParam(value="게시글 댓글 정보", required = true) @RequestBody @ModelAttribute BoardCommentPostRequest boardCommentPostRequest) throws IOException {
+        System.out.println("댓글 수정하러 가기 >> 댓글 아이디 " + commentId + " // 수정할 내용 : " + boardCommentPostRequest.getComment() + " // 유저 아이디 : " + boardCommentPostRequest.getUserId());
+        BoardComment boardComment = boardService.updateBoardComment(commentId, boardCommentPostRequest);
+
+        return new ResponseEntity<>(BaseResponse.of(200, "댓글이 정상적으로 수정되었습니다"), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "게시글 댓글 삭제", notes="특정 게시글 댓글 삭제")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "댓글 삭제 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @PatchMapping("/comment/delete/{comment_id}")
+    public ResponseEntity<? extends BaseResponse> deleteBoardComment(@PathVariable("comment_id") String commentId) throws IOException {
+        BoardComment boardComment = boardService.deleteBoardComment(commentId);
+
+        return new ResponseEntity<>(BaseResponse.of(200, "댓글이 정상적으로 삭제되었습니다"), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "게시글 댓글 목록", notes="특정 게시글의 목록 가져오기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "댓글 목록 가져오기 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @GetMapping("/comment/{board_id}")
+    public ResponseEntity<List<BoardCommentGetResponse>> findBoardCommentList(@PathVariable("board_id") String boardId) throws IOException {
+        List<BoardCommentGetResponse> boardServiceBoardCommentList = boardService.findBoardCommentList(boardId);
+
+        return new ResponseEntity<>(boardServiceBoardCommentList, HttpStatus.OK);
     }
 }
