@@ -11,7 +11,7 @@ export default {
         async getAccessToken(code){
             await this.$store.dispatch("user/requestAccessToken", {"code" : code});
             await this.$store.dispatch("user/requestProfile", this.token);
-            await this.$router.push({ name: 'main' });
+            await this.$router.push({ name: 'unity' });
         }
     },
 
