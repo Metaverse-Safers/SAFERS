@@ -32,7 +32,7 @@ const user = {
     actions: {
         /* AccessToken 요청 */
         async requestAccessToken({ commit }, code) {
-            await http.post("/user/token", code)
+            await http.get("/user/token?code=" + code)
             .then(function(result) {
                 console.log(result.data);
                 commit("SET_TOKEN", result.data);

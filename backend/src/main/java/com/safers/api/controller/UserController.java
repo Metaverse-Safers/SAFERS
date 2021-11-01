@@ -33,11 +33,9 @@ public class UserController {
     @Autowired
     KakaoService kakaoService;
 
-    @PostMapping("/token")
+    @GetMapping("/token")
     @ApiOperation(value = "Token 요청", notes = "발급된 code로 사용자의 Token을 발급한다.")
-    public ResponseEntity<UserTokenResponse> requestAuthCode(@RequestBody HashMap<String, Object> map) {
-        String code = (String) map.get("code");
-
+    public ResponseEntity<UserTokenResponse> requestAuthCode(@RequestParam(value = "code") String code) {
         // code값을 이용한 accessToken 조회
         HashMap<String, String> token = kakaoService.getTokens(code);
         String accessToken = token.get("accessToken");
@@ -48,18 +46,16 @@ public class UserController {
 
     @PostMapping("/token/refresh")
     @ApiOperation(value = "Token 갱신 요청", notes = "refreshToken을 통해 만료된 AccessToken을 갱신한다.")
-    public ResponseEntity<UserTokenResponse> refreshAccessToken(@RequestBody HashMap<String, Object> map) {
-        String refreshToken = (String)map.get("refreshToken");
-
-        HashMap<String, String> token = kakaoService.refreshTokens(refreshToken);
+    public ResponseEntity<UserTokenResponse> refreshAccessToken(@RequestBody UserTokenRequest request) {
+        HashMap<String, String> token = kakaoService.refreshTokens(request.getRefreshToken());
         String accessToken = token.get("accessToken");
 
-        return ResponseEntity.ok(UserTokenResponse.of(accessToken, refreshToken));
+        return ResponseEntity.ok(UserTokenResponse.of(accessToken, request.getRefreshToken()));
     }
 
-    @GetMapping("/present")
+    @PostMapping("/present")
     @ApiOperation(value = "회원 조회", notes = "해당 회원이 존재하는 회원인지 판단한다.")
-    public ResponseEntity<UserPresentResponse> isPresentUser(@ModelAttribute UserTokenRequest request) {
+    public ResponseEntity<UserPresentResponse> isPresentUser(@RequestBody UserTokenRequest request) {
         String accessToken = request.getAccessToken();
         String refreshToken = request.getRefreshToken();
 
@@ -70,19 +66,22 @@ public class UserController {
         Long kakaoId = (Long) profile.get("kakaoId");
         User user = userService.getUserByKakaoId(kakaoId);
 
-        if(isNull(user))
-            return ResponseEntity.ok(UserPresentResponse.of(kakaoId, false));
+        // 회원가입한 기록이 없거나, 탈퇴회원이라면
+        if(isNull(user) || "A02".equals(user.getCode().getCode()))
+            return ResponseEntity.ok(UserPresentResponse.of(false));
 
-        return ResponseEntity.ok(UserPresentResponse.of(kakaoId, true));
+        return ResponseEntity.ok(UserPresentResponse.of(true));
     }
 
 
     @PostMapping("/login")
     @ApiOperation(value = "카카오 로그인", notes = "로그인 후, 사용자 정보를 반환한다.")
-    public ResponseEntity<UserResponse> login(@ModelAttribute UserTokenRequest request) {
+    public ResponseEntity<UserResponse> login(@RequestBody UserTokenRequest request) {
 
         String accessToken = request.getAccessToken();
         String refreshToken = request.getRefreshToken();
+
+        System.out.println("token" + accessToken + " " + refreshToken);
 
         // accessToken을 이용한 사용자 정보 조회
         HashMap<String, Object> profile = kakaoService.getUserProfile(accessToken, refreshToken);
