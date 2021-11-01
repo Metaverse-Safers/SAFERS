@@ -1,5 +1,8 @@
 package com.safers.api.controller;
 
+import com.safers.api.request.UserProfileRequest;
+import com.safers.api.request.UserRequest;
+import com.safers.api.request.UserTokenRequest;
 import com.safers.api.response.UserResponse;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import static java.util.Objects.isNull;
@@ -54,10 +58,10 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "카카오 로그인", notes = "로그인 후, 사용자 정보를 반환한다.")
-    public ResponseEntity<UserResponse> login(@RequestBody HashMap<String, Object> map) {
+    public ResponseEntity<UserResponse> login(@ModelAttribute UserTokenRequest request) {
 
-        String accessToken = (String)map.get("accessToken");
-        String refreshToken = (String)map.get("refreshToken");
+        String accessToken = request.getAccessToken();
+        String refreshToken = request.getRefreshToken();
 
         // accessToken을 이용한 사용자 정보 조회
         HashMap<String, Object> profile = kakaoService.getUserProfile(accessToken, refreshToken);
@@ -66,9 +70,9 @@ public class UserController {
         Long kakaoId = (Long) profile.get("kakaoId");
         User user = userService.getUserByKakaoId(kakaoId);
 
-        if(isNull(user)) // 회원가입이 되어있지 않은 경우, 회원 정보 저장
+        if(isNull(user)) // 1. 회원가입이 되어있지 않은 경우, 회원 정보 저장
             user = userService.createUser(accessToken, refreshToken, profile);
-        else if("A02".equals(user.getCode().getCode())) // 탈퇴회원인 경우, code만 변경
+        else if("A02".equals(user.getCode().getCode())) // 2. 탈퇴회원인 경우, code만 변경
             user = userService.reconnectUser(user);
 
         // accessToken과 refreshToken 저장
@@ -84,7 +88,7 @@ public class UserController {
         return ResponseEntity.ok("로그아웃 되었습니다.");
     }
 
-    @GetMapping("/disconnect")
+    @DeleteMapping("/{id}")
     @ApiOperation(value = "카카오 회원 탈퇴", notes = "사용자의 token을 만료 시키고 회원상태 값을 'A02'(탈퇴 회원)로 변경한다.")
     public ResponseEntity<String> disconnect(@RequestHeader(value = "authorization") String accessToken) {
         Long kakaoId = kakaoService.disconnect(accessToken);
@@ -95,4 +99,10 @@ public class UserController {
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
 
+    @PutMapping("/{id}")
+    @ApiOperation(value = "회원 프로필 수정", notes = "회원의 프로필을 수정한다.")
+    public ResponseEntity<UserResponse> updateUserProfile(@ModelAttribute UserProfileRequest request) throws IOException {
+        User user = userService.updateUser(request);
+        return ResponseEntity.ok(UserResponse.of(user));
+    }
 }
