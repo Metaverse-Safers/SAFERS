@@ -3,6 +3,7 @@ package com.safers.api.controller;
 import com.safers.api.request.UserProfileRequest;
 import com.safers.api.request.UserRequest;
 import com.safers.api.request.UserTokenRequest;
+import com.safers.api.response.UserPresentResponse;
 import com.safers.api.response.UserResponse;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
@@ -55,6 +56,26 @@ public class UserController {
 
         return ResponseEntity.ok(UserTokenResponse.of(accessToken, refreshToken));
     }
+
+    @GetMapping("/present")
+    @ApiOperation(value = "회원 조회", notes = "해당 회원이 존재하는 회원인지 판단한다.")
+    public ResponseEntity<UserPresentResponse> isPresentUser(@ModelAttribute UserTokenRequest request) {
+        String accessToken = request.getAccessToken();
+        String refreshToken = request.getRefreshToken();
+
+        // accessToken을 이용한 사용자 정보 조회
+        HashMap<String, Object> profile = kakaoService.getUserProfile(accessToken, refreshToken);
+
+        // 해당 회원이 사이트에 가입한 기록이 있는지 체크
+        Long kakaoId = (Long) profile.get("kakaoId");
+        User user = userService.getUserByKakaoId(kakaoId);
+
+        if(isNull(user))
+            return ResponseEntity.ok(UserPresentResponse.of(kakaoId, false));
+
+        return ResponseEntity.ok(UserPresentResponse.of(kakaoId, true));
+    }
+
 
     @PostMapping("/login")
     @ApiOperation(value = "카카오 로그인", notes = "로그인 후, 사용자 정보를 반환한다.")
