@@ -78,6 +78,7 @@ public class BoardService {
         board.setIsDelete(false);
         boardRepository.save(board);
 
+
         for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
             BoardImage image = new BoardImage();
             String saveUrl = s3Service.upload(multipartFile, "board");
@@ -86,6 +87,7 @@ public class BoardService {
             // image.setFilePath("https://"+S3Service"/"+saveUrl);
             boardImageRepository.save(image);
         }
+
         return board;
     }
 
@@ -117,13 +119,14 @@ public class BoardService {
 
             // 다시 등록하기
             board.setContent(boardRegisterPostRequest.getContent());
+            board.setTitle(boardRegisterPostRequest.getTitle());
         }
         return board;
     }
 
 
     /**
-     * 게시글 삭제하기 -> 완료
+     * 게시글 삭제하기 -> 완료 (O)
      * @param boardId
      * @return Board
      */

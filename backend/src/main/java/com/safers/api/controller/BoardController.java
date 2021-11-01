@@ -83,7 +83,6 @@ public class BoardController {
     public ResponseEntity<? extends BaseResponse> updateBoard(@PathVariable(value = "board_id")String boardId, @ModelAttribute BoardRegisterPostRequest boardRegisterPostRequest) throws IOException {
         Board board = boardService.updateBoard(boardId, boardRegisterPostRequest);
 
-        System.out.println(board);
         return new ResponseEntity<>(BaseResponse.of(200, "게시글이 정상적으로 수정되었습니다"), HttpStatus.OK);
     }
 
@@ -98,9 +97,8 @@ public class BoardController {
     @PatchMapping(value = "/delete/{board_id}")
     public ResponseEntity<? extends BaseResponse> deleteBoard(@PathVariable(value = "board_id")String boardId) throws IOException {
         Board board = boardService.deleteBoard(boardId);
-
-        System.out.println(board);
-        return new ResponseEntity<>(BaseResponse.of(200, "게시글이 정상적으로 수정되었습니다"), HttpStatus.OK);
+        
+        return new ResponseEntity<>(BaseResponse.of(200, "게시글이 정상적으로 삭제되었습니다"), HttpStatus.OK);
     }
 
     @ApiOperation(value = "내가 쓴 글 목록 조회", notes="특정 사용자가 작성한 게시글 중 삭제처리가 되지 않은 게시글 전체 목록을 조회한다.")

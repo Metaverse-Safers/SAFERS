@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -24,9 +23,6 @@ public class BoardRegisterPostRequest {
     String content;
 
     @ApiModelProperty
-    LocalDateTime regDt;
-
-    @ApiModelProperty
     List<MultipartFile> fileList;
 
     @Override
@@ -35,7 +31,6 @@ public class BoardRegisterPostRequest {
                 "userId='" + userId + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", regDt='" + regDt + '\'' +
                 ", fileList=" + fileList +
                 '}';
     }
