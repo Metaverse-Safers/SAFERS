@@ -32,7 +32,7 @@ const user = {
     actions: {
         /* AccessToken 요청 */
         async requestAccessToken({ commit }, code) {
-            await http.post("/user/token", code)
+            await http.get("/user/token?code=" + code)
             .then(function(result) {
                 console.log(result.data);
                 commit("SET_TOKEN", result.data);
@@ -80,8 +80,19 @@ const user = {
             .catch(function(error) {
                 console.log(error);
             })
-        }
+        },
 
+        /* 사용자 프로필 정보 수정 */
+        async requestUpdateProfile({ commit }, data) {
+            await http.post("/user/" + data.id, data.profile)
+            .then(function(result) {
+                console.log(result)
+                commit("SET_USER_PROFILE", result.data);
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        }
     }
 }
 export default user;

@@ -24,6 +24,7 @@ public class S3Service {
     private String bucket;
 
     // 사용자 프로필 사진 -> "profile"
+    // 게시판 사진 -> "board"
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MulipartFile 변환에 실패하였습니다."));
@@ -48,7 +49,8 @@ public class S3Service {
 
     // 로컬에 파일 업로드
     private Optional<File> convert(MultipartFile file) throws IOException {
-        File convertFile = new File(System.getProperty("") + "/" + file.getOriginalFilename());
+        // 현재 프로젝트의 루트 경로 아래에 임시로 파일을 저장한다.
+        File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
 
         // convertFile에 지정한 경로에 파일이 생성된다.
         if(convertFile.createNewFile()){
