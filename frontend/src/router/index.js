@@ -62,7 +62,7 @@ export default new router({
             path: '/login/callback',
             name: 'kakaoCallback',
             component: () => import("@/components/User/KakaoCallback.vue")
-        }
+        },
     ]
         
 })
