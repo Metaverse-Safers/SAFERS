@@ -1,5 +1,6 @@
 package com.safers.db.repository;
 
+import com.safers.db.entity.board.Board;
 import com.safers.db.entity.board.BoardComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,5 +13,5 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Stri
     @Override
     Optional<BoardComment> findById(String commentId);
 
-    Optional<List<BoardComment>> findAllByUserIdEqualsAndIsDeleteEquals(String userId, Boolean isDelete);
+    Optional<List<BoardComment>> findAllByBoardEqualsAndIsDeleteEquals(Board board, Boolean isDelete);
 }
