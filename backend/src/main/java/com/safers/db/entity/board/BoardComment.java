@@ -5,8 +5,11 @@ import com.safers.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class BoardComment extends BaseEntity {
     @Column(name = "comment", columnDefinition = "TEXT")
     String comment;
@@ -24,6 +28,7 @@ public class BoardComment extends BaseEntity {
     @Column(name = "nick_name", length = 15)
     String nickName;
 
+    @CreatedDate        // 생성 시간 저장 c.f. @LastModifiedDate => 수정 시간 저장
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
     LocalDateTime regDt;
 

@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.safers.db.entity.BaseEntity;
 import com.safers.db.entity.user.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Board extends BaseEntity {
     @JsonBackReference
     @ManyToOne
@@ -27,6 +32,7 @@ public class Board extends BaseEntity {
     @Column(name = "content", columnDefinition = "TEXT")
     String content;
 
+    @CreatedDate
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
     LocalDateTime regDt;
 
