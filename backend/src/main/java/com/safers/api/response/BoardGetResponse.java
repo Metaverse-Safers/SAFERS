@@ -33,7 +33,7 @@ public class BoardGetResponse {
     @ApiModelProperty
     List<String> fileList;
 
-    public BoardGetResponse of(Board board, List<String> boardImageList) {
+    public static BoardGetResponse of(Board board, List<String> boardImageList) {
         BoardGetResponse res = new BoardGetResponse();
         res.setId(board.getId());
         res.setUserId(board.getUser().getId());

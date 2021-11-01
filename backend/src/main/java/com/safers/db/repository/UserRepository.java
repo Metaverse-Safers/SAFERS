@@ -11,4 +11,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByKakaoId(Long kakaoId);
 
+    @Override
+    Optional<User> findById(String s);
 }
