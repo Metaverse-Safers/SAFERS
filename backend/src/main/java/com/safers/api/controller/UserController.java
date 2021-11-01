@@ -108,7 +108,7 @@ public class UserController {
         return ResponseEntity.ok("로그아웃 되었습니다.");
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/")
     @ApiOperation(value = "카카오 회원 탈퇴", notes = "사용자의 token을 만료 시키고 회원상태 값을 'A02'(탈퇴 회원)로 변경한다.")
     public ResponseEntity<String> disconnect(@RequestHeader(value = "authorization") String accessToken) {
         Long kakaoId = kakaoService.disconnect(accessToken);
@@ -119,7 +119,7 @@ public class UserController {
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/")
     @ApiOperation(value = "회원 프로필 수정", notes = "회원의 프로필을 수정한다.")
     public ResponseEntity<UserResponse> updateUserProfile(@ModelAttribute UserProfileRequest request) throws IOException {
         User user = userService.updateUser(request);
