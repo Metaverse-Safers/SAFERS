@@ -81,7 +81,15 @@ public class BoardService {
 
         for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
             BoardImage image = new BoardImage();
+            System.out.println("등록된 사진 >> " + multipartFile);
+            while(true) {
+                id = RandomIdUtil.makeRandomId(13);
+                Optional<BoardImage> tmpBoardImage = boardImageRepository.findById(id);
+                if(!tmpBoardImage.isPresent()) break;
+            }
+            image.setId(id);
             String saveUrl = s3Service.upload(multipartFile, "board");
+            System.out.println("S3에 등록할 URL >> "+saveUrl);
             image.setBoard(board);
             image.setFileName(saveUrl);
             // image.setFilePath("https://"+S3Service"/"+saveUrl);
@@ -111,13 +119,25 @@ public class BoardService {
      * @param boardRegisterPostRequest
      * @return Board
      */
-    public Board updateBoard(String boardId, BoardRegisterPostRequest boardRegisterPostRequest) {
+    public Board updateBoard(String boardId, BoardRegisterPostRequest boardRegisterPostRequest) throws IOException{
         Board board = boardRepository.getById(boardId);
 
         if(board != null) {
-            // 기존 등록된 이미지 모두 제거
-
-            // 다시 등록하기
+            String id = "";
+            for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
+                BoardImage image = new BoardImage();
+                while(true) {
+                    id = RandomIdUtil.makeRandomId(13);
+                    Optional<BoardImage> tmpBoardImage = boardImageRepository.findById(id);
+                    if(!tmpBoardImage.isPresent()) break;
+                }
+                image.setId(id);
+                String saveUrl = s3Service.upload(multipartFile, "board");
+                image.setBoard(board);
+                image.setFileName(saveUrl);
+                // image.setFilePath("https://"+S3Service"/"+saveUrl);
+                boardImageRepository.save(image);
+            }
             board.setContent(boardRegisterPostRequest.getContent());
             board.setTitle(boardRegisterPostRequest.getTitle());
         }

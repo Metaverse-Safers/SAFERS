@@ -52,7 +52,6 @@ public class BoardController {
     public ResponseEntity<? extends BaseResponse> registerBoard(@ModelAttribute BoardRegisterPostRequest boardRegisterPostRequest) throws IOException {
         Board board = boardService.registerBoard(boardRegisterPostRequest);
 
-        System.out.println(board);
         return new ResponseEntity<>(BaseResponse.of(200, "게시글이 정상적으로 등록되었습니다"), HttpStatus.OK);
     }
 
@@ -67,7 +66,6 @@ public class BoardController {
     public ResponseEntity<BoardGetResponse> findBoard(@PathVariable(value = "board_id")String boardId) throws IOException {
         BoardGetResponse board = boardService.findBoard(boardId);
 
-        System.out.println(board);
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
 

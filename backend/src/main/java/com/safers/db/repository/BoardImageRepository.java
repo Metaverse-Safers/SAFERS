@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface BoardImageRepository extends JpaRepository<BoardImage, String> {
 
     Optional<List<String>> findAllFilePathByBoardEquals(Board board);
+
+    @Override
+    Optional<BoardImage> findById(String id);
 }
