@@ -24,6 +24,7 @@ public class S3Service {
     private String bucket;
 
     // 사용자 프로필 사진 -> "profile"
+    // 게시판 사진 -> "board"
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MulipartFile 변환에 실패하였습니다."));
