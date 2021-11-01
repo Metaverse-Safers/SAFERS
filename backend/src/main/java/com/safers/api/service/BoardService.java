@@ -81,9 +81,18 @@ public class BoardService {
 
         for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
             BoardImage image = new BoardImage();
+            System.out.println("등록된 사진 >> " + multipartFile.getOriginalFilename());
+            while(true) {
+                id = RandomIdUtil.makeRandomId(13);
+                Optional<BoardImage> tmpBoardImage = boardImageRepository.findById(id);
+                if(!tmpBoardImage.isPresent()) break;
+            }
+            image.setId(id);
             String saveUrl = s3Service.upload(multipartFile, "board");
+            System.out.println("S3에 등록할 URL >> "+saveUrl);
             image.setBoard(board);
-            image.setFileName(saveUrl);
+            image.setFileName(multipartFile.getOriginalFilename());
+            image.setFilePath(saveUrl);
             // image.setFilePath("https://"+S3Service"/"+saveUrl);
             boardImageRepository.save(image);
         }
@@ -98,7 +107,7 @@ public class BoardService {
      */
     public BoardGetResponse findBoard(String boardId) {
         Board board = boardRepository.getById(boardId);
-        Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(board);
+        Optional<List<BoardImage>> fileList = boardImageRepository.findBoardImagesByBoardEquals(board);
 //        if(fileList.isPresent())
 //            return BoardGetResponse.of(board, fileList.get());
 //        return null;
@@ -111,13 +120,29 @@ public class BoardService {
      * @param boardRegisterPostRequest
      * @return Board
      */
-    public Board updateBoard(String boardId, BoardRegisterPostRequest boardRegisterPostRequest) {
+    public Board updateBoard(String boardId, BoardRegisterPostRequest boardRegisterPostRequest) throws IOException{
         Board board = boardRepository.getById(boardId);
 
         if(board != null) {
-            // 기존 등록된 이미지 모두 제거
+            String id = "";
+            // 기존에 있던 이미지 파일 지우기
+            System.out.println(">>>>> 기존 이미지 파일 삭제");
+            boardImageRepository.deleteAllByBoardEquals(board);
 
-            // 다시 등록하기
+            for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
+                BoardImage image = new BoardImage();
+                while(true) {
+                    id = RandomIdUtil.makeRandomId(13);
+                    Optional<BoardImage> tmpBoardImage = boardImageRepository.findById(id);
+                    if(!tmpBoardImage.isPresent()) break;
+                }
+                image.setId(id);
+                String saveUrl = s3Service.upload(multipartFile, "board");
+                image.setBoard(board);
+                image.setFileName(multipartFile.getOriginalFilename());
+                image.setFilePath(saveUrl);
+                boardImageRepository.save(image);
+            }
             board.setContent(boardRegisterPostRequest.getContent());
             board.setTitle(boardRegisterPostRequest.getTitle());
         }
@@ -164,8 +189,7 @@ public class BoardService {
      */
     private List<BoardGetResponse> getBoardGetResponses(List<BoardGetResponse> boardGetResponseList, Page<Board> boardPage) {
         for(Board board : boardPage) {
-            System.out.println("board >> " + board.getTitle());
-            Optional<List<String>> fileList = boardImageRepository.findAllFilePathByBoardEquals(board);
+            Optional<List<BoardImage>> fileList = boardImageRepository.findBoardImagesByBoardEquals(board);
             if(fileList.isPresent())
                 boardGetResponseList.add(BoardGetResponse.of(board,fileList.get()));
         }
@@ -234,7 +258,8 @@ public class BoardService {
      */
     public List<BoardCommentGetResponse> findBoardCommentList(String boardId) {
         List<BoardCommentGetResponse> boardCommentGetResponses = new ArrayList<>();
-        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByUserIdEqualsAndIsDeleteEquals(boardId, false);
+        Board board = boardRepository.getById(boardId);
+        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByBoardEqualsAndIsDeleteEquals(board, false);
         if(!commentList.isPresent())
             return null;
         for(BoardComment boardComment : commentList.get()) {
