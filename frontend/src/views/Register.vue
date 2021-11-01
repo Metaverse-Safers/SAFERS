@@ -1,0 +1,125 @@
+<template>
+    <div id='loginBackGround'>
+        <img id='rectangle' src="@/assets/images/rectangle.png">
+        <div>
+            <form id="rgForm">
+                <label className="input-file-button" for="input-file">
+                    <img v-if="img.previewImgUrl" :src="img.previewImgUrl" for="input-file" style="height:10vh; width:10vh; borderRadius: 100px"/>
+                </label>
+                <input type="file" ref="selectFile" id="input-file" style="display:none" @change="previewFile" accept="image/*"/>
+                <input type="text" v-model="userInfo.nickName" />
+                <button class="button" @click="register">회원가입</button>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default{
+        data() {
+            return{
+                Hw: false,
+                userInfo: {},
+                img: {
+                    selectFile: null,
+                    previewImgUrl: null, // 미리보기 이미지 URL
+                    isUploading: false, // 파일 업로드 체크
+                }
+            }
+        },
+        methods: {
+            previewFile() {
+                // 선택된 파일이 있는가?
+                if (0 < this.$refs.selectFile.files.length) {
+                    // 0 번째 파일을 가져 온다.
+                    this.img.selectFile = this.$refs.selectFile.files[0]
+                    // 마지막 . 위치를 찾고 + 1 하여 확장자 명을 가져온다.
+                    let fileExt = this.img.selectFile.name.substring(
+                        this.img.selectFile.name.lastIndexOf(".") + 1
+                    )
+                    // 소문자로 변환
+                    fileExt = fileExt.toLowerCase()
+                    // 이미지 확장자 체크, 1메가 바이트 이하 인지 체크
+                    if (
+                        ["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt) &&
+                        this.img.selectFile.size <= 1048576
+                        ) {
+                            // FileReader 를 활용하여 파일을 읽는다
+                            var reader = new FileReader()
+                            reader.onload = e => {
+                                // base64
+                                this.img.previewImgUrl = e.target.result
+                            }
+                            reader.readAsDataURL(this.img.selectFile)
+                        } else if (this.img.selectFile.size <= 1048576) {
+                            // 이미지외 파일
+                            this.img.previewImgUrl = null
+                        } else {
+                            this.img.selectFile = null
+                            this.img.previewImgUrl = null
+                    }
+                } else {
+                    // 파일을 선택하지 않았을때
+                    this.img.selectFile = null
+                    this.img.previewImgUrl = null
+                }
+            },
+            register(){
+                this.userInfo.profileUrl = this.img.previewImgUrl;
+                console.log(this.userInfo)
+                this.$store.dispatch("user/requestUpdateProfile", this.userInfo);
+            }
+        },
+        computed: {
+            userProfile(){
+                return this.$store.state.user.userProfile;
+            }
+        },
+        mounted(){
+            this.userInfo = { ...this.userProfile };
+            this.img.previewImgUrl = this.userInfo.profileUrl;
+        }
+    }
+</script>
+
+<style>
+    #loginBackGround{
+        background-image: url('../assets/images/background.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    #loginWrap{
+        display: flex;
+        justify-content: space-between;
+        height: 10vh; 
+    }
+    #loginQM{
+        margin: 3vh;
+        width: 5vh;
+        height: 5vh;
+    }
+    #home{
+        margin: 3.5vh;
+        width: 15vh;
+        height: 3.5vh;
+    }
+    #rectangle{
+        width: 70vh;
+        position:absolute;
+        top:50%; left:50%;
+        transform: translate(-50%, -50%);
+    }
+    #rgForm{
+        position:absolute;
+        z-index: 1;
+        top:50%; left:50%;
+        transform: translate(-50%, -50%);
+    }
+    .input-file-button{
+        padding: 6px 25px;
+        background-color:#FF6600;
+        border-radius: 4px;
+        color: white;
+        cursor: pointer;
+    }
+</style>

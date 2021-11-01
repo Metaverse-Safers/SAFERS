@@ -1,7 +1,6 @@
 <template>
     <div id='loginBackGround'>
         <div id='loginWrap'>
-            <img id='loginQM' src="@/assets/images/questionMark.png">
             <router-link to=/main><img id='home' src="@/assets/images/homeBtn.png"></router-link>
         </div>
         <img id='loginImg' src="@/assets/images/loginImg.png">
@@ -14,11 +13,22 @@ export default{
     methods: {
         kakaoLogin(){
             this.$kakao.Auth.authorize({
-            // redirectUri: "https://localhost:8081/login/callback" // 8081: frontend, 8080: backend로 두고 테스트함.
-            redirectUri: "https://k5a403.p.ssafy.io/login/callback" //배포용
+            redirectUri: "https://localhost:8081/login/callback" // 8081: frontend, 8080: backend로 두고 테스트함.
+            //redirectUri: "https://k5a403.p.ssafy.io/login/callback" //배포용
             });
         },
     },
+    computed: {
+        userProfile(){
+            return this.$store.state.user.userProfile;
+        },
+        isAuthenticated(){
+            return this.$store.state.user.isAuthenticated;
+        }
+    },
+    mounted(){
+        console.log(this.isAuthenticated)
+    }
 }
 </script>
 
@@ -27,11 +37,6 @@ export default{
         background-image: url('../assets/images/background.png');
         background-size: cover;
         background-repeat: no-repeat;
-    }
-    #loginWrap{
-        display: flex;
-        justify-content: space-between;
-        height: 10vh; 
     }
     #loginQM{
         margin: 3vh;
@@ -42,6 +47,7 @@ export default{
         margin: 3.5vh;
         width: 15vh;
         height: 3.5vh;
+        float: right;
     }
     #loginImg{
         width: 70vh;
