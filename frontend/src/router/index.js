@@ -41,11 +41,6 @@ export default new router({
                     name: 'personality',
                     component: () => import("@/views/Personality.vue")
                 },
-                {
-                    path: 'mypage',
-                    name: 'mypage',
-                    component: () => import("@/views/MyPage.vue")
-                },
             ]
         },
         {
@@ -62,6 +57,11 @@ export default new router({
             path: '/login/callback',
             name: 'kakaoCallback',
             component: () => import("@/components/User/KakaoCallback.vue")
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: () => import("@/views/Register.vue")
         },
     ]
         

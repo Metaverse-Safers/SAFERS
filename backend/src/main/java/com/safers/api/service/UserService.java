@@ -61,8 +61,10 @@ public class UserService {
         User user = userRepository.findById(profile.getId()).orElse(null);
         user.setNickName(profile.getNickName());
 
+        System.out.println("profileFile : " + profile.getProfileFile());
+
         // 새로운 프로필 사진을 업로드 한 경우
-        if(profile.getProfileFile().getSize() > 0){
+        if(profile.getProfileFile() != null && profile.getProfileFile().getSize() > 0){
             String profileUrl = s3Service.upload(profile.getProfileFile(), "profile");
             user.setProfileUrl(profileUrl);
             System.out.println("새로운 프로필 등록! -> " + profileUrl);

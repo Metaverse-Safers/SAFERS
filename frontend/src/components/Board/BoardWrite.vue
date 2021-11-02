@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from "axios";
+    import axios from "axios";
     export default {
         data() {
             return{
@@ -62,11 +62,6 @@ import axios from "axios";
                             // 이미지외 파일
                             this.img.previewImgUrl = null
                         } else {
-                            this.$store.commit('SET_SNACKBAR', {
-                                text: "파일을 다시 선택해 주세요.",
-                                color: '#8EC0E4',
-                                location: 'bottom',
-                            })
                             this.img.selectFile = null
                             this.img.previewImgUrl = null
                     }
