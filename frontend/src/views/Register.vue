@@ -1,15 +1,17 @@
 <template>
     <div id='loginBackGround'>
-        <img id='rectangle' src="@/assets/images/rectangle.png">
+        <img id='rectangle' src="@/assets/images/registerImg.png">
         <div>
             <form id="rgForm" enctype="multipart/form-data">
-                <label className="input-file-button" for="input-file">
-                    <img v-if="img.previewImgUrl" :src="img.previewImgUrl" for="input-file" style="height:10vh; width:10vh; borderRadius: 100px"/>
+                <label id="rgImg" className="input-file-button" for="rgImgSelctor">
+                    <img v-if="img.previewImgUrl" :src="img.previewImgUrl" style="height:15vh; width:15vh; borderRadius: 100px; text-align:center"/>
+                    <p style="color:white; font-size:1.3vh">프로필 사진 변경하기</p>
                 </label>
-                <input type="file" ref="selectFile" id="input-file" style="display:none" @change="previewFile" accept="image/*" />
-                <input type="text" v-model="userInfo.nickName" required/>
-                <input type="button" class="button" @click="register" value="회원가입"/>
+                <input id="rgImgSelctor" type="file" ref="selectFile" style="display:none" @change="previewFile" accept="image/*" />
+                <br>
+                <input class="rgText" type="text" v-model="userInfo.nickName" required/>
             </form>
+            <img id="registerBtn" @click="register" src="@/assets/images/registerBtn.png">                            
         </div>
     </div>
 </template>
@@ -61,6 +63,7 @@
                 updateData.append("nickName", this.userInfo.nickName);
                 updateData.append("profileFile", this.img.selectFile);
                 this.$store.dispatch("user/requestUpdateProfile", updateData);
+                this.$router.push({ name: 'unity' });
             }
         },
         computed: {
@@ -102,17 +105,40 @@
         top:50%; left:50%;
         transform: translate(-50%, -50%);
     }
-    #rgForm{
+    #rgImg>img{
         position:absolute;
         z-index: 1;
-        top:50%; left:50%;
+        top:44%; left:49.5%;
+        transform: translate(-50%, -50%);
+        display:inline-block;
+        vertical-align: middle;
+    }
+    #rgImg>p{
+        position:absolute;
+        z-index: 1;
+        top:53%; left:49.5%;
+        transform: translate(-50%, -50%);
+        display:inline-block;
+        vertical-align: middle;
+    }
+    .rgText{
+        position:absolute;
+        z-index: 1;
+        top:60%; left:49.5%;
+        transform: translate(-50%, -50%);
+        display:inline-block;
+        vertical-align: middle;
+        border: solid 2px white;
+        border-radius: 8px;
+        width: 20vh;
+    }
+    #registerBtn{
+        width: 15vh;
+        position:absolute;
+        top:70%; left:49.5%;
         transform: translate(-50%, -50%);
     }
-    .input-file-button{
-        padding: 6px 25px;
-        background-color:#FF6600;
-        border-radius: 4px;
-        color: white;
-        cursor: pointer;
+    #registerBtn:hover{
+        filter: brightness(80%);
     }
 </style>
