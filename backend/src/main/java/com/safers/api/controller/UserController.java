@@ -14,6 +14,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -121,8 +123,15 @@ public class UserController {
 
     @PutMapping("/")
     @ApiOperation(value = "회원 프로필 수정", notes = "회원의 프로필을 수정한다.")
-    public ResponseEntity<UserResponse> updateUserProfile(@ModelAttribute UserProfileRequest request) throws IOException {
-        User user = userService.updateUser(request);
+    public ResponseEntity<UserResponse> updateUserProfile(MultipartHttpServletRequest request) throws IOException {
+
+        String id = request.getParameter("id");
+        String nickName = request.getParameter("nickName");
+        MultipartFile profileFile = request.getFile("profileFile");
+
+        UserProfileRequest profile = UserProfileRequest.builder().id(id).nickName(nickName).profileFile(profileFile).build();
+
+        User user = userService.updateUser(profile);
         return ResponseEntity.ok(UserResponse.of(user));
     }
 }
