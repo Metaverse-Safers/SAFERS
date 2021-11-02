@@ -92,7 +92,7 @@
   </tr>
   <tr>
     <td align="center">211102(화)</td>
-    <td></td>
+    <td>- Unity 추가 에셋 import 세팅<br>- 비회원 설문 결과 내용 정리</td>
     <td></td>
     <td></td>
     <td></td>
