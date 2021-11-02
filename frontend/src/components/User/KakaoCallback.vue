@@ -18,13 +18,16 @@ export default {
             await http.post("user/present", this.token)
             .then(res => {
                 this.present = res.data.present
+                console.log(this.present)
             })
             await this.$store.dispatch("user/requestProfile", this.token);
+            
             if (!this.present){
                 await this.$router.push({ name: 'register' });
             }
-            //console.log(this.userProfile.nickName)
-            //console.log(this.userProfile.profileUrl)
+            else {
+                await this.$router.push({ name: 'unity' });
+            }
         }
     },
 
@@ -32,10 +35,7 @@ export default {
         ...mapGetters({
             token: "user/token",
             userProfile: "user/userProfile"
-        }),
-        userProfile(){
-            return this.$store.state.user.userProfile;
-        },
+        })
     },
 
     async mounted() {

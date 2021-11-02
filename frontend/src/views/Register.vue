@@ -2,13 +2,13 @@
     <div id='loginBackGround'>
         <img id='rectangle' src="@/assets/images/rectangle.png">
         <div>
-            <form id="rgForm">
+            <form id="rgForm" enctype="multipart/form-data">
                 <label className="input-file-button" for="input-file">
                     <img v-if="img.previewImgUrl" :src="img.previewImgUrl" for="input-file" style="height:10vh; width:10vh; borderRadius: 100px"/>
                 </label>
                 <input type="file" ref="selectFile" id="input-file" style="display:none" @change="previewFile" accept="image/*" />
                 <input type="text" v-model="userInfo.nickName" required/>
-                <button class="button" @click="register">회원가입</button>
+                <input type="button" class="button" @click="register" value="회원가입"/>
             </form>
         </div>
     </div>

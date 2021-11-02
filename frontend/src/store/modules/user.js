@@ -82,9 +82,10 @@ const user = {
             })
         },
 
+
         /* 사용자 프로필 정보 수정 */
         async requestUpdateProfile({ commit }, data) {
-            await http.put("/user/", data)
+            await http.post("/user/", data, {headers: { 'Content-Type': 'multipart/form-data'}})
             .then(function(result) {
                 console.log(result)
                 commit("SET_USER_PROFILE", result.data);
