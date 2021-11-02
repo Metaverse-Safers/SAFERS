@@ -6,7 +6,7 @@
                 <label className="input-file-button" for="input-file">
                     <img v-if="img.previewImgUrl" :src="img.previewImgUrl" for="input-file" style="height:10vh; width:10vh; borderRadius: 100px"/>
                 </label>
-                <input type="file" ref="selectFile" id="input-file" style="display:none" @change="previewFile" accept="image/*" required/>
+                <input type="file" ref="selectFile" id="input-file" style="display:none" @change="previewFile" accept="image/*" />
                 <input type="text" v-model="userInfo.nickName" required/>
                 <button class="button" @click="register">회원가입</button>
             </form>
@@ -26,70 +26,50 @@
                     previewImgUrl: null, // 미리보기 이미지 URL
                     isUploading: false, // 파일 업로드 체크
                 },
-                file: null
             }
         },
         methods: {
             previewFile(e) {
-                this.file = e.target.files[0];
                 // 선택된 파일이 있는가?
-                // if (0 < this.$refs.selectFile.files.length) {
-                //     // 0 번째 파일을 가져 온다.
+                if (e.target.files.length > 0) {
+                    // 0 번째 파일을 가져 온다.
                     
-                //     this.img.selectFile = this.$refs.selectFile.files[0]
-                //     // 마지막 . 위치를 찾고 + 1 하여 확장자 명을 가져온다.
-                //     let fileExt = this.img.selectFile.name.substring(
-                //         this.img.selectFile.name.lastIndexOf(".") + 1
-                //     )
-                //     // 소문자로 변환
-                //     fileExt = fileExt.toLowerCase()
-                //     // 이미지 확장자 체크, 1메가 바이트 이하 인지 체크
-                //     if (
-                //         ["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt) &&
-                //         this.img.selectFile.size <= 1048576
-                //         ) {
-                //             // FileReader 를 활용하여 파일을 읽는다
-                //             var reader = new FileReader()
-                //             reader.onload = e => {
-                //                 // base64
-                //                 this.img.previewImgUrl = e.target.result
-                //             }
-                //             reader.readAsDataURL(this.img.selectFile)
-                //         } else if (this.img.selectFile.size <= 1048576) {
-                //             // 이미지외 파일
-                //             this.img.previewImgUrl = null
-                //         } else {
-                //             this.img.selectFile = null
-                //             this.img.previewImgUrl = null
-                //     }
-                // } else {
-                //     // 파일을 선택하지 않았을때
-                //     this.img.selectFile = null
-                //     this.img.previewImgUrl = null
-                // }
+                    const file = e.target.files[0];
+                    // 확장자 명 가져오기
+                    let fileExt = file.name.substring(file.name.lastIndexOf(".") + 1); 
+                    fileExt = fileExt.toLowerCase()
+
+                    // 이미지 확장자 체크, 3메가 바이트 이하 인지 체크 
+                    if(["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt)
+                            && file.size <= 3145728){
+                        
+                        this.img.selectFile = file;
+                        this.img.previewImgUrl = URL.createObjectURL(file);
+                    }
+                    else {
+                        alert("3MB 이하의 이미지 파일만 가능합니다.")
+                    }
+                } else {
+                    // 파일을 선택하지 않았을때
+                    this.img.selectFile = null
+                    this.img.previewImgUrl = null
+                }
             },
             register(){
-                //this.userInfo.profileUrl = this.img.previewImgUrl;
                 const updateData = new FormData();
                 updateData.append("id", this.userInfo.id);
                 updateData.append("nickName", this.userInfo.nickName);
-                updateData.append("profileFile", this.file);
+                updateData.append("profileFile", this.img.selectFile);
                 this.$store.dispatch("user/requestUpdateProfile", updateData);
-
             }
         },
         computed: {
             ...mapGetters({
                 userProfile: "user/userProfile"
             }),
-            //userProfile(){
-            //    return this.$store.state.user.userProfile;
-            //}
         },
         mounted(){
             this.userInfo = { ...this.userProfile };
-            console.log(this.userInfo);
-            console.log(this.userProfile);
             this.img.previewImgUrl = this.userInfo.profileUrl;
         }
     }
