@@ -84,7 +84,7 @@ const user = {
 
         /* 사용자 프로필 정보 수정 */
         async requestUpdateProfile({ commit }, data) {
-            await http.post("/user/" + data.id, data.profile)
+            await http.put("/user/", data)
             .then(function(result) {
                 console.log(result)
                 commit("SET_USER_PROFILE", result.data);
