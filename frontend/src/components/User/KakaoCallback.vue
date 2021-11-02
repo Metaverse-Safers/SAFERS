@@ -15,10 +15,10 @@ export default {
     methods: {
         async getAccessToken(code){
             await this.$store.dispatch("user/requestAccessToken", code);
-            await http.post("user/present", this.token)
+            this.present = await http.post("user/present", this.token)
             .then(res => {
-                this.present = res.data.present
-                console.log(this.present)
+                console.log(res.data.present)
+                return res.data.present;
             })
             await this.$store.dispatch("user/requestProfile", this.token);
             
