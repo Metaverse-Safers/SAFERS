@@ -121,7 +121,7 @@ public class UserController {
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
 
-    @PutMapping("/")
+    @PostMapping("/")
     @ApiOperation(value = "회원 프로필 수정", notes = "회원의 프로필을 수정한다.")
     public ResponseEntity<UserResponse> updateUserProfile(MultipartHttpServletRequest request) throws IOException {
 
