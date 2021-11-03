@@ -22,16 +22,11 @@ public class Mission extends BaseEntity {
     @Column(name="title", columnDefinition = "TEXT")
     String title;
 
-    @Column(name="result_id", length = 13)
+    @Column(name="result_id", columnDefinition = "TEXT")
     String resultId;
 
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "code")
-    Code code;
-
-    @Column(name="prd_id", length = 13)
-    String preId;
+    @Column(name="next_mission", columnDefinition = "TEXT")
+    String nextMission;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "mission", cascade = {CascadeType.REMOVE}, orphanRemoval = true)

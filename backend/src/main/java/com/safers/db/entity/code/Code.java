@@ -39,8 +39,4 @@ public class Code {
     @JsonIgnore
     @OneToMany(mappedBy="code", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     private List<MissionLog> missionLog;
-
-    @JsonIgnore
-    @OneToMany(mappedBy="code", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
-    private List<Mission> mission;
 }
