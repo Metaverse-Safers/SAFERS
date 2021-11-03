@@ -1,5 +1,5 @@
 <template>
-        <unity id='unity' src="./unity/Build/Build.json" width=1000 height=800 unityLoader="./unity/Build/UnityLoader.js" ref="hookInstance"></unity>
+        <unity id='unity' src="./unity/Build/Build.json" width=1920 height=1080 unityLoader="./unity/Build/UnityLoader.js" ref="hookInstance"></unity>
 </template>
 
 <script>
@@ -32,4 +32,7 @@ import Unity from 'vue-unity-webgl';
 </script>
 
 <style>
+    #unity{
+        margin-left: 0;
+    }
 </style>

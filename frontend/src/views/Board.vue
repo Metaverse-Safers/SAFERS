@@ -1,9 +1,12 @@
 <template>
     <div>
-        <image-card-list :images="images"/>
+        
         <router-link to='/board/boardwrite' >
             <i id='plus' class="fas fa-plus fa-5x"></i>
         </router-link>
+        
+        <image-card-list :images="images"/>
+        
     </div>
 </template>
 
@@ -24,14 +27,21 @@
                             params: {count}
                         })
                     this.images = data;
-                    console.log(this.images)
                 } catch (error) {
                     console.error(error)
                 }
-            }
+            },
         },
         mounted(){
             this.getRandomImages(30);
+            axios.get('https://k5a403.p.ssafy.io/api/board/list/0')
+                .then(res => {  
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+            console.log('done')
         },
         data(){
             return{
@@ -46,7 +56,7 @@
 <style>
     #plus{
         position : fixed;
-        left: 25px;
+        left: 17px;
         bottom: 30px;
         z-index: 11;
         color: #c86b98a6;

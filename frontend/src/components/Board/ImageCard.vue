@@ -3,14 +3,19 @@
             width: '100%',
             height: tH + 'px',
             gridRowEnd: gap}"
-            @click='boardDetail(image)'>
+            @click='boardDetail(image)'
+            v-b-modal.modal-2>
         <img id='imageCardImage' :src="image.urls.small" style="borderRadius: 10px" width="100%"/>
         <p id='imageCardText'>{{image.description}}</p>
     </div>
 </template>
 
 <script>
+    //import boardDetail from '@/components/Board/BoardDetail';
     export default {
+        components:{
+            //boardDetail
+        },
         props: {
             image: {
             type: Object,
@@ -29,7 +34,8 @@
         },
         methods:{
             boardDetail(image) {
-                this.$router.push({name: 'boarddetail', query: {image: image}});
+                //this.$router.push({name: 'boarddetail', query: {image: image}});
+                this.$emit(image);
             }
         }
     }

@@ -35,35 +35,25 @@
             }
         },
         methods: {
-            previewFile() {
+            previewFile(e) {
                 // 선택된 파일이 있는가?
-                if (0 < this.$refs.selectFile.files.length) {
-                // 0 번째 파일을 가져 온다.
-                    this.img.selectFile = this.$refs.selectFile.files[0]
-                    // 마지막 . 위치를 찾고 + 1 하여 확장자 명을 가져온다.
-                    let fileExt = this.img.selectFile.name.substring(
-                        this.img.selectFile.name.lastIndexOf(".") + 1
-                    )
-                    // 소문자로 변환
+                if (e.target.files.length > 0) {
+                    // 0 번째 파일을 가져 온다.
+                    
+                    const file = e.target.files[0];
+                    // 확장자 명 가져오기
+                    let fileExt = file.name.substring(file.name.lastIndexOf(".") + 1); 
                     fileExt = fileExt.toLowerCase()
-                    // 이미지 확장자 체크, 1메가 바이트 이하 인지 체크
-                    if (
-                        ["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt) &&
-                        this.img.selectFile.size <= 1048576
-                        ) {
-                            // FileReader 를 활용하여 파일을 읽는다
-                            var reader = new FileReader()
-                            reader.onload = e => {
-                                // base64
-                                this.img.previewImgUrl = e.target.result
-                            }
-                            reader.readAsDataURL(this.img.selectFile)
-                        } else if (this.img.selectFile.size <= 1048576) {
-                            // 이미지외 파일
-                            this.img.previewImgUrl = null
-                        } else {
-                            this.img.selectFile = null
-                            this.img.previewImgUrl = null
+
+                    // 이미지 확장자 체크, 3메가 바이트 이하 인지 체크 
+                    if(["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt)
+                            && file.size <= 3145728){
+                        
+                        this.img.selectFile = file;
+                        this.img.previewImgUrl = URL.createObjectURL(file);
+                    }
+                    else {
+                        alert("3MB 이하의 이미지 파일만 가능합니다.")
                     }
                 } else {
                     // 파일을 선택하지 않았을때
@@ -72,8 +62,7 @@
                 }
             },
             insertRecord() {
-                axios.post('' + this.user.no, {
-                    
+                axios.post('/board/list/{0}' + this.user.no, {
                 })
                 .then(res => {  // eslint-disable-line no-unused-vars
                     this.$router.push('board');

@@ -9,7 +9,10 @@
                 </label>
                 <input id="rgImgSelctor" type="file" ref="selectFile" style="display:none" @change="previewFile" accept="image/*" />
                 <br>
-                <input class="rgText" type="text" v-model="userInfo.nickName" required/>
+                <div class="rgText">
+                    <input type="text" v-model="userInfo.nickName" required/>
+                    <p style="color:white; font-size:1.3vh">닉네임</p>
+                </div>
             </form>
             <img id="registerBtn" @click="register" src="@/assets/images/registerBtn.png">                            
         </div>
@@ -121,16 +124,23 @@
         display:inline-block;
         vertical-align: middle;
     }
-    .rgText{
+    .rgText>input{
         position:absolute;
         z-index: 1;
         top:60%; left:49.5%;
         transform: translate(-50%, -50%);
-        display:inline-block;
-        vertical-align: middle;
         border: solid 2px white;
-        border-radius: 8px;
+        border-radius: 5px;
         width: 20vh;
+    }
+    .rgText>input[type="text"]:focus{
+        border: solid 2px #c86b9885;
+    }
+    .rgText>p{
+        position:absolute;
+        z-index: 1;
+        top:63%; left:49.5%;
+        transform: translate(-50%, -50%);
     }
     #registerBtn{
         width: 15vh;
