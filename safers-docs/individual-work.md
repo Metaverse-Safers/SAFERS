@@ -95,7 +95,7 @@
     <td>- Unity 추가 에셋 import 세팅<br>- 비회원 설문 결과 내용 정리</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 미션 & 동물 연결 <br> - 스토리라인1 구성</td>
     <td></td>
   </tr>
   <tr>
