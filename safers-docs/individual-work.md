@@ -104,7 +104,7 @@
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 인칭 전환 카메라 버그 픽스</td>
   </tr>
   <tr>
     <td align="center">211104(목)</td>
