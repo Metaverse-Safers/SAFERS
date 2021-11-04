@@ -51,10 +51,16 @@ import { mapGetters } from 'vuex';
 </script>
 
 <style>
+    p {
+        cursor: default;
+    }
     #main{
-        background-image: url('../assets/images/background.png');
+        /* background-image: url('../assets/images/background.png');
         background-size: cover;
-        background-repeat: no-repeat;
+        background-repeat: no-repeat; */
+        background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280F36);
+        background-size: 160% 160%;
+        animation: gradient 10s ease infinite;
     }
     #wrap{
         display: flex;
@@ -63,18 +69,19 @@ import { mapGetters } from 'vuex';
     }
     #qM{
         margin: 3vh;
-        width: 5vh;
-        height: 5vh;
+        width: 4.5vh;
+        height: 4.5vh;
+        cursor: pointer;
     }
     #login{
         margin: 3vh;
-        width: 16vh;
-        height: 5vh;
+        width: 14vh;
+        height: 4.5vh;
     }
     #logout{
         margin: 3vh;
-        width: 16vh;
-        height: 5vh;
+        width: 14vh;
+        height: 4.5vh;
         cursor: pointer;
     }
     #p1{
@@ -84,7 +91,8 @@ import { mapGetters } from 'vuex';
         top:22%; left:50%;
         transform: translate(-50%, -50%);
         font-family: 'NEXON Lv1 Gothic OTF';
-        
+        -webkit-animation: focus-in-expand 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+                animation: focus-in-expand 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;    
     }
     #p2{
         color: white; 
@@ -93,12 +101,13 @@ import { mapGetters } from 'vuex';
         top:30%; left:50%;
         transform: translate(-50%, -50%);
         font-family: 'IBMPlexSansKR-SemiBold';
-    }   
+    }  
     #mainLogo{
         width: 35vh;
         position:absolute;
         top:55%; left:50%;
         transform: translate(-50%, -50%);
+        animation:circlemove 1.5s infinite linear;
     }
     #p3{
         color: white; 
@@ -107,8 +116,80 @@ import { mapGetters } from 'vuex';
         top:78%; left:50%;
         transform: translate(-50%, -50%);
         font-family: 'NEXON Lv1 Gothic OTF';
+        -webkit-animation: fadein 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+        -webkit-animation-delay: 3s;
+                animation: fadein 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;  
+                animation-delay: 3s;
     }
     #wrap2{
         height: 90%;
+    }
+    @keyframes circlemove{ 
+        0%,100%{ transform:translate(-50%,-50%); } 
+        50%{ transform:translate(-50%,-52%); } 
+    }
+    @-webkit-keyframes focus-in-expand {
+        0% {
+            letter-spacing: -0.5em;
+            -webkit-filter: blur(12px);
+                    filter: blur(12px);
+            opacity: 0;
+        }
+        100% {
+            -webkit-filter: blur(0px);
+                    filter: blur(0px);
+            opacity: 1;
+        }
+    }
+    @keyframes focus-in-expand {
+    0% {
+        letter-spacing: -0.5em;
+        -webkit-filter: blur(12px);
+                filter: blur(12px);
+        opacity: 0;
+    }
+    100% {
+        -webkit-filter: blur(0px);
+                filter: blur(0px);
+        opacity: 1;
+    }
+    }
+    @keyframes fadein {
+        from {
+            opacity:0;
+        }
+        to {
+            opacity:1;
+        }
+    }
+    @-webkit-keyframes fadein { /* Safari and Chrome */
+        from {
+            opacity:0;
+        }
+        to {
+            opacity:1;
+        }
+    }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    @-webkit-keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
 </style>
