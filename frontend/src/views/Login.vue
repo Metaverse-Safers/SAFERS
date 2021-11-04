@@ -34,9 +34,12 @@ export default{
 
 <style>
     #loginBackGround{
-        background-image: url('../assets/images/background.png');
+        /* background-image: url('../assets/images/background.png');
         background-size: cover;
-        background-repeat: no-repeat;
+        background-repeat: no-repeat; */
+        background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280F36);
+        background-size: 160% 160%;
+        animation: gradient 10s ease infinite;
     }
     #loginQM{
         margin: 3vh;
@@ -45,8 +48,8 @@ export default{
     }
     #home{
         margin: 3.5vh;
-        width: 15vh;
-        height: 3.5vh;
+        width: 14vh;
+        height: 3vh;
         float: right;
     }
     #loginImg{
@@ -61,5 +64,27 @@ export default{
         top:68%; left:50%;
         transform: translate(-50%, -50%);
         cursor: pointer;
+    }
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    @-webkit-keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
     }
 </style>
