@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="icon-bar">
-            <router-link to="/main"><img id='sideBarLogo' src='@/assets/images/SafersSideBar.png'/></router-link>
+            <router-link to="/"><img id='sideBarLogo' src='@/assets/images/SafersSideBar.png'/></router-link>
             <router-link to="/unity"><i class="fas fa-home"></i></router-link>
             <router-link to="/board"><i class="fas fa-chalkboard-teacher"></i></router-link>
             <router-link to="/personality"><i class="fas fa-cat"></i></router-link>
