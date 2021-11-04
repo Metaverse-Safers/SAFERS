@@ -1,7 +1,7 @@
 <template>
     <div id='loginBackGround'>
         <div id='loginWrap'>
-            <router-link to=/main><img id='home' src="@/assets/images/homeBtn.png"></router-link>
+            <router-link to=/><img id='home' src="@/assets/images/homeBtn.png"></router-link>
         </div>
         <img id='loginImg' src="@/assets/images/loginImg.png">
         <img id='kakaoLogin' src='@/assets/images/kakaoLogin.png' @click="kakaoLogin">

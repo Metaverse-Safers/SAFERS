@@ -8,7 +8,11 @@ export default new router({
     routes: [
         {
             path: '/',
-            redirect: 'main',
+            name: 'main',
+            component: () => import("@/views/Main.vue")
+        },
+        {
+            path: '/',
             component: () => import("@/components/Common/SideBar.vue"),
             children:[
                 {
@@ -42,11 +46,6 @@ export default new router({
                     component: () => import("@/views/Personality.vue")
                 },
             ]
-        },
-        {
-            path: '/main',
-            name: 'main',
-            component: () => import("@/views/Main.vue")
         },
         {
             path: '/login',
