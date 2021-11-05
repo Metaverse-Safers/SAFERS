@@ -120,7 +120,7 @@
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td> - 공통 채널 맵 디자인</td>
   </tr>
 </table>
 
