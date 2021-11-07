@@ -26,7 +26,7 @@ export default {
                 await this.$router.push({ name: 'register' });
             }
             else {
-                await this.$router.push({ name: 'unity' });
+                await this.$router.push({ name: 'main' });
             }
         }
     },
