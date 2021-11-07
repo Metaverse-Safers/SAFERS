@@ -19,6 +19,9 @@ export default new router({
     // world 페이지
     { path: '/world', name: 'world', component: () => import("@/views/World.vue") },
 
+    // information 페이지
+    { path: '/info', name: 'info', component: () => import("@/views/Info.vue") }
+
   ]
 
 })
