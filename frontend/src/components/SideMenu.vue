@@ -77,13 +77,13 @@ export default {
 .menu-open-button {
   background: #dbdbdb;
   border-radius: 100%;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   margin-left: -40px;
   position: absolute;
   color: #ffffff;
   text-align: center;
-  line-height: 64px;
+  line-height: 55px;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
   -webkit-transition: -webkit-transform ease-out 200ms;
