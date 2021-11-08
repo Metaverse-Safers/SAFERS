@@ -7,6 +7,7 @@ import com.safers.api.response.UserPresentResponse;
 import com.safers.api.response.UserResponse;
 import com.safers.api.response.UserTokenResponse;
 import com.safers.api.service.KakaoService;
+import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
 import com.safers.db.entity.user.User;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -34,6 +36,8 @@ public class UserController {
     UserService userService;
     @Autowired
     KakaoService kakaoService;
+    @Autowired
+    UnityService unityService;
 
     @GetMapping("/token")
     @ApiOperation(value = "Token 요청", notes = "발급된 code로 사용자의 Token을 발급한다.")
@@ -66,13 +70,20 @@ public class UserController {
 
         // 해당 회원이 사이트에 가입한 기록이 있는지 체크
         Long kakaoId = (Long) profile.get("kakaoId");
+        String profileUrl = (String) profile.get("profileUrl");
+        String nickname = (String) profile.get("nickname");
         User user = userService.getUserByKakaoId(kakaoId);
 
-        // 회원가입한 기록이 없거나, 탈퇴회원이라면
-        if(isNull(user) || "A02".equals(user.getCode().getCode()))
-            return ResponseEntity.ok(UserPresentResponse.of(false));
-
-        return ResponseEntity.ok(UserPresentResponse.of(true));
+        // 1. 회원가입이 되어있지 않은 경우 -> id로 빈문자열 전달
+        if (isNull(user)){
+            return ResponseEntity.ok(UserPresentResponse.of(false, UserResponse.of("", nickname, profileUrl)));
+        }
+        // 2. 탈퇴회원인 경우 -> id로 기존 회원의 id 전달
+        else if("A02".equals(user.getCode().getCode())){
+            return ResponseEntity.ok(UserPresentResponse.of(false, UserResponse.of(user.getId(), nickname, profileUrl)));
+        }
+        // 3. 일반회원인 경우
+        return ResponseEntity.ok(UserPresentResponse.of(true, UserResponse.of(user.getId(), user.getNickName(), user.getProfileUrl())));
     }
 
 
@@ -83,8 +94,6 @@ public class UserController {
         String accessToken = request.getAccessToken();
         String refreshToken = request.getRefreshToken();
 
-        System.out.println("token" + accessToken + " " + refreshToken);
-
         // accessToken을 이용한 사용자 정보 조회
         HashMap<String, Object> profile = kakaoService.getUserProfile(accessToken, refreshToken);
 
@@ -92,10 +101,16 @@ public class UserController {
         Long kakaoId = (Long) profile.get("kakaoId");
         User user = userService.getUserByKakaoId(kakaoId);
 
-        if(isNull(user)) // 1. 회원가입이 되어있지 않은 경우, 회원 정보 저장
+        // 1. 회원가입이 되어있지 않은 경우, 회원 정보 저장
+        if(isNull(user)) {
             user = userService.createUser(accessToken, refreshToken, profile);
-        else if("A02".equals(user.getCode().getCode())) // 2. 탈퇴회원인 경우, code만 변경
+            unityService.createMissionLog(user);
+        }
+        // 2. 탈퇴회원인 경우, code만 변경
+        else if("A02".equals(user.getCode().getCode())) {
             user = userService.reconnectUser(user);
+            unityService.createMissionLog(user);
+        }
 
         // accessToken과 refreshToken 저장
         userService.saveToken(user, accessToken, refreshToken);
@@ -113,10 +128,12 @@ public class UserController {
     @DeleteMapping("/")
     @ApiOperation(value = "카카오 회원 탈퇴", notes = "사용자의 token을 만료 시키고 회원상태 값을 'A02'(탈퇴 회원)로 변경한다.")
     public ResponseEntity<String> disconnect(@RequestHeader(value = "authorization") String accessToken) {
+
         Long kakaoId = kakaoService.disconnect(accessToken);
         User user = userService.getUserByKakaoId(kakaoId);
         userService.disconnectUser(user);
         userService.deleteToken(user);
+        unityService.deleteMissionLog(user);
 
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }

@@ -42,7 +42,7 @@ const user = {
         })
     },
 
-    /* 사용자 정보 요청 */
+    /* 사용자 정보 요청 + 로그인 요청 */
     async requestProfile({ commit }, token) {
       await http.post("/user/login", token)
         .then(function (result) {
