@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     clickStart() {
-      let isLogin = this.$store.getters["isAuthenticated"];
+      let isLogin = this.$store.getters["user/isAuthenticated"];
       if(isLogin){
         this.$router.push("/world");
       }
@@ -59,7 +59,7 @@ export default {
     },
     async clickLogout() {
       await this.$store.dispatch("user/requestLogout");
-      let isLogin = this.$store.getters["isAuthenticated"];
+      let isLogin = this.$store.getters["user/isAuthenticated"];
       if(isLogin == undefined || isLogin == false){
         this.loggedIn = true;
         this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
