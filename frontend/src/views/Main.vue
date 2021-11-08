@@ -33,6 +33,9 @@ export default {
     ...mapGetters({
       userProfile: "user/userProfile",
     }),
+    getIsLoggin(){
+      return this.$store.getter["user/userProfile"];
+    }
   },
   mounted() {
     // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
@@ -49,11 +52,23 @@ export default {
     },
     async clickLogout() {
       await this.$store.dispatch("user/requestLogout");
-      this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
-      .then(() => console.log("Closed"));
-      this.loggedIn = false;
+      let isLogin = this.$store.getters["isAuthenticated"];
+      if(isLogin == undefined || isLogin == false){
+        this.loggedIn = true;
+        this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
+        .then(() => console.log("Closed"));
+      } else {
+        this.loggedIn = false;
+        this.$alert( "문제가 생겼어요!", "로그아웃", "warning")
+        .then(() => console.log("Closed"));
+      }
     },
   },
+  watch:{
+    getIsLoggin(){
+      console.log(this.loggedIn);
+    }
+  }
 };
 </script>
 
