@@ -64,7 +64,7 @@ export default {
       updateData.append("nickName", this.userInfo.nickName);
       updateData.append("profileFile", this.img.selectFile);
       this.$store.dispatch("user/requestUpdateProfile", updateData);
-      this.$router.push({ name: "unity" });
+      this.$router.push({ name: "main" });
     },
   },
   computed: {
