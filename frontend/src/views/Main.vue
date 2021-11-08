@@ -35,18 +35,15 @@ export default {
     }),
   },
   mounted() {
-    this.isLogin();
+    // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
+    if (
+      this.userProfile == undefined ||
+      Object.keys(this.userProfile).length != 0
+    )
+      this.loggedIn = false;
+    console.log(this.userProfile);
   },
   methods: {
-    isLogin(){
-      // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
-      if (
-        this.userProfile == undefined ||
-        Object.keys(this.userProfile).length != 0
-      )
-        this.loggedIn = false;
-      console.log(this.userProfile);
-    },
     clickStart() {
       this.$router.push("/world");
     },
@@ -54,8 +51,7 @@ export default {
       await this.$store.dispatch("user/requestLogout");
       this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
       .then(() => console.log("Closed"));
-      this.isLogin();
-      this.$router.push("/");
+      this.loggedIn = false;
     },
   },
 };
