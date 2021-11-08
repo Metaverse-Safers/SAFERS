@@ -71,7 +71,7 @@ export default {
       updateData.append("nickName", this.userInfo.nickName);
       updateData.append("profileFile", this.img.selectFile);
       await this.$store.dispatch("user/requestUpdateProfile", updateData);
-      await this.$router.push({ name: "world" });
+      await this.$router.push({ name: "main" });
     }
   },
   computed: {
