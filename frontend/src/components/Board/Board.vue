@@ -1,21 +1,32 @@
 <template>
     <div class="border-main">
       <div class="border-nav">
-      <h1 class="imb-font-semi-bold">게시판</h1>
+        <h1 class="imb-font-semi-bold" @click="current = 'BoardList'">게시판</h1>
       </div>
-      <BoardList @testClick="checktest"></BoardList>
+      <i class="fas fa-plus fa-5x" @click="current = 'BoardWrite'"></i>
+      <!-- <BoardList @testClick="checktest"></BoardList>
+      <BoardWrite></BoardWrite> -->
+        <li @click="current = 'BoardDetail'"><a href="#">detail</a></li>
+      <keep-alive>
+          <component :is="current"></component>
+      </keep-alive>
     </div>
 </template>
 
 <script>
 import BoardList from "./BoardList.vue";
+import BoardDetail from "./BoardDetail.vue";
+import BoardWrite from "./BoardWrite.vue";
 export default {
   components:{
-    BoardList
+    BoardList,
+    BoardDetail,
+    BoardWrite
   },
   data:function(){
       return {
           del_password:'',
+          current: 'BoardList'
       }
   },props : [
       'hot_table',

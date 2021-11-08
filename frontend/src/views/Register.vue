@@ -5,7 +5,7 @@
       <form id="rgForm" enctype="multipart/form-data">
         <label class="rg-img" className="input-file-button" for="rg-img-selctor">
           <img v-if="img.previewImgUrl" :src="img.previewImgUrl"
-            style="height: 15vh; width: 15vh; borderradius: 100px; text-align: center;"/>
+            style="height: 15vh; width: 15vh; border-radius: 100px; text-align: center;"/>
           <p style="color: white; font-size: 1.3vh">프로필 사진 변경하기</p>
         </label>
         <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>
@@ -22,7 +22,6 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      Hw: false,
       userInfo: {},
       img: {
         selectFile: null,
