@@ -1,6 +1,6 @@
 {
 "companyName": "DefaultCompany",
-"productName": "PhotonDemo",
+"productName": "Safers",
 "productVersion": "0.1",
 "dataUrl": "Build.data.unityweb",
 "wasmCodeUrl": "Build.wasm.code.unityweb",
@@ -12,5 +12,5 @@
 "cacheControl": {"default": "must-revalidate"},
 "developmentBuild": true,
 "multithreading": false,
-"unityVersion": "2019.4.31f1"
+"unityVersion": "2019.4.32f1"
 }
