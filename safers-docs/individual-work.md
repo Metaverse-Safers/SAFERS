@@ -122,5 +122,45 @@
     <td>- 1인칭 카메라 위치 조정 <br> </td>
     <td> - 공통 채널 맵 디자인</td>
   </tr>
+    <tr>
+    <td align="center">211108(월)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- 게시글, 댓글 관련 API 완료 😁 <br> - 동물 최종 조사 (에셋 연결 포함) 🐼🦒 </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211109(화)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211110(수)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211111(목)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211112(금)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
 
