@@ -126,7 +126,7 @@
     <td align="center">211108(월)</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 퀘스트 구현 중💬 <br> - Unity에서 LocalStorage 접근 </td>
     <td>- 첫 번째 퀘스트 구현 중💬 <br> - 지역별 초기 위치 지정 <br> - 플레이어에 게임오브젝트 자동 삽입<br></td>
     <td></td>
   </tr>
@@ -134,7 +134,7 @@
     <td align="center">211109(화)</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 퀘스트 구현 중💬 </td>
     <td>- 유니티 로그 API 구현 중💬 </td>
     <td></td>
   </tr>
