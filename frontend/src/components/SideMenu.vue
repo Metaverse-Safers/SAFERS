@@ -48,7 +48,7 @@ export default {
         modal : this.$modal },
         {
           name: 'mypage-modal',
-          width : '70%',
+          width : '60%',
           height : '70%',
           draggable: false,
         }
