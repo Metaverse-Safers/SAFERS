@@ -2,10 +2,7 @@ package com.safers.api.controller;
 
 import com.safers.api.request.MissionLogRequest;
 import com.safers.api.request.MissionRequest;
-import com.safers.api.response.AnimalsLogResponse;
-import com.safers.api.response.MissionLogListResponse;
-import com.safers.api.response.MissionLogResponse;
-import com.safers.api.response.MissionResponse;
+import com.safers.api.response.*;
 import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
 import com.safers.db.entity.unity.Mission;
@@ -73,6 +70,22 @@ public class UnityController {
         return ResponseEntity.ok(animalsLogResponseList);
     }
 
+    @ApiOperation(value = "회원 맵 해금 현황", notes = "해당 회원의 맵 해금 내역을 가져온다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "맵 로그 조회 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @GetMapping("/map")
+    public ResponseEntity<List<MapLogResponse>> requestMapLog(@RequestParam(value = "id") String id) {
+        User user = userService.getUserById(id);
+        List<MapLogResponse> mapLogResponseList = unityService.getMapLogByUser(user);
+
+        return ResponseEntity.ok(mapLogResponseList);
+    }
+
+    
     @PostMapping("/complete")
     @ApiResponses({
             @ApiResponse(code = 200, message = "미션 완료 처리 성공"),

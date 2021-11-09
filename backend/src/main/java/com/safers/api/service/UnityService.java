@@ -1,6 +1,7 @@
 package com.safers.api.service;
 
 import com.safers.api.response.AnimalsLogResponse;
+import com.safers.api.response.MapLogResponse;
 import com.safers.api.response.MissionLogResponse;
 import com.safers.db.entity.code.Code;
 import com.safers.db.entity.unity.Animals;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -68,6 +70,20 @@ public class UnityService {
         return missionLogList;
     }
 
+    /**
+     * 회원 가입 시, 회원별 기본 맵 해금 로그 생성
+     * @param user
+     */
+    public void createMapLog(User user) {
+        MapLog mapLog = new MapLog();
+
+        // 초기 맵인 숲/초원 정보 가지고 오기
+        Map map = mapRepository.getById("M001");
+        mapLog.setMap(map);
+        mapLog.setUser(user);
+        mapLogRepository.save(mapLog);
+    }
+    
     /**
      * 회원의 미션로그 불러오기
      * @param user
@@ -132,6 +148,32 @@ public class UnityService {
      * @return List<AnimalsLogResponse>
      */
     public List<AnimalsLogResponse> getAnimalsLogByUser(User user) {
+        Optional<List<AnimalsLog>> animalsLogs = animalsLogRepository.findAllByUser(user);
+        if(animalsLogs.isPresent()) {
+            List<AnimalsLogResponse> animalsLogResponseList = new ArrayList<>();
+            for(AnimalsLog animalsLog : animalsLogs.get()) {
+                animalsLogResponseList.add(AnimalsLogResponse.of(animalsLog));
+            }
+            return animalsLogResponseList;
+        }
+
+        return null;
+    }
+
+    /**
+     * 회원 지도 로그 불러오기
+     * @param user
+     * @return List<MapLogResponse>
+     */
+    public List<MapLogResponse> getMapLogByUser(User user) {
+        Optional<List<MapLog>> mapLogs = mapLogRepository.findAllByUser(user);
+        if(mapLogs.isPresent()) {
+            List<MapLogResponse> mapLogResponseList = new ArrayList<>();
+            for(MapLog mapLog : mapLogs.get()) {
+                mapLogResponseList.add(MapLogResponse.of(mapLog));
+            }
+            return mapLogResponseList;
+        }
         return null;
     }
 
