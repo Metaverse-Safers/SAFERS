@@ -1,15 +1,15 @@
 <template>
     <div>
-        <form class="container" enctype="multipart/form-data">
-            <label class="rg-img" className="input-file-button" for="rg-img-selctor">
+        <form class="boardwrite-container" enctype="multipart/form-data">
+            <label class="board-img" className="input-file-button" for="rg-img-selctor">
                 <img v-if="img.previewImgUrl" :src="img.previewImgUrl" style="height:100%; width:100%;"/>
-                <p v-else style="font-size: 2vh">사진 선택하기</p>
+                <p v-else style="font-size: 20px">사진 선택하기</p>
             </label>
             <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*" required/>
-            <textarea class="rg-Text"  placeholder="제목" v-model="boardInfo.title" style="margin-bottom:2px" required/>
-            <textarea class="rg-Text"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
+            <textarea class="board-Text"  placeholder="제목" v-model="boardInfo.title" style="margin-bottom:2px" required/>
+            <textarea class="board-Text"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
         </form>
-        <div class="register-btn">
+        <div class="upload-btn">
             <img @click="register" style="height:40px" src="@/assets/images/Board-Register_Btn.png"/>
         </div>
     </div>
@@ -87,25 +87,25 @@
     }
 </script>
 <style>
-    .container{
+    .boardwrite-container{
         display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: 1fr 10fr;
+        grid-template-rows: 33px 40vh;
         margin-top: 10px;
         margin-bottom: 20px;
         border: 1px rgb(197, 197, 197) solid;
         padding: 2px;
     }
-    .rg-img:nth-child(1) {
+    .board-img:nth-child(1) {
         /* 1번 라인에서 1칸 */
         grid-column: 1 / span 1;
         /* 1번 라인에서 2칸 */
         grid-row: 1 / span 2;
     }
-    .rg-img{
+    .board-img{
         margin-right: 2px;
     }
-    .register-btn{
+    .upload-btn{
         text-align: center;
         margin-bottom: 20px;
     }

@@ -46,7 +46,7 @@ export default {
   margin: 3.5vh;
   width: 14vh;
   height: 3vh;
-  float: right;
+  float: left;
 }
 .login-btn {
   width: 70vh;

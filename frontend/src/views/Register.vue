@@ -66,9 +66,22 @@ export default {
     async profileUpdate() {
       // 사용자 프로필 업데이트
       const updateData = new FormData();
-      updateData.append("id", this.userProfile.id); 
+      updateData.append("id", this.userInfo.id); 
       updateData.append("nickName", this.userInfo.nickName);
-      updateData.append("profileFile", this.img.selectFile);
+      if (this.img.selectFile)
+        updateData.append("profileFile", this.img.selectFile);
+      else
+        updateData.append("profileFile", this.userInfo.profileUrl);
+      this.$fire({
+            title: "환영합니다!",
+            text: "회원가입 완료",
+            type: "success",
+            timer: 2000,
+            showConfirmButton: false
+        })
+      for (let value of updateData.values()) {
+        console.log(value);
+      }
       await this.$store.dispatch("user/requestUpdateProfile", updateData);
       await this.$router.push({ name: "main" });
     }
