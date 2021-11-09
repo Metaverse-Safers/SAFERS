@@ -27,6 +27,9 @@ const user = {
     },
     async SET_IS_AUTHENTICATED(state, payload) {
       state.isAuthenticated = payload;
+    },
+    async WITHDRAWAL(state) {
+      state.token = {};
     }
   },
   actions: {
@@ -92,6 +95,18 @@ const user = {
         .then(function (result) {
           console.log(result)
           commit("SET_USER_PROFILE", result.data);
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+
+    /* 회원 탈퇴 */
+    async withdrawal({ commit }, data) {
+      await http.delete("/user/", data)
+        .then(function (result) {
+          console.log(result)
+          commit("WITHDRAWAL", result.data);
         })
         .catch(function (error) {
           console.log(error)

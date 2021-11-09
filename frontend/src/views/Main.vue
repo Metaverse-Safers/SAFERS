@@ -53,7 +53,7 @@ export default {
         this.$router.push("/world");
       }
       else{
-        this.$alert( "로그인이 필요합니다!", "로그인", "success")
+        this.$fire({title: "로그인이 필요합니다!", type: "warning", timer: 2000, showConfirmButton: false})
         .then(() => this.$router.push({ name: "login" }));
       }
     },
@@ -62,12 +62,10 @@ export default {
       let isLogin = this.$store.getters["user/isAuthenticated"];
       if(isLogin == undefined || isLogin == false){
         this.loggedIn = true;
-        this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
-        .then(() => console.log("Closed"));
+        this.$fire({title: "다음에 또 놀러오세요!", text: "로그아웃 되었습니다", type: "success", timer: 2000, showConfirmButton: false})
       } else {
         this.loggedIn = false;
-        this.$alert( "문제가 생겼어요!", "로그아웃", "warning")
-        .then(() => console.log("Closed"));
+        this.$fire({title: "문제가 생겼어요!", text: "로그아웃", type: "warning", timer: 2000, showConfirmButton: false})
       }
     },
   },

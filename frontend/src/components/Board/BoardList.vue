@@ -1,195 +1,64 @@
 <template>
   <div>
-    <br>
     <div class="masonry">
-      <div class="mItem">
-        <img class="m-img" src="https://source.unsplash.com/random/1">
+      <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
+        <!-- @click="detail(data.chlgNo)" -->
+        <img :src= data.fileList[0].filePath>
       </div>
-
-      <div class="mItem">
-        <img class="m-img" src="https://source.unsplash.com/random/2">
+      <infinite-loading @infinite='infiniteHandler'>
+      <div 
+        slot='no-more'
+        style="color:rgb(102,102,102); font-size: 14px; padding:10px 0px;">
+        목록의 끝입니다
       </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/3">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/4">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/5">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/6">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/7">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/8">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/9">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/60">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/80">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/300">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/200">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/100">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/50">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/600">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/500">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/400">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/20">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/60">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/80">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/300">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/200">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/100">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/50">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/600">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/500">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/400">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/30">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/10">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/20">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/60">
-      </div>
-
-      <div class="mItem">
-        <img src="https://source.unsplash.com/random/80">
-      </div>
+    </infinite-loading>
 
     </div>
+    
   </div>
 </template>
 
 <script>
-export default {
-  methods:{
-    test(){
-      this.$emit("testClick", "1")
+  import axios from "axios";
+  import InfiniteLoading from 'vue-infinite-loading';
+  export default {
+    components: {
+      InfiniteLoading,
+    },
+    data(){
+      return{
+        boardList: [],
+        page: 0
+      }
+    },
+    methods:{
+      infiniteHandler($state){
+        setTimeout(1000);
+        axios
+          .get('/api/board/list/' + this.page)
+          .then(res => {
+            if(res.data.length == 0){
+              $state.complete();
+            }
+            else{
+              setTimeout(() => {
+                for(let i=0; i<res.data.length; i++)
+                {
+                  if(res.data[i].fileList[0].filePath)
+                    this.boardList.push(res.data[i]);
+                }
+                this.page++;
+                $state.loaded();
+              },700)
+              
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   }
-}
 </script>
 
 <style>

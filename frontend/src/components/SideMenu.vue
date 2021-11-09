@@ -13,7 +13,7 @@
         <i class="fas fa-chalkboard-teacher"></i>
       </div>
 
-      <div class="menu-item go-user-page-btn" >
+      <div class="menu-item go-user-page-btn" @click="clickMyPage">
         <i class="fas fa-user"></i>
       </div>
 
@@ -26,6 +26,7 @@
 
 <script>
 import Border from "./Board/Board.vue";
+import MyPage from "./User/MyPage.vue";
 export default {
   name: "SideMenu",
   methods: {   
@@ -35,8 +36,20 @@ export default {
         modal : this.$modal },
         {
           name: 'border-modal',
-          width : '80%',
-          height : '80%',
+          width : '70%',
+          height : '70%',
+          draggable: false,
+        }
+      )
+    },
+    clickMyPage(){
+      this.$modal.show(MyPage,{
+        hot_table : 'data',
+        modal : this.$modal },
+        {
+          name: 'mypage-modal',
+          width : '60%',
+          height : '70%',
           draggable: false,
         }
       )
@@ -46,8 +59,7 @@ export default {
     }, 
     async clickLogout() {
       await this.$store.dispatch("user/requestLogout");
-      this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
-      .then(() => console.log("Closed"));
+      this.$fire({title: "다음에 또 놀러오세요!", text: "로그아웃 되었습니다", type: "success", timer: 2000, showConfirmButton: false})
       this.$router.push("/");
     }
   }, mounted(){

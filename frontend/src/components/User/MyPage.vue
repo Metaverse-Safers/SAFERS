@@ -1,18 +1,18 @@
 <template>
-  <div class="login-background">
-    <img class="rectangle" src="@/assets/images/registerImg.png" />
+  <div class="mypage-container">
+    <img class="mypage-img" src="@/assets/images/mypageImg.png" />
     <div>
-      <form id="rgForm" enctype="multipart/form-data">
-        <label class="rg-img" className="input-file-button" for="rg-img-selctor">
+      <form enctype="multipart/form-data">
+        <label class="mypage-profile-img" className="input-file-button" for="mypage-profile-img-selctor">
           <img v-if="img.previewImgUrl" :src="img.previewImgUrl"
             style="height: 15vh; width: 15vh; border-radius: 100px; text-align: center;"/>
           <p style="color: white; font-size: 1.3vh">프로필 사진 변경하기</p>
         </label>
-        <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>
-        <br />
-        <input class="rgText" type="text" v-model="userInfo.nickName" required/>
+        <input id="mypage-profile-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>  
+        <input class="mypage-text" type="text" v-model="userInfo.nickName" required/>
       </form>
-      <img class="register-btn" @click="register" src="@/assets/images/registerBtn.png"/>
+      <img class="mypage-btn" @click="register" src="@/assets/images/mypageBtn.png"/>
+      <img class="mypage-withdrawal-btn" @click="withdrawal" src="@/assets/images/withdrawal.png"/>
     </div>
   </div>
 </template>
@@ -27,7 +27,7 @@ export default {
         selectFile: null,
         previewImgUrl: null, // 미리보기 이미지 URL
         isUploading: false, // 파일 업로드 체크
-      },
+      }
     };
   },
   methods: {
@@ -49,7 +49,7 @@ export default {
           this.img.selectFile = file;
           this.img.previewImgUrl = URL.createObjectURL(file);
         } else {
-          alert("3MB 이하의 이미지 파일만 가능합니다.");
+          this.$fire({title: "3MB이하의 사진만 가능합니다!", type: "error", timer: 1500, showConfirmButton: false})
         }
       } else {
         // 파일을 선택하지 않았을때
@@ -57,40 +57,32 @@ export default {
         this.img.previewImgUrl = null;
       }
     },
-    async register() {
-      // 1차 회원가입 후
-      await this.$store.dispatch("user/requestProfile", this.token);
-      await this.profileUpdate();
-    },
-
-    async profileUpdate() {
-      // 사용자 프로필 업데이트
+    register() {
       const updateData = new FormData();
-      updateData.append("id", this.userInfo.id); 
+      updateData.append("id", this.userInfo.id);
       updateData.append("nickName", this.userInfo.nickName);
-      if (this.img.selectFile)
-        updateData.append("profileFile", this.img.selectFile);
-      else
-        updateData.append("profileFile", this.userInfo.profileUrl);
-      this.$fire({
-            title: "환영합니다!",
-            text: "회원가입 완료",
-            type: "success",
-            timer: 2000,
-            showConfirmButton: false
-        })
-      for (let value of updateData.values()) {
-        console.log(value);
-      }
-      await this.$store.dispatch("user/requestUpdateProfile", updateData);
-      await this.$router.push({ name: "main" });
+      updateData.append("profileFile", this.img.selectFile);
+      this.$store.dispatch("user/requestUpdateProfile", updateData);
+      this.$fire({title: "변경되었습니다!", type: "success", timer: 1500, showConfirmButton: false})
+    },
+    async withdrawal() {
+        var confirm = false;
+        await this.$fire({title: "정말 탈퇴하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
+        .then(function(result) {if(result.value) confirm = true})
+        if(confirm){
+            this.$fire({title: "금방 돌아오실 거죠? ㅠㅠ", text: "탈퇴 완료", type: "success", timer: 3000, showConfirmButton: false})
+            await this.$store.dispatch("user/withdrawal", this.token.accessToken);
+            await this.$store.dispatch("user/requestLogout");
+            await this.$router.push({ name: "main"});
+            await window.location.reload();
+        }
     }
   },
   computed: {
     ...mapGetters({
-        token: "user/token",
-        userProfile: "user/userProfile"
-    })
+      userProfile: "user/userProfile",
+      token: "user/token"
+    }),
   },
   mounted() {
     this.userInfo = { ...this.userProfile };
@@ -100,7 +92,7 @@ export default {
 </script>
 
 <style>
-.login-background {
+.mypage-container {
   background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
   background-size: 160% 160%;
   -webkit-animation: gradient 10s ease infinite;
@@ -108,23 +100,23 @@ export default {
   width: 100vw;
   height: 100vh;
 }
-.rectangle {
+.mypage-img {
   width: 70vh;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.rg-img > img {
+.mypage-profile-img > img {
   position: absolute;
   z-index: 1;
-  top: 44%;
+  top: 40%;
   left: 49.5%;
   transform: translate(-50%, -50%);
   display: inline-block;
   vertical-align: middle;
 }
-.rg-img > p {
+.mypage-profile-img > p {
   position: absolute;
   z-index: 1;
   top: 53%;
@@ -133,7 +125,7 @@ export default {
   display: inline-block;
   vertical-align: middle;
 }
-.rgText {
+.mypage-text {
   position: absolute;
   z-index: 1;
   top: 60%;
@@ -145,15 +137,23 @@ export default {
   border-radius: 8px;
   width: 20vh;
 }
-.register-btn {
+.mypage-btn {
   width: 15vh;
   position: absolute;
   top: 70%;
   left: 49.5%;
   transform: translate(-50%, -50%);
 }
-.rg-img > p:hover,
-.register-btn:hover {
+.mypage-withdrawal-btn {
+  width: 10vh;
+  position: absolute;
+  top: 78%;
+  left: 49.5%;
+  transform: translate(-50%, -50%);
+}
+.mypage-profile-img :hover,
+.mypage-btn:hover,
+.mypage-withdrawal-btn:hover {
   filter: brightness(80%);
   cursor: pointer;
 }
