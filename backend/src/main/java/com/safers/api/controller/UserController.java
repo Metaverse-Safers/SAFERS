@@ -1,7 +1,6 @@
 package com.safers.api.controller;
 
 import com.safers.api.request.UserProfileRequest;
-import com.safers.api.request.UserRequest;
 import com.safers.api.request.UserTokenRequest;
 import com.safers.api.response.UserPresentResponse;
 import com.safers.api.response.UserResponse;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -105,6 +103,7 @@ public class UserController {
         if(isNull(user)) {
             user = userService.createUser(accessToken, refreshToken, profile);
             unityService.createMissionLog(user);
+            unityService.createMapLog(user);
         }
         // 2. 탈퇴회원인 경우, code만 변경
         else if("A02".equals(user.getCode().getCode())) {
