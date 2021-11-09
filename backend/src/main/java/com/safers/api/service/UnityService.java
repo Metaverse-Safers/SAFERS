@@ -81,6 +81,7 @@ public class UnityService {
         Map map = mapRepository.getById("M001");
         mapLog.setMap(map);
         mapLog.setUser(user);
+        mapLog.setRegDt(LocalDateTime.now());
         mapLogRepository.save(mapLog);
     }
     
@@ -182,12 +183,20 @@ public class UnityService {
      * 1. 미션 로그 수정
      * 2. 동물 로그 추가
      * 3. 맵 로그 추가
+     * 4. 다음 미션 코드 변경
      * @param user
      * @param mission
      */
     public void completeMission(User user, Mission mission) {
         // 1. 미션 로그 수정
         MissionLog missionLog = updateMissionLog(user, mission, "C04");
+        String[] nextMissions = mission.getNextMission().split("/");
+        for(String id : nextMissions) {
+            System.out.println(id);
+            Mission nextMission = missionRepository.getById(id);
+            updateMissionLog(user, nextMission, "C02");
+        }
+
         // 2. 동물 로그 추가
         // 3. 맵 로그 추가
         String[] results = mission.getResultId().split("/");
@@ -215,6 +224,7 @@ public class UnityService {
         MapLog mapLog = new MapLog();
         mapLog.setMap(map);
         mapLog.setUser(user);
+        mapLog.setRegDt(LocalDateTime.now());
         mapLogRepository.save(mapLog);
     }
 
@@ -227,6 +237,7 @@ public class UnityService {
         AnimalsLog animalsLog = new AnimalsLog();
         animalsLog.setAnimals(animals);
         animalsLog.setUser(user);
+        animalsLog.setRegDt(LocalDateTime.now());
         animalsLogRepository.save(animalsLog);
     }
 }
