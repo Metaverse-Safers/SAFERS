@@ -1,27 +1,16 @@
 <template>
-    <div class="main">
-        <div class='box'>
-            <!-- <div id="img">
-                <img v-if="img.previewImgUrl" :src="img.previewImgUrl" style="height:80vh; width:46.6vw;"/>
-                <input type="file" ref="selectFile" @change="previewFile" accept="image/*" required/>
-            </div>
-            <div id="text">  
-                <textarea v-model="message" placeholder="문구 입력..."></textarea>
-                <button class="btn" @click="insertRecord">업로드</button>
-            </div> -->
-            <form class="rgForm" enctype="multipart/form-data">
-                <label class="rg-img" className="input-file-button" for="rg-img-selctor">
-                    <img v-if="img.previewImgUrl" :src="img.previewImgUrl"
-                        style="height: 15vh; width: 15vh; border-radius: 100px; text-align: center;"/>
-                    <p style=" font-size: 5vh">사진 변경하기</p>
-                </label>
-                <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>
-                <br />
-                <input class="rgText" type="text" v-model="boardInfo.title" required/>
-                <input class="rgText" type="text" v-model="boardInfo.content" required/>
-            </form>
-            <img class="register-btn" @click="register" src="@/assets/images/kakaoLogin.png"/>
-        
+    <div>
+        <form class="container" enctype="multipart/form-data">
+            <label class="rg-img" className="input-file-button" for="rg-img-selctor">
+                <img v-if="img.previewImgUrl" :src="img.previewImgUrl" style="height:100%; width:100%;"/>
+                <p v-else style="font-size: 2vh">사진 선택하기</p>
+            </label>
+            <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*" required/>
+            <textarea class="rg-Text"  placeholder="제목" v-model="boardInfo.title" style="margin-bottom:2px" required/>
+            <textarea class="rg-Text"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
+        </form>
+        <div class="register-btn">
+            <img @click="register" style="height:40px" src="@/assets/images/Board-Register_Btn.png"/>
         </div>
     </div>
 </template>
@@ -34,21 +23,14 @@
             return{
                 userInfo: {},
                 boardInfo:{
-                    title: null,
-                    content: null
+                    title: "",
+                    content: ""
                 },
                 img: {
                     selectFile: null,
                     previewImgUrl: null, // 미리보기 이미지 URL
                     isUploading: false, // 파일 업로드 체크
-                },
-                Hw: false
-            }
-        },
-        created() {
-            this.imageInfo = this.$route.query.image;
-            if (this.imageInfo.height > this.imageInfo.width){
-                this.Hw = true
+                }
             }
         },
         methods: {
@@ -56,16 +38,13 @@
                 // 선택된 파일이 있는가?
                 if (e.target.files.length > 0) {
                     // 0 번째 파일을 가져 온다.
-                    
                     const file = e.target.files[0];
                     // 확장자 명 가져오기
                     let fileExt = file.name.substring(file.name.lastIndexOf(".") + 1); 
                     fileExt = fileExt.toLowerCase()
-
                     // 이미지 확장자 체크, 3메가 바이트 이하 인지 체크 
-                    if(["jpeg", "png", "gif", "bmp", "jpg"].includes(fileExt)
+                    if(["jpeg", "png", "gif", "bmp", "jpg", "jfif"].includes(fileExt)
                             && file.size <= 3145728){
-                        
                         this.img.selectFile = file;
                         this.img.previewImgUrl = URL.createObjectURL(file);
                     }
@@ -86,7 +65,11 @@
                 uploadBoard.append("content", this.boardInfo.content);
                 axios.post('/api/board', uploadBoard)
                 .then(res => {  // eslint-disable-line no-unused-vars
-                    console.log(res)
+                    this.$alert( "등록 되었습니다!", "완료", "success")
+                    this.boardInfo.title="";
+                    this.boardInfo.content="";
+                    this.img.selectFile="";
+                    this.img.previewImgUrl="";
                 })
                 .catch(err => {
                     console.log(err);
@@ -104,9 +87,26 @@
     }
 </script>
 <style>
-    
+    .container{
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 10fr;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        border: 1px rgb(197, 197, 197) solid;
+        padding: 2px;
+    }
+    .rg-img:nth-child(1) {
+        /* 1번 라인에서 1칸 */
+        grid-column: 1 / span 1;
+        /* 1번 라인에서 2칸 */
+        grid-row: 1 / span 2;
+    }
     .rg-img{
-        width: 100%;
-        height: 100%;
+        margin-right: 2px;
+    }
+    .register-btn{
+        text-align: center;
+        margin-bottom: 20px;
     }
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div class="border-main">
-      <div class="border-nav">
-        <h1 class="imb-font-semi-bold" @click="current = 'BoardList'">게시판</h1>
+      <div class="border-nav" v-show="current == 'BoardList'">
+        <h1 class="imb-font-semi-bold">게시판</h1>
+        <i class="fas fa-plus fa-3x" @click="current = 'BoardWrite'"></i>
       </div>
-      <i class="fas fa-plus fa-5x" @click="current = 'BoardWrite'"></i>
-      <!-- <BoardList @testClick="checktest"></BoardList>
-      <BoardWrite></BoardWrite> -->
-        <li @click="current = 'BoardDetail'"><a href="#">detail</a></li>
+      <div v-show="current == 'BoardWrite'">
+        <i class="fas fa-arrow-left fa-3x" @click="current = 'BoardList'"></i>
+      </div>
       <keep-alive>
           <component :is="current"></component>
       </keep-alive>
@@ -52,7 +52,7 @@ export default {
 }
 
 .border-main::-webkit-scrollbar {
-  width: 15px;
+  width: 5px;
 
 }
 
@@ -67,6 +67,7 @@ export default {
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
 .border-nav{
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

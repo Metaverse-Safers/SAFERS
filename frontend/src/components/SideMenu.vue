@@ -13,7 +13,7 @@
         <i class="fas fa-chalkboard-teacher"></i>
       </div>
 
-      <div class="menu-item go-user-page-btn" >
+      <div class="menu-item go-user-page-btn" @click="clickMyPage">
         <i class="fas fa-user"></i>
       </div>
 
@@ -26,6 +26,7 @@
 
 <script>
 import Border from "./Board/Board.vue";
+import MyPage from "./User/MyPage.vue";
 export default {
   name: "SideMenu",
   methods: {   
@@ -35,6 +36,18 @@ export default {
         modal : this.$modal },
         {
           name: 'border-modal',
+          width : '80%',
+          height : '80%',
+          draggable: false,
+        }
+      )
+    },
+    clickMyPage(){
+      this.$modal.show(MyPage,{
+        hot_table : 'data',
+        modal : this.$modal },
+        {
+          name: 'mypage-modal',
           width : '80%',
           height : '80%',
           draggable: false,
