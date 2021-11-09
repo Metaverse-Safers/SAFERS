@@ -122,5 +122,45 @@
     <td>- 1인칭 카메라 위치 조정 <br> </td>
     <td> - 공통 채널 맵 디자인</td>
   </tr>
+    <tr>
+    <td align="center">211108(월)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- 첫 번째 퀘스트 구현 중💬 <br> - 지역별 초기 위치 지정 <br> - 플레이어에 게임오브젝트 자동 삽입<br></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211109(화)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211110(수)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211111(목)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211112(금)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
 </table>
 

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class BoardService {
 
@@ -71,8 +73,8 @@ public class BoardService {
         }
         board.setId(id);
         // user -> id로 User 정보 가져오기
-        Optional<User> user = userService.getUserById(boardRegisterPostRequest.getUserId());
-        board.setUser(user.get());
+        User user = userService.getUserById(boardRegisterPostRequest.getUserId());
+        board.setUser(user);
         board.setTitle(boardRegisterPostRequest.getTitle());
         board.setContent(boardRegisterPostRequest.getContent());
         board.setIsDelete(false);
@@ -173,11 +175,11 @@ public class BoardService {
     public List<BoardGetResponse> findBoardListByPageAndUserId(int page, String userId) {
         List<BoardGetResponse> boardGetResponseList = new ArrayList<>();
         PageRequest pageRequest = PageRequest.of(page, 30, Sort.Direction.DESC, "regDt");
-        Optional<User> user = userService.getUserById(userId);
+        User user = userService.getUserById(userId);
 
-        if(!user.isPresent())
+        if(isNull(user))
             return null;
-        Page<Board> boardPage = boardRepository.findAllByIsDeleteEqualsAndUserEquals(false, user.get(), pageRequest);
+        Page<Board> boardPage = boardRepository.findAllByIsDeleteEqualsAndUserEquals(false, user, pageRequest);
         return getBoardGetResponses(boardGetResponseList, boardPage);
     }
 
@@ -263,12 +265,12 @@ public class BoardService {
         if(!commentList.isPresent())
             return null;
         for(BoardComment boardComment : commentList.get()) {
-            Optional<User> user = userService.getUserById(boardComment.getUserId());
-            if(!user.isPresent()) {
+            User user = userService.getUserById(boardComment.getUserId());
+            if(isNull(user)) {
                 boardComment.setIsDelete(false);
                 continue;
             }
-            boardCommentGetResponses.add(BoardCommentGetResponse.of(boardComment, user.get()));
+            boardCommentGetResponses.add(BoardCommentGetResponse.of(boardComment, user));
         }
         return boardCommentGetResponses;
     }

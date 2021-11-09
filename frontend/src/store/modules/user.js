@@ -42,13 +42,15 @@ const user = {
         })
     },
 
-    /* 사용자 정보 요청 */
+    /* 사용자 정보 요청 + 로그인 요청 */
     async requestProfile({ commit }, token) {
       await http.post("/user/login", token)
         .then(function (result) {
           console.log(result.data);
           commit("SET_USER_PROFILE", result.data);
           commit("SET_IS_AUTHENTICATED", true);
+          localStorage.setItem("userId", result.data.id); // Unity에서 얻기위한 UserId
+          localStorage.setItem("nickname", result.data.nickName); 
         })
         .catch(function (error) {
           console.log(error);
@@ -63,6 +65,8 @@ const user = {
           commit("SET_USER_PROFILE", {});
           commit("SET_TOKEN", {});
           commit("SET_IS_AUTHENTICATED", false);
+          localStorage.removeItem("userId");
+          localStorage.removeItem("nickname");
         })
         .catch(function (error) {
           console.log(error);

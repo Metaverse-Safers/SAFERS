@@ -18,14 +18,15 @@ export default {
             this.present = await http.post("user/present", this.token)
             .then(res => {
                 console.log(res.data.present)
+                this.$store.commit("user/SET_USER_PROFILE", res.data.userProfile);
                 return res.data.present;
             })
-            await this.$store.dispatch("user/requestProfile", this.token);
-            
+
             if (!this.present){
                 await this.$router.push({ name: 'register' });
             }
             else {
+                await this.$store.dispatch("user/requestProfile", this.token);
                 await this.$router.push({ name: 'main' });
             }
         }

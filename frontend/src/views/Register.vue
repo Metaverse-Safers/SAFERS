@@ -57,19 +57,27 @@ export default {
         this.img.previewImgUrl = null;
       }
     },
-    register() {
+    async register() {
+      // 1차 회원가입 후
+      await this.$store.dispatch("user/requestProfile", this.token);
+      await this.profileUpdate();
+    },
+
+    async profileUpdate() {
+      // 사용자 프로필 업데이트
       const updateData = new FormData();
-      updateData.append("id", this.userInfo.id);
+      updateData.append("id", this.userProfile.id); 
       updateData.append("nickName", this.userInfo.nickName);
       updateData.append("profileFile", this.img.selectFile);
-      this.$store.dispatch("user/requestUpdateProfile", updateData);
-      this.$router.push({ name: "main" });
-    },
+      await this.$store.dispatch("user/requestUpdateProfile", updateData);
+      await this.$router.push({ name: "main" });
+    }
   },
   computed: {
     ...mapGetters({
-      userProfile: "user/userProfile",
-    }),
+        token: "user/token",
+        userProfile: "user/userProfile"
+    })
   },
   mounted() {
     this.userInfo = { ...this.userProfile };

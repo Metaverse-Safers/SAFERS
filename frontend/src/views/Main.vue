@@ -34,7 +34,7 @@ export default {
       userProfile: "user/userProfile",
     }),
     getIsLoggin(){
-      return this.$store.getter["user/userProfile"];
+      return this.$store.getters["user/userProfile"];
     }
   },
   mounted() {
@@ -48,11 +48,18 @@ export default {
   },
   methods: {
     clickStart() {
-      this.$router.push("/world");
+      let isLogin = this.$store.getters["user/isAuthenticated"];
+      if(isLogin){
+        this.$router.push("/world");
+      }
+      else{
+        this.$alert( "로그인이 필요합니다!", "로그인", "success")
+        .then(() => this.$router.push({ name: "login" }));
+      }
     },
     async clickLogout() {
       await this.$store.dispatch("user/requestLogout");
-      let isLogin = this.$store.getters["isAuthenticated"];
+      let isLogin = this.$store.getters["user/isAuthenticated"];
       if(isLogin == undefined || isLogin == false){
         this.loggedIn = true;
         this.$alert( "다음에 또 놀러오세요!", "로그아웃", "success")
