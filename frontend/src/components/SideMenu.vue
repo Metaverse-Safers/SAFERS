@@ -9,7 +9,7 @@
         <i class="fas fa-home"></i>
       </div>
 
-      <div class="menu-item go-border-btn" @click="clickBorder">
+      <div class="menu-item go-border-btn" id="goBoard" @click="clickBorder">
         <i class="fas fa-chalkboard-teacher"></i>
       </div>
 
