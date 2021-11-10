@@ -36,7 +36,7 @@ export default {
         modal : this.$modal },
         {
           name: 'border-modal',
-          width : '70%',
+          width : '50%',
           height : '70%',
           draggable: false,
         }
@@ -48,7 +48,7 @@ export default {
         modal : this.$modal },
         {
           name: 'mypage-modal',
-          width : '60%',
+          width : '50%',
           height : '70%',
           draggable: false,
         }

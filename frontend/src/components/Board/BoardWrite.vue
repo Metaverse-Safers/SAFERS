@@ -1,16 +1,22 @@
 <template>
-    <div>
-        <form class="boardwrite-container" enctype="multipart/form-data">
-            <label class="board-img" className="input-file-button" for="rg-img-selctor">
-                <img v-if="img.previewImgUrl" :src="img.previewImgUrl" style="height:100%; width:100%;"/>
-                <p v-else style="font-size: 20px">사진 선택하기</p>
+    <div class="write-wrap">
+        <form class="write-box" enctype="multipart/form-data">
+            <label class="write-img" className="input-file-button" for="rg-img-selctor">
+                <img v-if="img.previewImgUrl" :src="img.previewImgUrl"/>
+                <p v-else class="imb-font-semi-bold">사진 선택</p>
             </label>
             <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*" required/>
-            <textarea class="board-Text"  placeholder="제목" v-model="boardInfo.title" style="margin-bottom:2px" required/>
-            <textarea class="board-Text"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
+            <div class="write-user">
+                <img :src="userProfile.profileUrl"/>
+                <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
+            </div>
+            <div>
+                <input class="imb-font-semi-bold write-text write-title"  placeholder="제목" v-model="boardInfo.title" required/>
+                <textarea class="imb-font-semi-bold write-text write-content"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
+            </div>
         </form>
-        <div class="upload-btn">
-            <img @click="register" style="height:40px" src="@/assets/images/Board-Register_Btn.png"/>
+        <div class="write-btn">
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register">게시물 등록</button>
         </div>
     </div>
 </template>
@@ -87,26 +93,76 @@
     }
 </script>
 <style>
-    .boardwrite-container{
+    .write-wrap{
+        height: 80%;
+    }
+    .write-box{
         display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: 33px 40vh;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        border: 1px rgb(197, 197, 197) solid;
+        grid-template-rows: 1fr 10fr;
+        border: 1px rgb(220, 220, 220) solid;
+        height: 100%;
+    }
+    .write-img{
+        border-right: 1px rgb(230, 230, 230) solid;
+    }
+    .write-img:nth-child(1) {
+        grid-column: 1 / 2;
+        grid-row: 1 / 3;
+    }
+    .write-img:hover {
+        background-color: rgb(200, 200, 200);
+    }
+    .write-img > img {
+        height:100%; 
+        width:100%; 
+        object-fit: contain;
+    }
+    .write-img > p {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 2vh;
+    }
+    .write-btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 10%;
+    }
+    .write-user {
+        display: flex;
+        align-items: center;
         padding: 2px;
+        border-bottom: 1px rgb(230, 230, 230) solid;
     }
-    .board-img:nth-child(1) {
-        /* 1번 라인에서 1칸 */
-        grid-column: 1 / span 1;
-        /* 1번 라인에서 2칸 */
-        grid-row: 1 / span 2;
+    .write-user > img{
+        height: 3.5vh; 
+        width: 3.5vh; 
+        border-radius: 100px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
-    .board-img{
-        margin-right: 2px;
+    .write-user > div{
+        font-size: 1.5vh;
     }
-    .upload-btn{
-        text-align: center;
-        margin-bottom: 20px;
+    .write-text {
+        border: none;
+        width: 100%;
+        font-size: 1.5vh;
+    }
+    .write-text:focus {
+        outline: none;
+    }
+    .write-title {
+        height: 10%;
+        padding: 10px;
+    }
+    .write-content {
+        resize: none;
+        height: 90%;
+        border-top: 1px rgb(230, 230, 230) solid;
+        padding: 10px;
     }
 </style>

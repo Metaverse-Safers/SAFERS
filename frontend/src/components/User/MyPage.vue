@@ -1,19 +1,24 @@
 <template>
-  <div class="mypage-container">
-    <img class="mypage-img" src="@/assets/images/mypageImg.png" />
+  <div class="mypage-main">
+    <div class="mypage-nav">
+      <h1 class="imb-font-semi-bold">마이페이지</h1>
+    </div>
     <div>
       <form enctype="multipart/form-data">
         <label class="mypage-profile-img" className="input-file-button" for="mypage-profile-img-selctor">
-          <img v-if="img.previewImgUrl" :src="img.previewImgUrl"
-            style="height: 15vh; width: 15vh; border-radius: 100px; text-align: center;"/>
-          <p style="color: white; font-size: 1.3vh">프로필 사진 변경하기</p>
+          <img v-if="img.previewImgUrl" :src="img.previewImgUrl"/>
+          <div/>
+          <p>프로필 사진 변경하기</p>
         </label>
         <input id="mypage-profile-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>  
-        <input class="mypage-text" type="text" v-model="userInfo.nickName" required/>
+        <input class="mypage-text" type="text" v-model="userInfo.nickName" required>
       </form>
-      <img class="mypage-btn" @click="register" src="@/assets/images/mypageBtn.png"/>
-      <img class="mypage-withdrawal-btn" @click="withdrawal" src="@/assets/images/withdrawal.png"/>
+      <div class="mypage-btn">
+          <button type="button" @click="register" class="btn btn-outline-secondary imb-font-semi-bold">수정하기</button>
+          <button type="button" @click="withdrawal" class="btn btn-outline-danger imb-font-semi-bold">회원탈퇴</button>
+      </div>
     </div>
+    <!-- <img class="mypage-scene" src="@/assets/images/mypageScene.png"/> -->
   </div>
 </template>
 
@@ -92,64 +97,73 @@ export default {
 </script>
 
 <style>
-.mypage-container {
-  background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
-  background-size: 160% 160%;
-  -webkit-animation: gradient 10s ease infinite;
-  animation: gradient 10s ease infinite;
-  width: 100vw;
-  height: 100vh;
+.mypage-main {
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/images/mypageScene.png');
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% 35%;
+  margin-top: 1px;
 }
-.mypage-img {
-  width: 70vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.mypage-nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px rgb(220, 220, 220) solid;
+  padding: 10px 10px 0px 10px;
 }
 .mypage-profile-img > img {
   position: absolute;
-  z-index: 1;
-  top: 40%;
+  top: 33%;
   left: 49.5%;
   transform: translate(-50%, -50%);
-  display: inline-block;
-  vertical-align: middle;
+  height: 20vh; 
+  width: 20vh; 
+  border-radius: 100px; 
+  text-align: center;
 }
 .mypage-profile-img > p {
   position: absolute;
-  z-index: 1;
-  top: 53%;
+  top: 50%;
   left: 49.5%;
   transform: translate(-50%, -50%);
-  display: inline-block;
-  vertical-align: middle;
+  color: rgb(0, 0, 0); 
+  font-size: 1.5vh;
+}
+.mypage-profile-img > p:hover {
+  color: rgb(180, 180, 180);
+}
+.mypage-profile-img > div {
+  position: absolute;
+  top: 33%;
+  left: 49.5%;
+  transform: translate(-50%, -50%);
+  height: 20vh; 
+  width: 20vh;
+  border: 1px rgb(200, 200, 200) solid;
+  border-radius: 100px;
 }
 .mypage-text {
   position: absolute;
-  z-index: 1;
-  top: 60%;
+  top: 58%;
   left: 49.5%;
   transform: translate(-50%, -50%);
-  display: inline-block;
-  vertical-align: middle;
-  border: solid 2px white;
-  border-radius: 8px;
-  width: 20vh;
+  width: 170px;
+  border: none;
+  background-color: rgb(240, 240, 240);
+}
+.mypage-text:focus {
+  outline: none;
 }
 .mypage-btn {
-  width: 15vh;
+  height: 10%;
   position: absolute;
-  top: 70%;
+  top: 68%;
   left: 49.5%;
   transform: translate(-50%, -50%);
 }
-.mypage-withdrawal-btn {
-  width: 10vh;
-  position: absolute;
-  top: 78%;
-  left: 49.5%;
-  transform: translate(-50%, -50%);
+.mypage-btn * {
+  margin: 3px;
 }
 .mypage-profile-img :hover,
 .mypage-btn:hover,
