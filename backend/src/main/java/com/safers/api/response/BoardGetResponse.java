@@ -20,6 +20,12 @@ public class BoardGetResponse {
     String userId;
 
     @ApiModelProperty
+    String nickName;
+
+    @ApiModelProperty
+    String profileUrl;
+
+    @ApiModelProperty
     String title;
 
     @ApiModelProperty
@@ -38,6 +44,8 @@ public class BoardGetResponse {
         BoardGetResponse res = new BoardGetResponse();
         res.setId(board.getId());
         res.setUserId(board.getUser().getId());
+        res.setNickName(board.getUser().getNickName());
+        res.setProfileUrl(board.getUser().getProfileUrl());
         res.setTitle(board.getTitle());
         res.setContent(board.getContent());
         res.setRegDt(board.getRegDt());
