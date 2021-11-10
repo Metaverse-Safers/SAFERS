@@ -41,7 +41,7 @@
         </div>
 
         <div class="d-md-flex flex-md-equal w-100 my-md-5 ps-md-3 mt-5 line-mid container">
-          <div class="box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
+          <div class="info-box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
             <div class="my-3 p-3">
               <img class="info-icon" src="@/assets/icon/mobile.png" alt="">
               <hr style="background:#ffffff;">
@@ -49,7 +49,7 @@
               <p>멸종 위기 동물과의 만남<br>새로운 세상에서의 힐링</p>
             </div>
           </div>
-          <div class="box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
+          <div class="info-box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
             <div class="my-3 py-3">
               <img class="info-icon" src="@/assets/icon/history-book.png" alt="">
               <hr style="background:#ffffff;">
@@ -57,7 +57,7 @@
               <p>환경 미션을 클리어 하며,<br>동물 카드 모으기</p>
             </div>
           </div>
-          <div class="box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
+          <div class="info-box me-md-3 px-3 pt-md-4 pb-md-4 mb-md-5 px-md-5 text-center overflow-hidden">
             <div class="my-3 py-3">
               <img class="info-icon" src="@/assets/icon/chat.png" alt="">
               <hr style="background:#ffffff;">
@@ -152,11 +152,11 @@
             </div>
             <div class="col">
               <h3><b>&nbsp;&nbsp;세이퍼스에 놀러오세요.</b></h3>
-              <div class="card-box"><router-link to=/login>🌏 로그인/회원가입하기</router-link></div>
-              <div class="card-box"><a href="https://forms.gle/fmhmGCBrh5WoYGS6A" target="_blank">💪🏻 개발팀 응원하기</a></div>
-              <div class="card-box"><a href="https://forms.gle/F9MZYzjA2LbBLBsQ7" target="_blank">📋 건의사항 전달하기 </a></div>
-              <div class="card-box"><a href="https://forms.gle/EkRsna4hVNy2GfYs9" target="_blank">📇 오류사항 전달하기 </a></div>
-              <div class="card-box"><a href="https://forms.gle/mZ5fEgmritDKDVaDA" target="_blank">🚫 불량 유저/글 신고하기 </a></div>
+              <div class="card-info-box"><router-link to=/login>🌏 로그인/회원가입하기</router-link></div>
+              <div class="card-info-box"><a href="https://forms.gle/fmhmGCBrh5WoYGS6A" target="_blank">💪🏻 개발팀 응원하기</a></div>
+              <div class="card-info-box"><a href="https://forms.gle/F9MZYzjA2LbBLBsQ7" target="_blank">📋 건의사항 전달하기 </a></div>
+              <div class="card-info-box"><a href="https://forms.gle/EkRsna4hVNy2GfYs9" target="_blank">📇 오류사항 전달하기 </a></div>
+              <div class="card-info-box"><a href="https://forms.gle/mZ5fEgmritDKDVaDA" target="_blank">🚫 불량 유저/글 신고하기 </a></div>
             </div>
           </div>
         </div>
@@ -195,32 +195,32 @@ export default {
   border-left: 1px solid #e5e5e5;
 }
 
-.box{
+.info-box{
   border-radius: 20px;
 } 
 
-.box:nth-child(1) {
+.info-box:nth-child(1) {
   border: 1px solid #632B6C;
 }
 
-.box:nth-child(2) {
+.info-box:nth-child(2) {
   border: 1px solid #C86B98;
 }
 
-.box:nth-child(3) {
+.info-box:nth-child(3) {
   border: 1px solid#F09F9C;
 }
 
-.box:nth-child(1):hover {
+.info-box:nth-child(1):hover {
   background: #632B6C;
   color: #ffffff;
 }
 
-.box:nth-child(2):hover {
+.info-box:nth-child(2):hover {
   background: #C86B98;
 }
 
-.box:nth-child(3):hover {
+.info-box:nth-child(3):hover {
   background:#F09F9C;
 }
 
@@ -235,14 +235,14 @@ export default {
   text-align: center;
 }
 
-.card-box{
+.card-info-box{
   width: 80%;
   border-bottom: 1px solid #e5e5e5;
   padding: 2vh 5vh;
   border-radius: 10px;
 }
 
-.card-box:hover{
+.card-info-box:hover{
   background: #e5e5e5;
 }
 
@@ -321,14 +321,14 @@ export default {
   border-radius: 20px;
 }
 
-.card-box > a,
+.card-info-box > a,
 .login-to,
 .info-link > a {
   text-decoration: none;
   color: grey;
 }
 
-.card-box > a:hover,
+.card-info-box > a:hover,
 .login-to:hover,
 .info-link > a:hover {
   filter: brightness(20%);
