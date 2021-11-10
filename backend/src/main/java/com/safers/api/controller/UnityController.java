@@ -3,6 +3,7 @@ package com.safers.api.controller;
 import com.safers.api.request.MissionLogRequest;
 import com.safers.api.request.MissionRequest;
 import com.safers.api.response.*;
+import com.safers.api.service.BoardService;
 import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
 import com.safers.db.entity.unity.Mission;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -31,6 +33,9 @@ public class UnityController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    BoardService boardService;
 
     @GetMapping("/mission")
     @ApiOperation(value = "회원의 미션 정보 조회", notes = "회원 Id로 회원의 현재 미션 수행 정보를 가져온다.")
@@ -102,5 +107,24 @@ public class UnityController {
         unityService.completeMission(user, mission);
 
         return ResponseEntity.ok(MissionResponse.of(mission));
+    }
+
+    @PostMapping("/isupload")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "업로드 미션 관련 게시글 반환"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @ApiOperation(value = "업로드 미션 관련 게시글 반환", notes = "업로드 미션을 받은 후 작성된 삭제되지 않은 상태인 게시글 리스트를 모두 반환한다.")
+    public ResponseEntity<List<BoardUnityResponse>> isUploadBoard(@RequestBody MissionRequest missionRequest) {
+
+        User user = userService.getUserById(missionRequest.getUserId());
+        Mission mission = unityService.getMissionById(missionRequest.getMissionId());
+
+        LocalDateTime regDate = unityService.getRegDateByUserAndMission(user, mission);
+        List<BoardUnityResponse> boardUnityResponses = boardService.findBoardByUserAndRegDate(user, regDate);
+
+        return ResponseEntity.ok(boardUnityResponses);
     }
 }

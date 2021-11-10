@@ -4,6 +4,7 @@ import com.safers.api.request.BoardCommentPostRequest;
 import com.safers.api.request.BoardRegisterPostRequest;
 import com.safers.api.response.BoardCommentGetResponse;
 import com.safers.api.response.BoardGetResponse;
+import com.safers.api.response.BoardUnityResponse;
 import com.safers.common.util.RandomIdUtil;
 import com.safers.db.entity.board.Board;
 import com.safers.db.entity.board.BoardComment;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -273,5 +275,21 @@ public class BoardService {
             boardCommentGetResponses.add(BoardCommentGetResponse.of(boardComment, user));
         }
         return boardCommentGetResponses;
+    }
+
+    /**
+     * user가 작성한 글 중 regDate보다 이후에 작성된 글 목록 반환
+     * @param user
+     * @param regDate
+     * @return List<BoardUnityResponse>
+     */
+    public List<BoardUnityResponse> findBoardByUserAndRegDate(User user, LocalDateTime regDate) {
+        List<BoardUnityResponse> boardUnityResponseList = new ArrayList<>();
+        List<Board> boardList = boardRepository.findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfter(false, user, regDate).orElse(null);
+        for(Board board : boardList) {
+            boardUnityResponseList.add(BoardUnityResponse.of(board));
+        }
+
+        return boardUnityResponseList;
     }
 }

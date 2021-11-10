@@ -245,4 +245,15 @@ public class UnityService {
         animalsLog.setRegDt(LocalDateTime.now());
         animalsLogRepository.save(animalsLog);
     }
+
+
+    /**
+     * 미션 로그에 저장된 미션 등록 시간 반환
+     * @param user
+     * @param mission
+     * @return LocalDateTime
+     */
+    public LocalDateTime getRegDateByUserAndMission(User user, Mission mission) {
+        return missionLogRepository.findByUserAndMission(user, mission).orElseGet(null).getRegDt();
+    }
 }
