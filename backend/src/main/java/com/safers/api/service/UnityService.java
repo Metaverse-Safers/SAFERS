@@ -58,11 +58,16 @@ public class UnityService {
         List<Mission> missionList = missionRepository.findAll();
 
         Code disabled = codeRepository.getById("C01"); // 비활성화 코드
-        for (Mission misson : missionList) {
+        Code beforeStart = codeRepository.getById("C02");   // 미션 시작 전 & 활성화 코드
+        for (Mission mission : missionList) {
             MissionLog missionLog = new MissionLog();
             missionLog.setUser(user);
-            missionLog.setMission(misson);
-            missionLog.setCode(disabled);
+            missionLog.setMission(mission);
+            
+            if(mission.getId().equals("S1000"))             // 첫번째 미션일 경우 C02로 상태코드 지정 (초기화)
+                missionLog.setCode(beforeStart);
+            else
+                missionLog.setCode(disabled);
 
             missionLogRepository.save(missionLog);
             missionLogList.add(missionLog);
