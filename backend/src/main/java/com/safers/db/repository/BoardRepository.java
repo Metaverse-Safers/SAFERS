@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,4 +19,6 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     Page<Board> findAllByIsDeleteEqualsAndUserEquals(Boolean isDelete, User user, Pageable page);
     @Override
     Optional<Board> findById(String id);
+
+    Optional<List<Board>> findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfter(Boolean isDelete, User user, LocalDateTime regDate);
 }
