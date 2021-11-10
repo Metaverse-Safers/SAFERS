@@ -117,7 +117,7 @@ public class UnityController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     @ApiOperation(value = "업로드 미션 관련 게시글 반환", notes = "업로드 미션을 받은 후 작성된 삭제되지 않은 상태인 게시글 리스트를 모두 반환한다.")
-    public ResponseEntity<List<BoardUnityResponse>> isUploadBoard(@RequestBody MissionRequest missionRequest) {
+    public ResponseEntity<BoardUnityListResponse> isUploadBoard(@RequestBody MissionRequest missionRequest) {
 
         User user = userService.getUserById(missionRequest.getUserId());
         Mission mission = unityService.getMissionById(missionRequest.getMissionId());
@@ -125,6 +125,6 @@ public class UnityController {
         LocalDateTime regDate = unityService.getRegDateByUserAndMission(user, mission);
         List<BoardUnityResponse> boardUnityResponses = boardService.findBoardByUserAndRegDate(user, regDate);
 
-        return ResponseEntity.ok(boardUnityResponses);
+        return ResponseEntity.ok(BoardUnityListResponse.of(boardUnityResponses));
     }
 }
