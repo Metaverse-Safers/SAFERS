@@ -1,8 +1,9 @@
 <template>
   <div class="list-wrap">
-    <div class="goback" v-show="boardDetail" >
-        <i class="fas fa-arrow-left fa-2x" @click="boardDetailFunc"></i>
-      </div>
+    <div class="list-nav" v-show="boardDetail" >
+      <i class="fas fa-arrow-left fa-2x" @click="boardDetailFunc"></i>
+      <h2 class="imb-font-semi-bold">{{info.nickName}} 님의 게시물</h2>
+    </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
         <img :src= data.fileList[0].filePath @click="boardDetailInfo(data)">
@@ -15,7 +16,7 @@
         </div>
       </infinite-loading>
     </div>
-    <div class="detail-wrap" v-if="boardDetail">
+    <div class="board-detail" v-if="boardDetail">
       <BoardDetail :info="info"/>
     </div>
   </div>
@@ -82,11 +83,25 @@
   height: 100%;
 }
 
-.goback{
-  height: 10%;
+.list-nav {
+  display: grid;
+  grid-template-columns: 1fr 11fr 1fr;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-.goback:hover{
+.list-nav > h2 {
+  grid-column: 2/3;
+  justify-self: center;
+  margin-bottom: 0 !important;
+}
+
+.list-nav > i {
+  grid-column: 1/2;
+  justify-self: start;
+}
+
+.list-nav > i:hover{
   filter: brightness(5%);
   cursor: pointer;
 }
@@ -105,6 +120,7 @@
 	column-count: 6;
 	column-gap: 16px;
   padding-top: 10px;
+  border-top: 1px rgb(220, 220, 220) solid;
 }
 
 .masonry .mItem {
@@ -113,25 +129,30 @@
   width: 100%;
 }
 
-.detail-wrap{
+.board-detail{
   height: 85%;
 }
+@media (max-width: 1600px) {
+  .masonry {
+    column-count: 5;
+  }
+}
 
-@media (max-width: 1199px) {
+@media (max-width: 1200px) {
+  .masonry {
+    column-count: 4;
+  }
+}
+
+@media (max-width: 800px) {
   .masonry {
     column-count: 3;
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 400px) {
   .masonry {
     column-count: 2;
-  }
-}
-
-@media (max-width: 767px) {
-  .masonry {
-    column-count: 1;
   }
 }
 

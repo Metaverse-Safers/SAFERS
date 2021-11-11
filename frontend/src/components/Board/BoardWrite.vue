@@ -105,13 +105,12 @@
     }
     .write-img{
         border-right: 1px rgb(230, 230, 230) solid;
-    }
-    .write-img:nth-child(1) {
         grid-column: 1 / 2;
         grid-row: 1 / 3;
     }
     .write-img:hover {
         background-color: rgb(200, 200, 200);
+        cursor: pointer;
     }
     .write-img > img {
         height:100%; 

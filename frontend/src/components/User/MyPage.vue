@@ -77,7 +77,6 @@ export default {
         if(confirm){
             this.$fire({title: "금방 돌아오실 거죠? ㅠㅠ", text: "탈퇴 완료", type: "success", timer: 3000, showConfirmButton: false})
             await this.$store.dispatch("user/withdrawal", this.token.accessToken);
-            await this.$store.dispatch("user/requestLogout");
             await this.$router.push({ name: "main"});
             await window.location.reload();
         }
@@ -107,10 +106,14 @@ export default {
   margin-top: 1px;
 }
 .mypage-nav {
-  display: flex;
+  display: grid;
   align-items: center;
+  justify-items: center;
   border-bottom: 1px rgb(220, 220, 220) solid;
-  padding: 10px 10px 0px 10px;
+  padding: 10px
+}
+.mypage-nav > h1{
+  margin-bottom: 0 !important;
 }
 .mypage-profile-img > img {
   position: absolute;

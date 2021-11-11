@@ -107,6 +107,11 @@ const user = {
         .then(function (result) {
           console.log(result)
           commit("WITHDRAWAL", result.data);
+          commit("SET_USER_PROFILE", {});
+          commit("SET_TOKEN", {});
+          commit("SET_IS_AUTHENTICATED", false);
+          localStorage.removeItem("userId");
+          localStorage.removeItem("nickname");
         })
         .catch(function (error) {
           console.log(error)

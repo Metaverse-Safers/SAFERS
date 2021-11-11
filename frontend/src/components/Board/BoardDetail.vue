@@ -79,10 +79,12 @@
         height: auto;
         padding: 10px;
         font-size: 20px;
+        margin-bottom: 0 !important;
     }
     .detail-content {
         height: 80%;
         border-top: 1px rgb(230, 230, 230) solid;
         padding: 10px;
+        margin-bottom: 0 !important;
     }
 </style>

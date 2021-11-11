@@ -1,13 +1,14 @@
 <template>
     <div class="border-main">
       <div v-show="current == 'BoardList'">
-        <div class="border-nav" v-show="!boardDetail">
+        <div class="board-list" v-show="!boardDetail">
           <h1 class="imb-font-semi-bold">게시판</h1>
-          <i class="fas fa-plus fa-2x align-middle" @click="current = 'BoardWrite'"></i>
+          <i class="fas fa-plus fa-2x" @click="current = 'BoardWrite'"></i>
         </div>
       </div>
-      <div class="goback" v-show="current == 'BoardWrite'">
+      <div class="board-write" v-show="current == 'BoardWrite'">
         <i class="fas fa-arrow-left fa-2x" @click="current = 'BoardList'"></i>
+        <h2 class="imb-font-semi-bold">게시물 작성</h2>
       </div>
       <keep-alive>
           <component :is="current" @detail="boardDetailT"></component>
@@ -54,9 +55,6 @@ export default {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.goback{
-  height: 10%;
-}
 .border-main::-webkit-scrollbar {
   width: 5px;
 }
@@ -69,17 +67,29 @@ export default {
   background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
-.border-nav{
-  display: flex;
+.board-list, 
+.board-write{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px rgb(220, 220, 220) solid;
+  margin-bottom: 10px;
 }
-.border-nav > i:hover{
-  filter: brightness(5%);
-  cursor: pointer;
+.board-list > h1,
+.board-write > h2 {
+  grid-column: 2/3;
+  justify-self: center;
+  margin-bottom: 0 !important;
 }
-.goback:hover{
+.board-list > i {
+  grid-column: 3/4;
+  justify-self: end;
+}
+.board-write > i{
+  grid-column: 1/2;
+  justify-self: start;
+}
+.board-list > i:hover,
+.board-write > i:hover {
   filter: brightness(5%);
   cursor: pointer;
 }
