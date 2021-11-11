@@ -1,61 +1,90 @@
 <template>
-    <div class="main">
-        <div class='box'>
-            <div id="img">
-                <img :src="imageInfo.urls.small" style="height:80vh" v-if='Hw'/>
-                <img :src="imageInfo.urls.small" style="width:46.6vw; vertical-align: middle;" v-else/>
+    <div class="detail-main">
+        <div class='detail-box'>
+            <div class="detail-img">
+                <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="a"/>
+            </div>                                 
+            <div class="detail-user">
+                <img :src="info.profileUrl"/>
+                <div class="imb-font-semi-bold">{{info.nickName}}</div>
             </div>
-            <div id="text">
-                <p>{{imageInfo.created_at}}</p>
+            <div class="detail-text">
+                <p class="imb-font-semi-bold detail-title">{{info.title}}</p>
+                <p class="imb-font-semi-bold detail-content">{{info.content}}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import { mapGetters } from "vuex";
     export default {
         data() {
             return{
-                imageInfo:"",
-                Hw: false
             }
         },
-        created() {
-            this.imageInfo = this.$route.query.image;
-            if (this.imageInfo.height > this.imageInfo.width){
-                this.Hw = true
+        props: {
+            info: []
+        },
+        computed: {
+            ...mapGetters({
+                userProfile: "user/userProfile"
+            })
+        },
+        methods:{
+            a(){
+                console.log(this.info)
             }
-        }
+        },
     }
 </script>
 <style>
-    .main{
-        background-color: rgb(250, 250, 250);
+    .detail-main{
+        height: 100%;
     }
-    .box{
-        width: 70vw;
-        height: 80vh;
-        border: 1px rgb(219, 219, 219) solid;
-        position:absolute;
-        top:50%; left:50%;
-        transform: translate(-50%, -50%);
+    .detail-box{
+        border: 1px rgb(220, 220, 220) solid;
         display: grid;
         grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 10fr;
+        height:100%
     }
-    #img{
-        width: 100%;
-        height: 100%;
+    .detail-img{
         text-align: center;
-        line-height: 80vh;
-    }
-    #img *{
         vertical-align: middle;
+        grid-row: 1 / 3;
+        border-right: 1px rgb(230, 230, 230) solid;
+        background-color: rgb(250, 250, 250);
     }
-    #text{
+    .detail-user{
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        border-bottom: 1px rgb(230, 230, 230) solid;
+    }
+    .detail-user > img{
+        height: 3.5vh; 
+        width: 3.5vh; 
+        border-radius: 100px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .detail-user > div{
+        font-size: 1.5vh;
+    }
+    .detail-text{
         width: 100%;
-        height: 100%;
-        background-color: white;
-        border-left: 1px rgb(219, 219, 219) solid;
-        border-right: 1px rgb(219, 219, 219) solid;
+    }
+    .detail-title {
+        height: auto;
+        padding: 10px;
+        font-size: 20px;
+        margin-bottom: 0 !important;
+    }
+    .detail-content {
+        height: 80%;
+        border-top: 1px rgb(230, 230, 230) solid;
+        padding: 10px;
+        margin-bottom: 0 !important;
     }
 </style>

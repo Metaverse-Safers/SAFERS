@@ -76,46 +76,86 @@
   </tr>
   <tr>
     <td align="center">211029(금)</td>
-    <td>- 비회원 콘텐츠 기획 정리</td>
+    <td>- 비회원 콘텐츠 기획 정리<br>- 주간 회고 및 주말, 차주 계획</td>
     <td></td>
     <td>- 로그인/로그아웃 Frontend 연결 <br> - 사용자 프로필 조회/변경 API </td>
-    <td></td>
+    <td>- 게시판 전체 목록 조회, 등록 관련 API </td>
     <td></td>
   </tr>
   <tr>
     <td align="center">211101(월)</td>
+    <td>- 비회원 설문 질답, 결과, 계산식, 동물 설명<br>- 2차 교보재 신청서 최종 작성<br>- 프로젝트 계획서 업데이트</td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>- 회원가입 체크 API</td>
+    <td>- 게시글, 댓글 관련 API 완료 😁 <br> - 동물 최종 조사 (에셋 연결 포함) 🐼🦒 </td>
     <td></td>
   </tr>
   <tr>
     <td align="center">211102(화)</td>
+    <td>- Unity 추가 에셋 import 세팅<br>- 비회원 설문 결과 내용 정리</td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>- 미션 & 동물 연결 <br> - 스토리라인1 구성</td>
+    <td>- 미션 & 동물 연결 <br> - 스토리라인1 구성</td>
     <td></td>
   </tr>
   <tr>
     <td align="center">211103(수)</td>
     <td></td>
     <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>- 동물과 상호작용 <br> - 대화창에 대화 출력</td>
+    <td>- 동물 상호작용 & 대화 기본 출력 적용 </td>
+    <td>- 인칭 전환 카메라 버그 픽스</td>
   </tr>
   <tr>
     <td align="center">211104(목)</td>
     <td></td>
     <td></td>
+    <td>- 초기 퀘스트 구현 <br> - 맵 디자인 수정</td>
+    <td>- 숲/초원 동물 상호작용 </td>
+    <td>- 장애물 충돌 카메라 버그 픽스 <br> - 공통 채널 맵 디자인</td>
+  </tr>
+  <tr>
+    <td align="center">211405(금)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- 1인칭 카메라 위치 조정 <br> </td>
+    <td> - 공통 채널 맵 디자인</td>
+  </tr>
+    <tr>
+    <td align="center">211108(월)</td>
+    <td></td>
+    <td></td>
+    <td>- 퀘스트 구현 중💬 <br> - Unity에서 LocalStorage 접근 </td>
+    <td>- 첫 번째 퀘스트 구현 중💬 <br> - 지역별 초기 위치 지정 <br> - 플레이어에 게임오브젝트 자동 삽입<br></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211109(화)</td>
+    <td></td>
+    <td></td>
+    <td>- 퀘스트 구현 중💬 </td>
+    <td>- 유니티 로그 API 구현 중💬 </td>
+    <td>- 플레이어 캐릭터 선택창 업데이트</td>
+  </tr>
+  <tr>
+    <td align="center">211110(수)</td>
+    <td></td>
+    <td></td>
+    <td>- 스토리라인 구현</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211111(목)</td>
+    <td></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
   </tr>
   <tr>
-    <td align="center">211405(금)</td>
+    <td align="center">211112(금)</td>
     <td></td>
     <td></td>
     <td></td>

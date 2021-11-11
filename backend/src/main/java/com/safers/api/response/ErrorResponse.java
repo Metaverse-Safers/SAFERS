@@ -2,8 +2,10 @@ package com.safers.api.response;
 
 import com.safers.common.util.ErrorCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class ErrorResponse {
     private final int status;
     private final String error;

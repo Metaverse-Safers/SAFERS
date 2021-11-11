@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -20,7 +22,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(MissionLog.class)
+@IdClass(MissionLogID.class)
 public class MissionLog implements Serializable {
     @Id
     @JsonBackReference
@@ -35,7 +37,7 @@ public class MissionLog implements Serializable {
     Mission mission;
 
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
-    Date regDt;
+    LocalDateTime regDt;
 
     @JsonBackReference
     @ManyToOne

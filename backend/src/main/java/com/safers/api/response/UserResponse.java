@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class UserResponse extends BaseResponse{
+public class UserResponse{
 
     String id;
     String nickName;
@@ -19,6 +19,14 @@ public class UserResponse extends BaseResponse{
                 .id(user.getId())
                 .nickName(user.getNickName())
                 .profileUrl(user.getProfileUrl())
+                .build();
+    }
+
+    public static UserResponse of(String id, String nickName, String profileUrl){
+        return UserResponse.builder()
+                .id(id)
+                .nickName(nickName)
+                .profileUrl(profileUrl)
                 .build();
     }
 }

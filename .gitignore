@@ -178,4 +178,10 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# AWS S3
+application-aws.properties
+
+# package-lock.json
+package-lock.json
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,vue,vuejs,windows
