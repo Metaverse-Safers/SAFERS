@@ -12,17 +12,22 @@
         </div>
         <div class="detail-comment-wrap">
             <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
-                <img :src="list.profileUrl"/>
+                <div class="detail-comment">
+                    <img :src="list.profileUrl"/>
+                    <div>
+                        <div>{{list.nickName}}</div>
+                        <p>{{list.comment}}</p>
+                    </div>
+                </div>
                 <div>
-                    <div>{{list.nickName}}</div>
-                    <p>{{list.comment}}</p>
+                    <i class="far fa-times fa-1x detail-comment-delete-button" v-show="list.mine" @click="commentDelete(list.id)"></i>
                 </div>
             </div>
         </div>
         <div class="detail-comment-register">
             <textarea class="detail-comment-write" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
             <div>
-            <p class="detail-comment-register-button" @click="commentRegister">등록</p>
+                <p class="detail-comment-register-button" @click="commentRegister">등록</p>
             </div>
         </div>
     </div>
@@ -52,6 +57,12 @@ import axios from 'axios';
                 .get('/api/board/comment/' + this.info.id)
                 .then(res => {
                     this.commentList = res.data
+                    for(var i=0 ; i<this.commentList.length; i++){
+                        if (this.commentList[i].userId == this.userProfile.id) 
+                            this.commentList[i].mine = true;
+                        else
+                            this.commentList[i].mine = false;
+                    }
                 })
             },
             commentRegister() {
@@ -66,8 +77,12 @@ import axios from 'axios';
                 })
                 document.getElementById("detail-textarea").value='';
             },
-            a(){
-                console.log(this.info)
+            commentDelete(id) {
+                axios
+                .patch('/api/board/comment/delete/' + id)
+                .then(res => { // eslint-disable-line no-unused-vars
+                    this.commentGet();
+                })
             }
         },
         mounted(){
@@ -96,18 +111,21 @@ import axios from 'axios';
         border-right: 1px rgb(230, 230, 230) solid;
         background-color: rgb(250, 250, 250);
     }
-    .detail-user,
-    .detail-comment-list {
+    .detail-user {
         display: flex;
         align-items: stretch;
         padding: 10px 10px 0 10px;
-    }
-    .detail-user {
         border-bottom: 1px rgb(230, 230, 230) solid;
         padding-bottom: 10px;
     }
+    .detail-comment-list {
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        padding: 10px 10px 0 10px;
+    }
     .detail-user > img,
-    .detail-comment-list > img {
+    .detail-comment > img {
         height: 3.5vh; 
         width: 3.5vh; 
         border-radius: 100px;
@@ -128,6 +146,7 @@ import axios from 'axios';
     }
     .detail-comment {
         margin-bottom: 0 !important;
+        display: flex;
     }
     .detail-comment-wrap {
         overflow: auto;
@@ -140,7 +159,6 @@ import axios from 'axios';
         align-items: center;
         padding: 0 2px;
         border-top: 1px rgb(230, 230, 230) solid;
-
     }
     .detail-comment-write {
         border: none;
@@ -162,6 +180,14 @@ import axios from 'axios';
     }
     .detail-comment-register-button:hover {
         color: #632b6c;
+        cursor: pointer;
+    }
+    .detail-comment-delete-button {
+        color: #5f0000;
+        font-weight: 900 !important;
+    }
+    .detail-comment-delete-button:hover {
+        color: #ff0000;
         cursor: pointer;
     }
     
