@@ -10,6 +10,10 @@
       </div>
 
       <div class="menu-item go-border-btn" id="goBoard" @click="clickBorder">
+        <i class="fas fa-chalkboard"></i>
+      </div>
+
+      <div class="menu-item go-myborder-btn" id="goMyBoard" @click="clickMyBorder">
         <i class="fas fa-chalkboard-teacher"></i>
       </div>
 
@@ -26,12 +30,33 @@
 
 <script>
 import Border from "./Board/Board.vue";
+import MyBorder from "./Board/MyBoard.vue"
 import MyPage from "./User/MyPage.vue";
 export default {
   name: "SideMenu",
   methods: {   
     clickBorder(){
       this.$modal.show(Border,{
+        hot_table : 'data',
+        modal : this.$modal },
+        {
+          name: 'border-modal',
+          width : '70%',
+          height : '70%',
+          draggable: false,
+        },
+        {
+          opened() {
+            localStorage.setItem("focusValid", 1);
+          },
+          closed() {
+            localStorage.setItem("focusValid", 0);
+          }
+        }
+      )
+    },
+    clickMyBorder(){
+      this.$modal.show(MyBorder,{
         hot_table : 'data',
         modal : this.$modal },
         {
@@ -254,6 +279,16 @@ export default {
   color: #ffffff;
   text-shadow: none;
   background-color: #f08e8a;
+}
+
+.go-myborder-btn {
+  background-color: #FE9C7F;
+}
+
+.go-myborder-btn:hover {
+  color: #ffffff;
+  text-shadow: none;
+  background-color: #ff7d56;
 }
 
 .go-user-page-btn {

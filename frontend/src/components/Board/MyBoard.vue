@@ -1,33 +1,21 @@
 <template>
     <div class="border-main">
-      <div v-show="current == 'BoardList'">
-        <div class="board-list" v-show="!boardDetail">
-          <h1 class="imb-font-semi-bold">게시판</h1>
-          <i class="fas fa-plus fa-2x" @click="current = 'BoardWrite'"></i>
+        <div class="board-list" v-show="!boardDetail" >
+          <h1 class="imb-font-semi-bold">내 게시물</h1>
         </div>
-      </div>
-      <div class="board-write" v-show="current == 'BoardWrite'">
-        <i class="fas fa-arrow-left fa-2x" @click="current = 'BoardList'"></i>
-        <h2 class="imb-font-semi-bold">게시물 작성</h2>
-      </div>
-      <keep-alive>
-          <component :is="current" @detail="boardDetailT"></component>
-      </keep-alive>
+        <MyBoardList @detail="boardDetailT"/>
     </div>
 </template>
 
 <script>
-import BoardList from "./BoardList.vue";
-import BoardWrite from "./BoardWrite.vue";
+import MyBoardList from "./MyBoardList.vue";
 export default {
   components:{
-    BoardList,
-    BoardWrite
+    MyBoardList
   },
   data:function(){
       return {
           del_password:'',
-          current: 'BoardList',
           boardDetail: false
       }
   },props : [
@@ -67,30 +55,15 @@ export default {
   background-image: linear-gradient(180deg, #d0368a 0%, #708ad4 99%);
   box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
 }
-.board-list, 
-.board-write{
+.board-list{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   margin-bottom: 10px;
 }
-.board-list > h1,
-.board-write > h2 {
+.board-list > h1{
   grid-column: 2/3;
   justify-self: center;
   margin-bottom: 0 !important;
-}
-.board-list > i {
-  grid-column: 3/4;
-  justify-self: end;
-}
-.board-write > i{
-  grid-column: 1/2;
-  justify-self: start;
-}
-.board-list > i:hover,
-.board-write > i:hover {
-  filter: brightness(5%);
-  cursor: pointer;
 }
 </style>
