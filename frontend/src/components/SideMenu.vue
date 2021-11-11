@@ -39,6 +39,14 @@ export default {
           width : '70%',
           height : '70%',
           draggable: false,
+        },
+        {
+          opened() {
+            localStorage.setItem("focusValid", 1);
+          },
+          closed() {
+            localStorage.setItem("focusValid", 0);
+          }
         }
       )
     },
@@ -51,6 +59,14 @@ export default {
           width : '40%',
           height : '70%',
           draggable: false,
+        },
+        {
+          opened() {
+            localStorage.setItem("focusValid", 1);
+          },
+          closed() {
+            localStorage.setItem("focusValid", 0);
+          }
         }
       )
     },
