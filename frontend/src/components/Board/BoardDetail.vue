@@ -76,35 +76,44 @@ import axios from 'axios';
     }
 </script>
 <style>
-    .main{
-        background-color: rgb(250, 250, 250);
+    .detail-main{
+        height: 100%;
     }
-    .box{
-        width: 70vw;
-        height: 80vh;
-        border: 1px rgb(219, 219, 219) solid;
-        position:absolute;
-        top:50%; left:50%;
-        transform: translate(-50%, -50%);
+    .detail-box{
+        border: 1px rgb(220, 220, 220) solid;
         display: grid;
         grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 10fr;
+        height:100%
     }
     .detail-box *{
         font-family: "IBMPlexSansKR-SemiBold";
     }
     .detail-img{
         text-align: center;
-        line-height: 80vh;
-    }
-    #img *{
         vertical-align: middle;
+        grid-row: 1 / 3;
+        border-right: 1px rgb(230, 230, 230) solid;
+        background-color: rgb(250, 250, 250);
     }
-    #text{
+    .detail-user{
+        display: flex;
+        align-items: center;
+        padding: 2px;
+        border-bottom: 1px rgb(230, 230, 230) solid;
+    }
+    .detail-user > img{
+        height: 3.5vh; 
+        width: 3.5vh; 
+        border-radius: 100px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .detail-user > div{
+        font-size: 1.5vh;
+    }
+    .detail-text{
         width: 100%;
-        height: 100%;
-        background-color: white;
-        border-left: 1px rgb(219, 219, 219) solid;
-        border-right: 1px rgb(219, 219, 219) solid;
     }
     .detail-title {
         height: auto;

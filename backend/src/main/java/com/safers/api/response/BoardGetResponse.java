@@ -1,6 +1,7 @@
 package com.safers.api.response;
 
 import com.safers.db.entity.board.Board;
+import com.safers.db.entity.board.BoardImage;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,12 @@ public class BoardGetResponse {
     String userId;
 
     @ApiModelProperty
+    String nickName;
+
+    @ApiModelProperty
+    String profileUrl;
+
+    @ApiModelProperty
     String title;
 
     @ApiModelProperty
@@ -31,12 +38,14 @@ public class BoardGetResponse {
     Boolean isDelete;
 
     @ApiModelProperty
-    List<String> fileList;
+    List<BoardImage> fileList;
 
-    public BoardGetResponse of(Board board, List<String> boardImageList) {
+    public static BoardGetResponse of(Board board, List<BoardImage> boardImageList) {
         BoardGetResponse res = new BoardGetResponse();
         res.setId(board.getId());
         res.setUserId(board.getUser().getId());
+        res.setNickName(board.getUser().getNickName());
+        res.setProfileUrl(board.getUser().getProfileUrl());
         res.setTitle(board.getTitle());
         res.setContent(board.getContent());
         res.setRegDt(board.getRegDt());

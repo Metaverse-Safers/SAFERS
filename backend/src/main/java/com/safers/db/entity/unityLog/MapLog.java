@@ -6,20 +6,20 @@ import com.safers.db.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name="map_log", schema = "safers")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(MapLog.class)
+@EntityListeners(AuditingEntityListener.class)
+@IdClass(MapLogID.class)
 public class MapLog implements Serializable {
     @Id
     @JsonBackReference
@@ -33,6 +33,7 @@ public class MapLog implements Serializable {
     @JoinColumn(name="map_id")
     Map map;
 
+    @CreatedDate
     @Column(name="reg_dt", columnDefinition = "TIMESTAMP")
-    Date regDt;
+    LocalDateTime regDt;
 }

@@ -2,7 +2,7 @@
   <div class="list-wrap">
     <div class="list-nav" v-show="boardDetail" >
       <i class="fas fa-arrow-left fa-2x" @click="boardDetailFunc"></i>
-      <h2 class="imb-font-semi-bold">'{{info.nickName}}' 님의 게시물</h2>
+      <h2 class="imb-font-semi-bold">{{info.nickName}} 님의 게시물</h2>
     </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
@@ -85,7 +85,7 @@
 
 .list-nav {
   display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
+  grid-template-columns: 1fr 11fr 1fr;
   align-items: center;
   margin-bottom: 10px;
 }
