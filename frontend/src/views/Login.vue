@@ -14,8 +14,8 @@
     methods: {
         kakaoLogin() {
         this.$kakao.Auth.authorize({
-            redirectUri: "https://localhost:8081/login/callback" // 8081: frontend, 8080: backend로 두고 테스트함.
-            //redirectUri: "https://k5a403.p.ssafy.io/login/callback", //배포용
+            //redirectUri: "https://localhost:8081/login/callback" // 8081: frontend, 8080: backend로 두고 테스트함.
+            redirectUri: "https://k5a403.p.ssafy.io/login/callback", //배포용
         });
         },
     }
