@@ -13,7 +13,7 @@
         <img class="info-frist-img" src="@/assets/images/Safers-Survey-Object.png" alt="">
       </div>
     </div>
-    <div v-else class="container">
+    <div v-else>
       <component :is='pages' v-on:nextSurvey="nextPage"></component>
     </div>
   </div>
@@ -30,12 +30,12 @@ import Page07 from "./Survey/Page07.vue";
 import Page08 from "./Survey/Page08.vue";
 import Page09 from "./Survey/Page09.vue";
 import Page10 from "./Survey/Page10.vue";
-import Result from "./Survey/PageResult.vue";
+import PageResult from "./Survey/PageResult.vue";
 
 export default {
   name: "InfoSurvey",
   components:{
-    Page01, Page02, Page03, Page04, Page05, Page06, Page07, Page08, Page09, Page10, Result
+    Page01, Page02, Page03, Page04, Page05, Page06, Page07, Page08, Page09, Page10, PageResult
   },
   data(){
     return {
@@ -44,8 +44,9 @@ export default {
     }
   },
   methods: {
-    nextPage(one){
-      console.log(one);
+    nextPage(surverData){
+      this.pages = surverData['nextPage'];
+      this.mbti[surverData['index']] += surverData['data'];
     }
   },
 }
