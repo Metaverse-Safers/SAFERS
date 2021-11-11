@@ -1,26 +1,28 @@
 <template>
-    <div class="detail-main">
-        <div class='detail-box'>
-            <div class="detail-img">
-                <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="commentGet"/>
-            </div>                                 
-            <div class="detail-user">
-                <img :src="info.profileUrl"/>
+    <div class='detail-box'>
+        <div class="detail-img">
+            <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="commentGet"/>
+        </div>                                 
+        <div class="detail-user">
+            <img :src="info.profileUrl"/>
+            <div>
                 <div>{{info.nickName}}</div>
+                <p>{{info.content}}</p>
             </div>
-            <div class="detail-text">
-                <p class="detail-title">{{info.title}}</p>
-                <p class="detail-content">{{info.content}}</p>
-                <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
-                    <img :src="list.profileUrl"/>
+        </div>
+        <div class="detail-comment-wrap">
+            <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
+                <img :src="list.profileUrl"/>
+                <div>
                     <div>{{list.nickName}}</div>
-                    <br>
-                    <p class="detail-comment">{{list.comment}}</p>
+                    <p>{{list.comment}}</p>
                 </div>
-                <div class="detail-comment-register">
-                    <input class="detail-comment-write" placeholder="댓글 달기..." v-model="comment" required/>
-                    <p class="detail-comment-register-button" @click="commentRegister">등록</p>
-                </div>
+            </div>
+        </div>
+        <div class="detail-comment-register">
+            <textarea class="detail-comment-write" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
+            <div>
+            <p class="detail-comment-register-button" @click="commentRegister">등록</p>
             </div>
         </div>
     </div>
@@ -50,7 +52,6 @@ import axios from 'axios';
                 .get('/api/board/comment/' + this.info.id)
                 .then(res => {
                     this.commentList = res.data
-                    console.log(this.commentList[0])
                 })
             },
             commentRegister() {
@@ -61,54 +62,55 @@ import axios from 'axios';
                 axios
                 .post('/api/board/comment/' + this.info.id, uploadComment)
                 .then(res => { // eslint-disable-line no-unused-vars
-                    console.log("성공")
                     this.commentGet();
                 })
-                
+                document.getElementById("detail-textarea").value='';
             },
             a(){
                 console.log(this.info)
             }
         },
         mounted(){
-            
+            this.commentGet();
         }
     }
 </script>
 <style>
-    .detail-main{
-        height: 100%;
-    }
-    .detail-box{
+    .detail-box {
         border: 1px rgb(220, 220, 220) solid;
         display: grid;
         grid-template-columns: 2fr 1fr;
-        grid-template-rows: 1fr 10fr;
+        grid-template-rows: 1fr 9fr 1fr;
         height:100%
     }
-    .detail-box *{
+    *{
         font-family: "IBMPlexSansKR-SemiBold";
     }
-    .detail-img{
+    p {
+        margin-bottom: 0 !important;
+    }
+    .detail-img {
         text-align: center;
         vertical-align: middle;
-        grid-row: 1 / 3;
+        grid-row: 1 / 4;
         border-right: 1px rgb(230, 230, 230) solid;
         background-color: rgb(250, 250, 250);
     }
     .detail-user,
     .detail-comment-list {
         display: flex;
-        align-items: center;
-        padding: 10px;
+        align-items: stretch;
+        padding: 10px 10px 0 10px;
+    }
+    .detail-user {
         border-bottom: 1px rgb(230, 230, 230) solid;
+        padding-bottom: 10px;
     }
     .detail-user > img,
     .detail-comment-list > img {
         height: 3.5vh; 
         width: 3.5vh; 
         border-radius: 100px;
-        margin-left: 10px;
         margin-right: 10px;
     }
     .detail-user > div,
@@ -124,28 +126,43 @@ import axios from 'axios';
         font-size: 20px;
         margin-bottom: 0 !important;
     }
-    .detail-content {
-        height: auto;
-        border-bottom: 1px rgb(230, 230, 230) solid;
-        padding: 10px;
+    .detail-comment {
         margin-bottom: 0 !important;
+    }
+    .detail-comment-wrap {
+        overflow: auto;
+    }
+    .detail-comment-wrap::-webkit-scrollbar {
+        display: none;
     }
     .detail-comment-register {
         display: flex;
         align-items: center;
-        padding: 2px;
+        padding: 0 2px;
         border-top: 1px rgb(230, 230, 230) solid;
+
     }
     .detail-comment-write {
         border: none;
+        resize: none;
+        overflow: auto;
         width: 100%;
         font-size: 1.5vh;
+    }
+    .detail-comment-write::-webkit-scrollbar {
+        display: none;
     }
     .detail-comment-write:focus {
         outline: none;
     }
     .detail-comment-register-button {
+        width: max-content;
         margin-bottom: 0 !important;
+        color: #c289c5;
+    }
+    .detail-comment-register-button:hover {
+        color: #632b6c;
+        cursor: pointer;
     }
     
 </style>

@@ -160,8 +160,12 @@
     }
     .write-content {
         resize: none;
+        overflow: auto;
         height: 90%;
         border-top: 1px rgb(230, 230, 230) solid;
         padding: 10px;
+    }
+    .write-content::-webkit-scrollbar {
+        display: none;
     }
 </style>

@@ -38,8 +38,8 @@ export default {
       },checktest(){
         console.log("come!")
       },
-      boardDetailT(toggle){
-        this.boardDetail = toggle;
+      boardDetailT(data){
+        this.boardDetail = data;
       }
   }
 }
