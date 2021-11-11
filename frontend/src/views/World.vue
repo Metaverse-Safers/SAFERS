@@ -6,6 +6,7 @@
       src="./unity/Build/Build.json"
       unityLoader="./unity/Build/UnityLoader.js"
       ref="hookInstance"
+      v-bind="{hideFooter: true}"
     ></unity>
   </div>
 </template>
