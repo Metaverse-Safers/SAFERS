@@ -76,6 +76,7 @@
                     this.commentGet();
                 })
                 document.getElementById("detail-textarea").value='';
+                this.comment = "";
             },
             commentDelete(id) {
                 axios
