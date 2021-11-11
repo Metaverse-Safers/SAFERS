@@ -142,7 +142,7 @@
     <td align="center">211110(수)</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 스토리라인 구현</td>
     <td></td>
     <td></td>
   </tr>
