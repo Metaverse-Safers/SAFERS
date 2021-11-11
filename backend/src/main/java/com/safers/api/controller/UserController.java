@@ -97,6 +97,7 @@ public class UserController {
 
         // 해당 회원이 사이트에 가입한 기록이 있는지 체크
         Long kakaoId = (Long) profile.get("kakaoId");
+        String profileUrl = (String) profile.get("profileUrl");
         User user = userService.getUserByKakaoId(kakaoId);
 
         // 1. 회원가입이 되어있지 않은 경우, 회원 정보 저장
@@ -107,6 +108,7 @@ public class UserController {
         }
         // 2. 탈퇴회원인 경우, code만 변경
         else if("A02".equals(user.getCode().getCode())) {
+            user.setProfileUrl(profileUrl);
             user = userService.reconnectUser(user);
             unityService.createMissionLog(user);
         }
