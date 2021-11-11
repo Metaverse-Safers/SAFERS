@@ -2,7 +2,7 @@
     <div class="detail-main">
         <div class='detail-box'>
             <div class="detail-img">
-                <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="a"/>
+                <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="commentGet"/>
             </div>                                 
             <div class="detail-user">
                 <img :src="info.profileUrl"/>
@@ -13,9 +13,9 @@
                 <p class="detail-content">{{info.content}}</p>
                 <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
                     <img :src="list.profileUrl"/>
-                    <div>{{data.nickName}}</div>
+                    <div>{{list.nickName}}</div>
                     <br>
-                    <p class="detail-content">{{data.content}}</p>
+                    <p class="detail-comment">{{list.comment}}</p>
                 </div>
                 <div class="detail-comment-register">
                     <input class="detail-comment-write" placeholder="댓글 달기..." v-model="comment" required/>
@@ -50,7 +50,7 @@ import axios from 'axios';
                 .get('/api/board/comment/' + this.info.id)
                 .then(res => {
                     this.commentList = res.data
-                    console.log(this.commentList)
+                    console.log(this.commentList[0])
                 })
             },
             commentRegister() {
@@ -96,20 +96,23 @@ import axios from 'axios';
         border-right: 1px rgb(230, 230, 230) solid;
         background-color: rgb(250, 250, 250);
     }
-    .detail-user{
+    .detail-user,
+    .detail-comment-list {
         display: flex;
         align-items: center;
-        padding: 2px;
+        padding: 10px;
         border-bottom: 1px rgb(230, 230, 230) solid;
     }
-    .detail-user > img{
+    .detail-user > img,
+    .detail-comment-list > img {
         height: 3.5vh; 
         width: 3.5vh; 
         border-radius: 100px;
         margin-left: 10px;
         margin-right: 10px;
     }
-    .detail-user > div{
+    .detail-user > div,
+    .detail-comment-list > div{
         font-size: 1.5vh;
     }
     .detail-text{
@@ -123,7 +126,7 @@ import axios from 'axios';
     }
     .detail-content {
         height: auto;
-        border-top: 1px rgb(230, 230, 230) solid;
+        border-bottom: 1px rgb(230, 230, 230) solid;
         padding: 10px;
         margin-bottom: 0 !important;
     }
