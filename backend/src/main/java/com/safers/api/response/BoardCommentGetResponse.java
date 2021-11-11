@@ -25,6 +25,9 @@ public class BoardCommentGetResponse {
     String nickName;
 
     @ApiModelProperty
+    String profileUrl;
+
+    @ApiModelProperty
     LocalDateTime regDt;
 
     @ApiModelProperty
@@ -39,6 +42,7 @@ public class BoardCommentGetResponse {
         res.setComment(boardComment.getComment());
         res.setIsDelete(boardComment.getIsDelete());
         res.setNickName(user.getNickName());
+        res.setProfileUrl(user.getProfileUrl());
         res.setRegDt(boardComment.getRegDt());
         res.setUserId(user.getId());
         res.setBoardId(boardComment.getBoard().getId());
