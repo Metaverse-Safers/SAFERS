@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class BoardUnityListResponse {
 
-    List<BoardUnityResponse> boardUnityResponses;
+    List<BoardUnityResponse> boardList;
 
     public static BoardUnityListResponse of(List<BoardUnityResponse> boardUnityListResponseList) {
         BoardUnityListResponse listResponse = new BoardUnityListResponse();
-        listResponse.setBoardUnityResponses(boardUnityListResponseList);
+        listResponse.setBoardList(boardUnityListResponseList);
         return listResponse;
     }
 }
