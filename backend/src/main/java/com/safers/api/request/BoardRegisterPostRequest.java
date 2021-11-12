@@ -23,6 +23,9 @@ public class BoardRegisterPostRequest {
     String content;
 
     @ApiModelProperty
+    String code;
+
+    @ApiModelProperty
     List<MultipartFile> fileList;
 
     @Override
@@ -31,6 +34,7 @@ public class BoardRegisterPostRequest {
                 "userId='" + userId + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", code='"+code+'\''+
                 ", fileList=" + fileList +
                 '}';
     }

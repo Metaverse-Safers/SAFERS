@@ -9,6 +9,7 @@ import com.safers.common.util.RandomIdUtil;
 import com.safers.db.entity.board.Board;
 import com.safers.db.entity.board.BoardComment;
 import com.safers.db.entity.board.BoardImage;
+import com.safers.db.entity.code.Code;
 import com.safers.db.entity.user.User;
 import com.safers.db.repository.BoardCommentRepository;
 import com.safers.db.repository.BoardImageRepository;
@@ -33,6 +34,9 @@ public class BoardService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CodeService codeService;
 
     @Autowired
     BoardRepository boardRepository;
@@ -76,12 +80,14 @@ public class BoardService {
         board.setId(id);
         // user -> id로 User 정보 가져오기
         User user = userService.getUserById(boardRegisterPostRequest.getUserId());
+        Code code = codeService.getCodeByName(boardRegisterPostRequest.getCode());
+
         board.setUser(user);
         board.setTitle(boardRegisterPostRequest.getTitle());
         board.setContent(boardRegisterPostRequest.getContent());
+        board.setCode(code);
         board.setIsDelete(false);
         boardRepository.save(board);
-
 
         for(MultipartFile multipartFile : boardRegisterPostRequest.getFileList()) {
             BoardImage image = new BoardImage();
@@ -149,6 +155,9 @@ public class BoardService {
             }
             board.setContent(boardRegisterPostRequest.getContent());
             board.setTitle(boardRegisterPostRequest.getTitle());
+
+            Code code = codeService.getCodeByName(boardRegisterPostRequest.getCode());
+            board.setCode(code);
         }
         return board;
     }
@@ -278,14 +287,15 @@ public class BoardService {
     }
 
     /**
-     * user가 작성한 글 중 regDate보다 이후에 작성된 글 목록 반환
+     * user가 작성한 글 중 code값이 일치하고 regDate보다 이후에 작성된 글 목록 반환
      * @param user
      * @param regDate
+     * @param code
      * @return List<BoardUnityResponse>
      */
-    public List<BoardUnityResponse> findBoardByUserAndRegDate(User user, LocalDateTime regDate) {
+    public List<BoardUnityResponse> findBoardByUserAndRegDateAndCode(User user, LocalDateTime regDate, Code code) {
         List<BoardUnityResponse> boardUnityResponseList = new ArrayList<>();
-        List<Board> boardList = boardRepository.findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfter(false, user, regDate).orElse(null);
+        List<Board> boardList = boardRepository.findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfterAndCodeEquals(false, user, regDate, code).orElse(null);
         for(Board board : boardList) {
             boardUnityResponseList.add(BoardUnityResponse.of(board));
         }

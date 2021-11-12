@@ -9,4 +9,5 @@ public class MissionRequest {
 
     String userId;
     String missionId;
+    String code;
 }

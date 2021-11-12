@@ -3,6 +3,7 @@ package com.safers.db.entity.board;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.safers.db.entity.BaseEntity;
+import com.safers.db.entity.code.Code;
 import com.safers.db.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,6 +39,11 @@ public class Board extends BaseEntity {
 
     @Column(name = "is_delete")
     Boolean isDelete;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "code")
+    Code code;
 
     @JsonIgnore
     @OneToMany(mappedBy="board", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
