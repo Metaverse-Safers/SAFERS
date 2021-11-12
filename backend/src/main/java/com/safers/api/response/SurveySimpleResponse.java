@@ -9,7 +9,7 @@ import lombok.Setter;
 public class SurveySimpleResponse {
 
     @ApiModelProperty
-    String mbti;
+    String name;
 
     @ApiModelProperty
     String imageUrl;

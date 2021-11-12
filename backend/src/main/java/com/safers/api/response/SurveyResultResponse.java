@@ -44,6 +44,9 @@ public class SurveyResultResponse extends BaseResponse{
     @ApiModelProperty
     List<SurveySimpleResponse> enemy;
 
+    @ApiModelProperty
+    List<SurveySimpleResponse> similar;
+
     public static SurveyResultResponse of(Integer statusCode, String message, SurveyResultResponse survey){
         survey.setStatusCode(statusCode);
         survey.setStatusMessage(message);
