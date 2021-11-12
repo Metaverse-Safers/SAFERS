@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/survey")
 @Api(value = "SurveyController", tags = "SurveyController",
         description="설문조사 관련 컨트롤러")
-public class SurveyContoller {
+public class SurveyController {
 
     @Autowired
     SurveyService surveyService;
