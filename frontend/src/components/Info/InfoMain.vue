@@ -274,6 +274,8 @@ export default {
 
 .info-main-headline-div{
   background-image: url("../../assets/images/Safers-Info-Img.png");
+  background-repeat: no-repeat;
+  /* background: #E8FAFF; */
 }
 
 .info-number{

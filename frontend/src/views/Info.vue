@@ -14,10 +14,7 @@
         </div>
       </nav>
     </div>
-    <keep-alive>
-        <component :is="current"></component>
-    </keep-alive>
-
+    <component :is="current"></component>
     <Footer></Footer>
   </div>
 </template>
