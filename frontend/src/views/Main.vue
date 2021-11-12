@@ -45,6 +45,9 @@ export default {
     )
       this.loggedIn = false;
     console.log(this.userProfile);
+
+    // 홈화면 이동시 photonnetwork disconnect
+    localStorage.setItem("homeValid", 1);
   },
   methods: {
     clickStart() {

@@ -27,6 +27,9 @@ export default {
   mounted() {
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
+
+    // 게임화면 이동시 connect valid
+    localStorage.setItem("homeValid", 0);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
