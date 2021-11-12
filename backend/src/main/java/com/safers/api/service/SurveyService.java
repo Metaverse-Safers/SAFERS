@@ -60,7 +60,7 @@ public class SurveyService {
     public SurveySimpleResponse findMbtiSimpleData(String mbti){
         Survey survey = surveyRepository.findById(mbti).get();
         SurveySimpleResponse response = new SurveySimpleResponse();
-        response.setMbti(survey.getMbti());
+        response.setName(survey.getName());
         response.setImageUrl(survey.getImageUrl());
         return response;
     }
