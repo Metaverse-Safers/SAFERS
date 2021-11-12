@@ -4,8 +4,10 @@ import com.safers.api.request.MissionLogRequest;
 import com.safers.api.request.MissionRequest;
 import com.safers.api.response.*;
 import com.safers.api.service.BoardService;
+import com.safers.api.service.CodeService;
 import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
+import com.safers.db.entity.code.Code;
 import com.safers.db.entity.unity.Mission;
 import com.safers.db.entity.unityLog.MissionLog;
 import com.safers.db.entity.user.User;
@@ -36,6 +38,9 @@ public class UnityController {
 
     @Autowired
     BoardService boardService;
+
+    @Autowired
+    CodeService codeService;
 
     @GetMapping("/mission")
     @ApiOperation(value = "회원의 미션 정보 조회", notes = "회원 Id로 회원의 현재 미션 수행 정보를 가져온다.")
@@ -121,9 +126,9 @@ public class UnityController {
 
         User user = userService.getUserById(missionRequest.getUserId());
         Mission mission = unityService.getMissionById(missionRequest.getMissionId());
-
+        Code code = codeService.getCodeById(missionRequest.getCode());
         LocalDateTime regDate = unityService.getRegDateByUserAndMission(user, mission);
-        List<BoardUnityResponse> boardUnityResponses = boardService.findBoardByUserAndRegDate(user, regDate);
+        List<BoardUnityResponse> boardUnityResponses = boardService.findBoardByUserAndRegDateAndCode(user, regDate, code);
 
         return ResponseEntity.ok(BoardUnityListResponse.of(boardUnityResponses));
     }

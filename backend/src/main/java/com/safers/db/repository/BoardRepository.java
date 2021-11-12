@@ -1,6 +1,7 @@
 package com.safers.db.repository;
 
 import com.safers.db.entity.board.Board;
+import com.safers.db.entity.code.Code;
 import com.safers.db.entity.user.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,5 +21,5 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     @Override
     Optional<Board> findById(String id);
 
-    Optional<List<Board>> findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfter(Boolean isDelete, User user, LocalDateTime regDate);
+    Optional<List<Board>> findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfterAndCodeEquals(Boolean isDelete, User user, LocalDateTime regDate, Code code);
 }
