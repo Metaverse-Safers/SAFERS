@@ -20,12 +20,8 @@ export default {
   },
   methods:{
     getMBTIData(){
-      axios.post({
-        url: "api/survey",
-        data: {
-          mbti: this.mbtiString
-        }
-      })
+      console.log("FE 호출");
+      axios.get("/api/survey/" + this.mbtiString)
       .then(res => {
         console.log(res);
       }).catch(err=>{
