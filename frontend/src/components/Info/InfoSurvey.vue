@@ -14,7 +14,7 @@
       </div>
     </div>
     <div v-else>
-      <component :is='pages' v-on:nextSurvey="nextPage"></component>
+      <component :is='pages' v-on:nextSurvey="nextPage" :mbti="mbti"></component>
     </div>
   </div>
 </template>
