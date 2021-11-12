@@ -158,7 +158,7 @@
     <td align="center">211112(금)</td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 북극 퀘스트 구현</td>
     <td></td>
     <td></td>
   </tr>
