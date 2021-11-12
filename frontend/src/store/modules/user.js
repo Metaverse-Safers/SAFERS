@@ -95,6 +95,7 @@ const user = {
         .then(function (result) {
           console.log(result)
           commit("SET_USER_PROFILE", result.data);
+          localStorage.setItem("nickname", result.data.nickName);
         })
         .catch(function (error) {
           console.log(error)
