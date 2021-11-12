@@ -1,21 +1,21 @@
 <template>
   <div class="list-wrap">
     <div class="list-nav" v-show="boardDetail" >
-      <i class="fas fa-arrow-left fa-2x" @click="boardDetailFunc"></i>
+      <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
       <h2 class="imb-font-semi-bold">{{info.title}}</h2>
     </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
         <img :src= data.fileList[0].filePath @click="boardDetailInfo(data)">
       </div>
-      <infinite-loading @infinite='infiniteHandler'>
-        <div 
-          slot='no-more'
-          style="color:rgb(102,102,102); font-size: 14px; padding:10px 0px;">
-          목록의 끝입니다
-        </div>
-      </infinite-loading>
     </div>
+    <infinite-loading @infinite='infiniteHandler' spinner="bubbles" v-show="!boardDetail">
+      <div 
+        slot='no-more'
+        style="color:rgb(100,100,100); font-size: 15px; padding:0px 0px 10px 0px;">
+        목록의 끝입니다
+      </div>
+    </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
       <BoardDetail :info="info"/>
     </div>
@@ -91,18 +91,15 @@
 }
 
 .list-nav > h2 {
-  grid-column: 2/3;
   justify-self: center;
   margin-bottom: 0 !important;
 }
 
-.list-nav > i {
-  grid-column: 1/2;
+.go-back {
   justify-self: start;
 }
 
-.list-nav > i:hover{
-  filter: brightness(5%);
+.go-back:hover {
   cursor: pointer;
 }
 

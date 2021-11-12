@@ -3,20 +3,20 @@
     <div class="list-nav" v-show="boardDetail">
       <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
       <h2 class="imb-font-semi-bold">{{info.title}}</h2>
-      <i class="far fa-trash-alt fa-2x board-delete"></i>
+      <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete"></i>
     </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
         <img :src= data.fileList[0].filePath @click="boardDetailInfo(data)">
       </div>
-      <infinite-loading @infinite='infiniteHandler'>
-        <div 
-          slot='no-more'
-          style="color:rgb(102,102,102); font-size: 14px; padding:10px 0px;">
-          목록의 끝입니다
-        </div>
-      </infinite-loading>
     </div>
+    <infinite-loading @infinite='infiniteHandler' :identifier="infiniteId" spinner="bubbles" v-show="!boardDetail">
+      <div 
+        slot='no-more'
+        style="color:rgb(100,100,100); font-size: 15px; padding:0px 0px 10px 0px;">
+        목록의 끝입니다
+      </div>
+    </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
       <MyBoardDetail :info="info"/>
     </div>
@@ -38,7 +38,8 @@
         info: [],
         boardDetail: false,
         boardList: [],
-        page: 0
+        page: 0,
+        infiniteId: +new Date()
       }
     },
     computed: {
@@ -54,7 +55,7 @@
           .then(res => {
             if(res.data.length == 0){
               $state.complete();
-            }
+            } 
             else{
               setTimeout(() => {
                 for(let i=0; i<res.data.length; i++)
@@ -80,6 +81,25 @@
       boardDetailFunc(){
         this.boardDetail=false;
         this.$emit('detail',false);
+      },
+      infiniteScrollRefresh(){
+        this.page = 0;
+        this.boardList = [];
+        this.infiniteId += 1 
+      },
+      async boardDelete(){
+        var confirm = false;
+        await this.$fire({title: "삭제하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
+        .then(function(result) {if(result.value) confirm = true})
+        if(confirm){
+            this.$fire({title: "삭제 되었습니다!", text: "삭제 완료", type: "success", timer: 1000, showConfirmButton: false})
+            this.boardDetailFunc();
+            axios
+            .patch('/api/board/delete/' + this.info.id)
+            .then(res => { // eslint-disable-line no-unused-vars
+            })
+            this.infiniteScrollRefresh();
+        }
       }
     }
   }
@@ -106,12 +126,17 @@
   justify-self: start;
 }
 
-.board-delete {
-  justify-self: end;
+.go-back:hover {
+  cursor: pointer;
 }
 
-.list-nav > i:hover{
-  filter: brightness(5%);
+.board-delete {
+  justify-self: end;
+  color: #5f0000;
+}
+
+.board-delete:hover {
+  color: #ff0000;
   cursor: pointer;
 }
 

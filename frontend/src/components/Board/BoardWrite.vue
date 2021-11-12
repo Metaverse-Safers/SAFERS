@@ -11,7 +11,7 @@
                 <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
             </div>
             <div>
-                <input class="imb-font-semi-bold write-text write-title"  placeholder="제목" v-model="boardInfo.title" required/>
+                <input class="imb-font-semi-bold write-text write-title"  placeholder="제목..." v-model="boardInfo.title" required/>
                 <textarea class="imb-font-semi-bold write-text write-content"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
             </div>
         </form>
@@ -150,6 +150,7 @@
         border: none;
         width: 100%;
         font-size: 1.5vh;
+        font-family: "IBMPlexSansKR-Regular";
     }
     .write-text:focus {
         outline: none;

@@ -7,7 +7,7 @@
             <img :src="info.profileUrl"/>
             <div>
                 <div>{{info.nickName}}</div>
-                <p>{{info.content}}</p>
+                <p class="detail-text">{{info.content}}</p>
             </div>
         </div>
         <div class="detail-comment-wrap">
@@ -16,7 +16,7 @@
                     <img :src="list.profileUrl"/>
                     <div>
                         <div>{{list.nickName}}</div>
-                        <p>{{list.comment}}</p>
+                        <p class="detail-text">{{list.comment}}</p>
                     </div>
                 </div>
                 <div>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="detail-comment-register">
-            <textarea class="detail-comment-write" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
+            <textarea class="detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
             <div>
                 <p class="detail-comment-register-button" @click="commentRegister">등록</p>
             </div>
@@ -137,7 +137,7 @@
         font-size: 1.5vh;
     }
     .detail-text{
-        width: 100%;
+        font-family: "IBMPlexSansKR-Regular";
     }
     .detail-title {
         height: auto;
