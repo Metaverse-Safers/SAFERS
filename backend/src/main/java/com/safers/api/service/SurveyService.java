@@ -44,6 +44,14 @@ public class SurveyService {
         for (String singleEnemy: survey.getEnemy().split("/"))
             enemy.add(findMbtiSimpleData(singleEnemy));
 
+        List<Survey> seimilar = surveyRepository.findAllByArea(survey.getArea()).get();
+        List<SurveySimpleResponse> seimilarList = new ArrayList<SurveySimpleResponse>();
+        for (Survey seim: seimilar) {
+            if(seim.getMbti().equals(survey.getMbti()))
+                continue;
+            seimilarList.add(findMbtiSimpleData(seim.getMbti()));
+        }
+
         return SurveyResultResponse.builder()
                 .mbti(survey.getMbti())
                 .area(survey.getArea())
@@ -54,7 +62,9 @@ public class SurveyService {
                 .extinction(extinction)
                 .personality(personality)
                 .buddy(buddy)
-                .enemy(enemy).build();
+                .enemy(enemy)
+                .similar(seimilarList)
+                .build();
     }
 
     public SurveySimpleResponse findMbtiSimpleData(String mbti){
