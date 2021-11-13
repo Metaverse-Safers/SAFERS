@@ -104,7 +104,7 @@ public class UnityService {
             missionLogList = new ArrayList<MissionLog>();
 
         for (MissionLog missionLog : missionLogList){
-            missionLogResponseList.add(MissionLogResponse.of(missionLog));
+            missionLogResponseList.add(MissionLogResponse.of(missionLog, missionLog.getMission()));
         }
 
         return missionLogResponseList;

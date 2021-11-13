@@ -52,19 +52,6 @@ public class UnityController {
         return ResponseEntity.ok(MissionLogListResponse.of(missionLogList));
     }
 
-    @PostMapping("/mission")
-    @ApiOperation(value = "회원의 미션 정보 수정", notes = "회원의 미션 수행 내역을 변경한다.")
-    public ResponseEntity<MissionLogResponse> updateMissionLog(@RequestBody MissionLogRequest missionLog) {
-
-        User user = userService.getUserById(missionLog.getUserId());
-        Mission mission = unityService.getMissionById(missionLog.getMissionId());
-
-        MissionLog updateMissionLog = unityService.updateMissionLog(user, mission, missionLog.getCode());
-
-        return ResponseEntity.ok(MissionLogResponse.of(updateMissionLog));
-    }
-    
-
     @ApiOperation(value = "회원 동물 해금 현황", notes = "해당 회원의 동물 해금 내역을 가져온다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "동물 로그 조회 성공"),

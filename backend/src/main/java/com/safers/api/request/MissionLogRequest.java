@@ -10,5 +10,4 @@ public class MissionLogRequest {
     String userId;
     String missionId;
     String code;
-
 }
