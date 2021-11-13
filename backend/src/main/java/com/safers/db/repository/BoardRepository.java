@@ -22,4 +22,6 @@ public interface BoardRepository extends JpaRepository<Board, String> {
     Optional<Board> findById(String id);
 
     Optional<List<Board>> findAllByIsDeleteEqualsAndUserEqualsAndRegDtIsAfterAndCodeEquals(Boolean isDelete, User user, LocalDateTime regDate, Code code);
+
+    Optional<List<Board>> findAllByUserEquals(User user);
 }

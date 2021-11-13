@@ -5,9 +5,12 @@ import com.safers.api.request.UserTokenRequest;
 import com.safers.api.response.UserPresentResponse;
 import com.safers.api.response.UserResponse;
 import com.safers.api.response.UserTokenResponse;
+import com.safers.api.service.BoardService;
 import com.safers.api.service.KakaoService;
 import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
+import com.safers.db.entity.board.Board;
+import com.safers.db.entity.board.BoardComment;
 import com.safers.db.entity.user.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import static java.util.Objects.isNull;
 
@@ -36,6 +40,8 @@ public class UserController {
     KakaoService kakaoService;
     @Autowired
     UnityService unityService;
+    @Autowired
+    BoardService boardService;
 
     @GetMapping("/token")
     @ApiOperation(value = "Token 요청", notes = "발급된 code로 사용자의 Token을 발급한다.")
@@ -135,6 +141,23 @@ public class UserController {
         userService.disconnectUser(user);
         userService.deleteToken(user);
         unityService.deleteMissionLog(user);
+        
+        // 게시글 is_delete 처리
+        List<Board> boardList = boardService.findBoardListByUserId(user);
+        for(Board board : boardList) {
+            boardService.deleteBoard(board.getId());
+        }
+        
+        // 댓글 is_delete 처리
+        List<BoardComment> boardCommentList = boardService.findBoardCommentByUserId(user.getId());
+        for(BoardComment boardComment : boardCommentList) {
+            boardService.deleteBoardComment(boardComment.getId());
+        }
+
+        // animal log 지우기
+        unityService.deleteAnimalLog(user);
+        // map log 지우기
+        unityService.deleteMapLog(user);
 
         return ResponseEntity.ok("회원탈퇴 되었습니다.");
     }
