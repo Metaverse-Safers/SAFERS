@@ -14,11 +14,11 @@
       </div>
 
       <div class="menu-item go-myborder-btn" id="goMyBoard" @click="clickMyBorder">
-        <i class="fas fa-chalkboard-teacher"></i>
+        <i class="fas fa-book-reader"></i>
       </div>
 
       <div class="menu-item go-user-page-btn" @click="clickMyPage">
-        <i class="fas fa-user"></i>
+        <i class="fas fa-user-cog"></i>
       </div>
 
       <div class="menu-item logout-btn" @click="clickLogout">
@@ -202,6 +202,11 @@ export default {
   transition-duration: 180ms;
 }
 
+.menu-item:nth-child(7) {
+  -webkit-transition-duration: 180ms;
+  transition-duration: 180ms;
+}
+
 .menu-open-button {
   z-index: 2;
   -webkit-transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -261,34 +266,41 @@ export default {
   transform: translate3d(0.08361px, 320.99997px, 0);
 }
 
+.menu-open:checked ~ .menu-item:nth-child(7) {
+  transition-duration: 380ms;
+  -webkit-transition-duration: 380ms;
+  -webkit-transform: translate3d(0.08361px, 400.99997px, 0);
+  transform: translate3d(0.08361px, 400.99997px, 0);
+}
+
 .go-home-btn {
-  background-color: #FFC1A0;
+  background-color: #ffc792;
 }
 
 .go-home-btn:hover {
   color: #ffffff;
   text-shadow: none;
-  background-color: #fcb087;
+  background-color: #f8b679;
 }
 
 .go-border-btn {
-  background-color: #F09F9C;
+  background-color: #fdaa8f;
 }
 
 .go-border-btn:hover {
   color: #ffffff;
   text-shadow: none;
-  background-color: #f08e8a;
+  background-color: #ee8a6b;
 }
 
 .go-myborder-btn {
-  background-color: #FE9C7F;
+  background-color: #f88da8;
 }
 
 .go-myborder-btn:hover {
   color: #ffffff;
   text-shadow: none;
-  background-color: #ff7d56;
+  background-color: #fa7093;
 }
 
 .go-user-page-btn {
