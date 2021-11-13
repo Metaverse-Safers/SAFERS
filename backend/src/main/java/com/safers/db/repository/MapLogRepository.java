@@ -13,4 +13,5 @@ import java.util.Optional;
 public interface MapLogRepository extends JpaRepository<MapLog, MapLogID> {
 
     Optional<List<MapLog>> findAllByUser(User user);
+    void deleteAllByUser(User user);
 }

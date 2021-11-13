@@ -1,10 +1,7 @@
 package com.safers.db.entity.unity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.safers.db.entity.BaseEntity;
-import com.safers.db.entity.code.Code;
-import com.safers.db.entity.unityLog.MapLog;
 import com.safers.db.entity.unityLog.MissionLog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +24,9 @@ public class Mission extends BaseEntity {
 
     @Column(name="next_mission", columnDefinition = "TEXT")
     String nextMission;
+
+    @Column(name="animal_name", columnDefinition = "TEXT")
+    String animalName;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "mission", cascade = {CascadeType.REMOVE}, orphanRemoval = true)

@@ -14,6 +14,7 @@ public class MissionResponse {
     String title;
     String nextMission;
     String resultId;
+    String animalName;
 
     public static MissionResponse of(Mission mission) {
         return MissionResponse.builder()
@@ -21,6 +22,7 @@ public class MissionResponse {
                 .title(mission.getTitle())
                 .nextMission(mission.getNextMission())
                 .resultId(mission.getResultId())
+                .animalName(mission.getAnimalName())
                 .build();
     }
 }

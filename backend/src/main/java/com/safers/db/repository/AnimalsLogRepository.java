@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface AnimalsLogRepository extends JpaRepository<AnimalsLog, MapLogID> {
 
     Optional<List<AnimalsLog>> findAllByUser(User user);
+    void deleteAllByUser(User user);
 }

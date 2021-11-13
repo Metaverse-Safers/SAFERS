@@ -195,6 +195,15 @@ public class BoardService {
     }
 
     /**
+     * 내가 쓴 글 가져오기 -> 회원 탈퇴의 경우
+     * @param user
+     * @return List<Board>
+     */
+    public List<Board> findBoardListByUserId(User user) {
+        return boardRepository.findAllByUserEquals(user).orElse(null);
+    }
+    
+    /**
      * 반환할 게시글 정보 넣기 (전체 게시글 / 내가 쓴 게시글 조회 시 사용) -> 완료
      * @param boardGetResponseList
      * @param boardPage
@@ -286,6 +295,15 @@ public class BoardService {
         return boardCommentGetResponses;
     }
 
+    /**
+     * 특정 회원이 작성한 댓글 목록 (회원 탈퇴시 사용)
+     * @param userId
+     * @return List<BoardComment>
+     */
+    public List<BoardComment> findBoardCommentByUserId(String userId) {
+        return boardCommentRepository.findAllByUserId(userId).orElse(null);
+    }
+    
     /**
      * user가 작성한 글 중 code값이 일치하고 regDate보다 이후에 작성된 글 목록 반환
      * @param user

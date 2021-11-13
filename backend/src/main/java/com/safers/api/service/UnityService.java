@@ -113,12 +113,25 @@ public class UnityService {
     /**
      * 회원의 미션로그 모두 삭제하기 -> 회원 탈퇴 시
      * @param user
-     * @return boolean
      */
     @Transactional
     public void deleteMissionLog(User user){
         missionLogRepository.deleteAllByUser(user);
     }
+
+    /**
+     * 회원의 동물로그 모두 삭제하기 -> 회원 탈퇴 시
+     * @param user
+     */
+    @Transactional
+    public void deleteAnimalLog(User user) { animalsLogRepository.deleteAllByUser(user); }
+
+    /**
+     * 회원의 맵 로그 모두 삭제하기 -> 회원 탈퇴 시
+     * @param user
+     */
+    @Transactional
+    public void deleteMapLog(User user) { mapLogRepository.deleteAllByUser(user); }
 
     /**
      * 회원의 미션로그 수정 -> 미션 활성화->시작가능 / 시작가능->진행중 / 진행중->미션 종료

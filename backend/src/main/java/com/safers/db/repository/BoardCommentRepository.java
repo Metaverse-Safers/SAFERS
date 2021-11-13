@@ -14,4 +14,6 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Stri
     Optional<BoardComment> findById(String commentId);
 
     Optional<List<BoardComment>> findAllByBoardEqualsAndIsDeleteEquals(Board board, Boolean isDelete);
+
+    Optional<List<BoardComment>> findAllByUserId(String userId);
 }
