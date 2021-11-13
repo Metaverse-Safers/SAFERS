@@ -56,8 +56,7 @@ export default {
         this.$router.push("/world");
       }
       else{
-        this.$fire({title: "로그인이 필요합니다!", type: "warning", timer: 2000, showConfirmButton: false})
-        .then(() => this.$router.push({ name: "login" }));
+        this.$router.push("/info");
       }
     },
     async clickLogout() {
