@@ -275,6 +275,7 @@ export default {
 .info-main-headline-div{
   background-image: url("../../assets/images/Safers-Info-Img.png");
   background-repeat: no-repeat;
+  background-size: 100%;
   /* background: #E8FAFF; */
 }
 
