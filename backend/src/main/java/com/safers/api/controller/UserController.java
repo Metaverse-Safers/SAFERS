@@ -117,6 +117,7 @@ public class UserController {
             user.setProfileUrl(profileUrl);
             user = userService.reconnectUser(user);
             unityService.createMissionLog(user);
+            unityService.createMapLog(user);
         }
 
         // accessToken과 refreshToken 저장
