@@ -13,7 +13,7 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Stri
     @Override
     Optional<BoardComment> findById(String commentId);
 
-    Optional<List<BoardComment>> findAllByBoardEqualsAndIsDeleteEqualsOOrderByRegDtDesc(Board board, Boolean isDelete);
+    Optional<List<BoardComment>> findAllByBoardEqualsAndIsDeleteEqualsOrderByRegDtDesc(Board board, Boolean isDelete);
 
     Optional<List<BoardComment>> findAllByUserId(String userId);
 }
