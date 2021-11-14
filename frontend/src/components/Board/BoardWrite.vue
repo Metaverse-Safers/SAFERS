@@ -90,24 +90,30 @@
                 }
             },  
             register() {
-                const uploadBoard = new FormData();
-                uploadBoard.append("title", this.boardInfo.title);
-                uploadBoard.append("userId", this.userInfo.id);
-                for (var i = 0; i < this.selectFiles.length; i++){
-                    uploadBoard.append("fileList", this.selectFiles[i]);
+                if (this.boardInfo.title == "" || this.selectFiles.length == 0 || this.boardInfo.content == ""){
+                    this.$fire({title: "사진이나 내용을 넣어주세요", text: "사진이나 내용 없음", type: "error", timer: 1000, showConfirmButton: false})
                 }
-                uploadBoard.append("content", this.boardInfo.content);
-                axios.post('/api/board', uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
-                .then(res => {  // eslint-disable-line no-unused-vars
-                    this.$fire({title: "등록 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
-                    this.boardInfo.title="";
-                    this.boardInfo.content="";
-                    this.selectFiles=[];
-                    this.previewImgUrls=[];
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+                else{
+                    const uploadBoard = new FormData();
+                    uploadBoard.append("title", this.boardInfo.title);
+                    uploadBoard.append("userId", this.userInfo.id);
+                    for (var i = 0; i < this.selectFiles.length; i++){
+                        uploadBoard.append("fileList", this.selectFiles[i]);
+                    }
+                    uploadBoard.append("content", this.boardInfo.content);
+                    axios.post('/api/board', uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
+                    .then(res => {  // eslint-disable-line no-unused-vars
+                        this.$fire({title: "등록 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
+                        this.boardInfo.title="";
+                        this.boardInfo.content="";
+                        this.selectFiles=[];
+                        this.previewImgUrls=[];
+                        this.$emit('write', 'BoardList');
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                }
             }
         },
         computed: {
