@@ -80,7 +80,7 @@ public class BoardService {
         board.setId(id);
         // user -> id로 User 정보 가져오기
         User user = userService.getUserById(boardRegisterPostRequest.getUserId());
-        Code code = codeService.getCodeByName(boardRegisterPostRequest.getCode());
+        Code code = codeService.getCodeByCode(boardRegisterPostRequest.getCode());
 
         board.setUser(user);
         board.setTitle(boardRegisterPostRequest.getTitle());
