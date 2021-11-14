@@ -14,10 +14,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardImage extends BaseEntity {
-    @Column(name = "file_path")
+    @Column(name = "file_path", columnDefinition = "TEXT")
     String filePath;
 
-    @Column(name="file_name")
+    @Column(name="file_name", columnDefinition = "TEXT")
     String fileName;
 
     @JsonBackReference
