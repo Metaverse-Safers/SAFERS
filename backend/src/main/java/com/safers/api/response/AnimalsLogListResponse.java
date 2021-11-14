@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class AnimalsLogListResponse {
 
-    List<AnimalsLogResponse> animalsLogResponseList;
+    List<AnimalsLogResponse> animalsLogList;
 
     public static AnimalsLogListResponse of(List<AnimalsLogResponse> animalsLogResponseList){
         AnimalsLogListResponse response = new AnimalsLogListResponse();
-        response.setAnimalsLogResponseList(animalsLogResponseList);
+        response.setAnimalsLogList(animalsLogResponseList);
         return response;
     }
 }
