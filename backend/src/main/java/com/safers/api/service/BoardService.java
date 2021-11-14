@@ -281,7 +281,7 @@ public class BoardService {
     public List<BoardCommentGetResponse> findBoardCommentList(String boardId) {
         List<BoardCommentGetResponse> boardCommentGetResponses = new ArrayList<>();
         Board board = boardRepository.getById(boardId);
-        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByBoardEqualsAndIsDeleteEquals(board, false);
+        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByBoardEqualsAndIsDeleteEqualsOOrderByRegDtDesc(board, false);
         if(!commentList.isPresent())
             return null;
         for(BoardComment boardComment : commentList.get()) {
