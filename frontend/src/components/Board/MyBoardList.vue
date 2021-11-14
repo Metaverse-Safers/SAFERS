@@ -26,7 +26,7 @@
 <script>
   import axios from "axios";
   import InfiniteLoading from 'vue-infinite-loading';
-  import MyBoardDetail from "./MyBoardDetail.vue";
+  import MyBoardDetail from "./BoardDetail.vue";
   import { mapGetters } from "vuex";
   export default {
     components: {

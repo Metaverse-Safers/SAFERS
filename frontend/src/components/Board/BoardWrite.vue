@@ -1,11 +1,21 @@
 <template>
     <div class="write-wrap">
+        
         <form class="write-box" enctype="multipart/form-data">
-            <label class="write-img" className="input-file-button" for="rg-img-selctor">
-                <img v-if="img.previewImgUrl" :src="img.previewImgUrl"/>
-                <p v-else class="imb-font-semi-bold">사진 선택</p>
-            </label>
-            <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*" required/>
+            <div class="write-img">
+                <Swiper class="write-swiper" :options="swiperOption" v-if="previewImgUrls">
+                    <SwiperSlide class="write-swiper-slide" v-for="(data, idx) in previewImgUrls" v-bind:key="idx">
+                            <img :src="data" class="write-swiper-img"/>
+                    </SwiperSlide>
+                    <div class="swiper-pagination" slot="pagination"></div>
+                    <div class="swiper-button-prev" slot="button-prev"></div>
+                    <div class="swiper-button-next" slot="button-next"></div>
+                </Swiper>
+                <label className="input-file-button" for="rg-img-selctor">
+                    <p class="imb-font-semi-bold write-img-selector">사진 선택</p>
+                </label>
+                <input id="rg-img-selctor" type="file" ref="selectFile" multiple style="display: none" @change="previewFile" accept="image/*" required/>
+            </div>
             <div class="write-user">
                 <img :src="userProfile.profileUrl"/>
                 <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
@@ -24,7 +34,13 @@
 <script>
     import axios from "axios";
     import { mapGetters } from "vuex";
+    import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+    import 'swiper/css/swiper.css'
     export default {
+        components: {
+            Swiper,
+            SwiperSlide
+        },
         data() {
             return{
                 userInfo: {},
@@ -32,50 +48,62 @@
                     title: "",
                     content: ""
                 },
-                img: {
-                    selectFile: null,
-                    previewImgUrl: null, // 미리보기 이미지 URL
-                    isUploading: false, // 파일 업로드 체크
+                selectFiles:[],
+                previewImgUrls:[],
+                swiperOption: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    loop: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev'
+                    }
                 }
             }
         },
         methods: {
             previewFile(e) {
+                this.selectFiles=[];
+                this.previewImgUrls=[];
                 // 선택된 파일이 있는가?
                 if (e.target.files.length > 0) {
-                    // 0 번째 파일을 가져 온다.
-                    const file = e.target.files[0];
-                    // 확장자 명 가져오기
-                    let fileExt = file.name.substring(file.name.lastIndexOf(".") + 1); 
-                    fileExt = fileExt.toLowerCase()
-                    // 이미지 확장자 체크, 3메가 바이트 이하 인지 체크 
-                    if(["jpeg", "png", "gif", "bmp", "jpg", "jfif"].includes(fileExt)
-                            && file.size <= 3145728){
-                        this.img.selectFile = file;
-                        this.img.previewImgUrl = URL.createObjectURL(file);
+                    for(var i=0; i<e.target.files.length; i++){
+                        // i 번째 파일을 가져 온다.
+                        var file = e.target.files[i];
+                        // 확장자 명 가져오기
+                        var fileExt = file.name.substring(file.name.lastIndexOf(".") + 1); 
+                        fileExt = fileExt.toLowerCase()
+                        // 이미지 확장자 체크, 3메가 바이트 이하 인지 체크 
+                        if(["jpeg", "png", "gif", "bmp", "jpg", "jfif"].includes(fileExt)
+                                && file.size <= 3145728){
+                            this.selectFiles.push(file);
+                            this.previewImgUrls.push(URL.createObjectURL(file));
+                        }
+                        else {
+                            alert("3MB 이하의 이미지 파일만 가능합니다.");
+                        }
                     }
-                    else {
-                        alert("3MB 이하의 이미지 파일만 가능합니다.")
-                    }
-                } else {
-                    // 파일을 선택하지 않았을때
-                    this.img.selectFile = null
-                    this.img.previewImgUrl = null
                 }
             },  
             register() {
                 const uploadBoard = new FormData();
                 uploadBoard.append("title", this.boardInfo.title);
                 uploadBoard.append("userId", this.userInfo.id);
-                uploadBoard.append("fileList", this.img.selectFile);
+                for (var i = 0; i < this.selectFiles.length; i++){
+                    uploadBoard.append("fileList", this.selectFiles[i]);
+                }
                 uploadBoard.append("content", this.boardInfo.content);
-                axios.post('/api/board', uploadBoard)
+                axios.post('/api/board', uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
                 .then(res => {  // eslint-disable-line no-unused-vars
-                    this.$alert( "등록 되었습니다!", "완료", "success")
+                    this.$fire({title: "등록 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
                     this.boardInfo.title="";
                     this.boardInfo.content="";
-                    this.img.selectFile="";
-                    this.img.previewImgUrl="";
+                    this.selectFiles=[];
+                    this.previewImgUrls=[];
                 })
                 .catch(err => {
                     console.log(err);
@@ -108,21 +136,32 @@
         grid-column: 1 / 2;
         grid-row: 1 / 3;
     }
-    .write-img:hover {
-        background-color: rgb(200, 200, 200);
-        cursor: pointer;
+    .write-swiper {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        vertical-align: middle;
+        border-right: 1px rgb(230, 230, 230) solid;
+        background-color: rgb(250, 250, 250);
     }
-    .write-img > img {
+    .write-swiper-slide {
+        width: 100% !important;
+    }
+    .write-swiper-img {
         height:100%; 
         width:100%; 
         object-fit: contain;
     }
-    .write-img > p {
+    .write-img-selector {
         display: flex;
         align-items: center;
         justify-content: center;
         height: 100%;
-        font-size: 2vh;
+        font-size: 1.5vh;
+    }
+    .write-img-selector:hover {
+        color: rgb(200, 200, 200);
+        cursor: pointer;
     }
     .write-btn{
         display: flex;

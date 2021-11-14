@@ -1,13 +1,18 @@
 <template>
-    <div class='detail-box imb-font-semi-bold'>
-        <div class="detail-img">
-            <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="commentGet"/>
-        </div>                                 
+    <div class='detail-box'>
+        <Swiper class="detail-swiper" :options="swiperOption" @click="commentGet">
+            <SwiperSlide v-for="(data, idx) in info.fileList" v-bind:key="idx">
+                <img :src="data.filePath" class="detail-swiper-img"/>
+            </SwiperSlide>
+            <div class="swiper-pagination" slot="pagination"></div>
+            <div class="swiper-button-prev" slot="button-prev"></div>
+            <div class="swiper-button-next" slot="button-next"></div>
+        </Swiper>                                 
         <div class="detail-user">
             <img :src="info.profileUrl"/>
             <div>
-                <div>{{info.nickName}}</div>
-                <p class="detail-text margin-bottom-zero">{{info.content}}</p>
+                <div class="imb-font-semi-bold">{{info.nickName}}</div>
+                <p class="imb-font-semi-bold detail-text">{{info.content}}</p>
             </div>
         </div>
         <div class="detail-comment-wrap">
@@ -15,8 +20,8 @@
                 <div class="detail-comment">
                     <img :src="list.profileUrl"/>
                     <div>
-                        <div>{{list.nickName}}</div>
-                        <p class="detail-text margin-bottom-zero">{{list.comment}}</p>
+                        <div class="imb-font-semi-bold">{{list.nickName}}</div>
+                        <p class="imb-font-semi-bold detail-text">{{list.comment}}</p>
                     </div>
                 </div>
                 <div>
@@ -25,9 +30,9 @@
             </div>
         </div>
         <div class="detail-comment-register">
-            <textarea class="detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
+            <textarea class="imb-font-semi-bold detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
             <div>
-                <p class="detail-comment-register-button margin-bottom-zero" @click="commentRegister">등록</p>
+                <p class="imb-font-semi-bold detail-comment-register-button" @click="commentRegister">등록</p>
             </div>
         </div>
     </div>
@@ -36,11 +41,30 @@
 <script>
     import axios from 'axios';
     import { mapGetters } from "vuex";
+    import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+    import 'swiper/css/swiper.css'
     export default {
+        components: {
+            Swiper,
+            SwiperSlide
+        },
         data() {
             return{
                 comment: "",
-                commentList: {}
+                commentList: {},
+                swiperOption: {
+                    slidesPerView: 1,
+                    spaceBetween: 30,
+                    loop: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev'
+                    }
+                }
             }
         },
         props: {
@@ -99,15 +123,18 @@
         grid-template-rows: 1fr 9fr 1fr;
         height:100%
     }
-    .margin-bottom-zero{
-        margin-bottom: 0 !important;
-    }
-    .detail-img {
+    .detail-swiper {
+        width: 100%;
         text-align: center;
         vertical-align: middle;
         grid-row: 1 / 4;
         border-right: 1px rgb(230, 230, 230) solid;
         background-color: rgb(250, 250, 250);
+    }
+    .detail-swiper-img {
+        width: 100%; 
+        height:100%; 
+        object-fit: contain;
     }
     .detail-user {
         display: flex;
@@ -135,6 +162,7 @@
     }
     .detail-text{
         font-family: "IBMPlexSansKR-Regular";
+        margin-bottom: 0 !important;
     }
     .detail-title {
         height: auto;
