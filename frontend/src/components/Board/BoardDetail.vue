@@ -1,5 +1,5 @@
 <template>
-    <div class='detail-box'>
+    <div class='detail-box imb-font-semi-bold'>
         <div class="detail-img">
             <img :src="info.fileList[0].filePath" style="width: 100%; height:100%; object-fit: contain;" @click="commentGet"/>
         </div>                                 
@@ -7,7 +7,7 @@
             <img :src="info.profileUrl"/>
             <div>
                 <div>{{info.nickName}}</div>
-                <p class="detail-text">{{info.content}}</p>
+                <p class="detail-text margin-bottom-zero">{{info.content}}</p>
             </div>
         </div>
         <div class="detail-comment-wrap">
@@ -16,7 +16,7 @@
                     <img :src="list.profileUrl"/>
                     <div>
                         <div>{{list.nickName}}</div>
-                        <p class="detail-text">{{list.comment}}</p>
+                        <p class="detail-text margin-bottom-zero">{{list.comment}}</p>
                     </div>
                 </div>
                 <div>
@@ -27,7 +27,7 @@
         <div class="detail-comment-register">
             <textarea class="detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
             <div>
-                <p class="detail-comment-register-button" @click="commentRegister">등록</p>
+                <p class="detail-comment-register-button margin-bottom-zero" @click="commentRegister">등록</p>
             </div>
         </div>
     </div>
@@ -99,10 +99,7 @@
         grid-template-rows: 1fr 9fr 1fr;
         height:100%
     }
-    *{
-        font-family: "IBMPlexSansKR-SemiBold";
-    }
-    p {
+    .margin-bottom-zero{
         margin-bottom: 0 !important;
     }
     .detail-img {
