@@ -11,7 +11,7 @@
         <h2 class="imb-font-semi-bold">게시물 작성</h2>
       </div>
       <keep-alive>
-          <component :is="current" @detail="boardDetailT"></component>
+          <component :is="current" @detail="boardDetailT" @write="boardWrite"></component>
       </keep-alive>
     </div>
 </template>
@@ -40,6 +40,9 @@ export default {
       },
       boardDetailT(data){
         this.boardDetail = data;
+      },
+      boardWrite(data){
+        this.current = data;
       }
   }
 }
