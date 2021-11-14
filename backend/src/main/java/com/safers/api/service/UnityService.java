@@ -89,7 +89,17 @@ public class UnityService {
         mapLog.setRegDt(LocalDateTime.now());
         mapLogRepository.save(mapLog);
     }
-    
+
+    public void createAnimalsLog(User user) {
+        AnimalsLog animalsLog = new AnimalsLog();
+
+        // 숲 첫 동물인 굴토끼 정보 가지고 오기
+        Animals animals = animalsRepository.getById("A001001");
+        animalsLog.setAnimals(animals);
+        animalsLog.setUser(user);
+        animalsLog.setRegDt(LocalDateTime.now());
+        animalsLogRepository.save(animalsLog);
+    }
     /**
      * 회원의 미션로그 불러오기
      * @param user
@@ -268,5 +278,36 @@ public class UnityService {
      */
     public LocalDateTime getRegDateByUserAndMission(User user, Mission mission) {
         return missionLogRepository.findByUserAndMission(user, mission).orElseGet(null).getRegDt();
+    }
+
+    /**
+     * 맵 정보 반환하기
+     * @param mapId
+     * @return Map
+     */
+    public Map getMapById(String mapId) {
+        return mapRepository.getById(mapId);
+    }
+
+    public List<Animals> getAnimalsListByMap(Map map) {
+        return animalsRepository.findAllByMap(map).orElse(null);
+    }
+
+    /**
+     * 동물 이름에 맞는 동물 로그 반환하기
+     * @param animals
+     * @return
+     */
+    public List<AnimalsLogResponse> getAnimalsLogByAnimalsName(User user, List<Animals> animals) {
+        List<AnimalsLogResponse> animalsLogResponseList = new ArrayList<>();
+        for(Animals animal : animals) {
+            //System.out.println(animal.getAnimalsName());
+            AnimalsLog animalsLog = animalsLogRepository.findByUserAndAnimals(user, animal).orElse(null);
+            if(animalsLog == null) continue;
+            //System.out.println("얘는 존재하네요~");
+            animalsLogResponseList.add(AnimalsLogResponse.of(animalsLog));
+        }
+
+        return animalsLogResponseList;
     }
 }

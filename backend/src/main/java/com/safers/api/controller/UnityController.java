@@ -1,6 +1,6 @@
 package com.safers.api.controller;
 
-import com.safers.api.request.MissionLogRequest;
+import com.safers.api.request.AnimalsLogRequest;
 import com.safers.api.request.MissionRequest;
 import com.safers.api.response.*;
 import com.safers.api.service.BoardService;
@@ -8,8 +8,9 @@ import com.safers.api.service.CodeService;
 import com.safers.api.service.UnityService;
 import com.safers.api.service.UserService;
 import com.safers.db.entity.code.Code;
+import com.safers.db.entity.unity.Animals;
+import com.safers.db.entity.unity.Map;
 import com.safers.db.entity.unity.Mission;
-import com.safers.db.entity.unityLog.MissionLog;
 import com.safers.db.entity.user.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -60,11 +61,28 @@ public class UnityController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     @GetMapping("/animal")
-    public ResponseEntity<List<AnimalsLogResponse>> requestAnimalsLog(@RequestParam(value = "id") String id) {
-        User user = userService.getUserById(id);
+    public ResponseEntity<AnimalsLogListResponse> requestAnimalsLog(@RequestParam(value = "userId") String userId) {
+        User user = userService.getUserById(userId);
         List<AnimalsLogResponse> animalsLogResponseList = unityService.getAnimalsLogByUser(user);
 
-        return ResponseEntity.ok(animalsLogResponseList);
+        return ResponseEntity.ok(AnimalsLogListResponse.of(animalsLogResponseList));
+    }
+
+    @ApiOperation(value = "맵별 회원 동물 해금 현황", notes = "주어진 맵 내에서 해당 회원의 동물 해금 내역을 가져온다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "동물 & 맵 로그 조회 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @PostMapping("/animal")
+    public ResponseEntity<AnimalsLogListResponse> requestAnimalsLogInMap(@RequestBody AnimalsLogRequest animalsLogRequest) {
+        User user = userService.getUserById(animalsLogRequest.getUserId());
+        Map map = unityService.getMapById(animalsLogRequest.getMapId());
+        List<Animals> animals = unityService.getAnimalsListByMap(map);
+        List<AnimalsLogResponse> animalsLogResponseList = unityService.getAnimalsLogByAnimalsName(user, animals);
+
+        return ResponseEntity.ok(AnimalsLogListResponse.of(animalsLogResponseList));
     }
 
     @ApiOperation(value = "회원 맵 해금 현황", notes = "해당 회원의 맵 해금 내역을 가져온다.")
@@ -75,11 +93,11 @@ public class UnityController {
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
     @GetMapping("/map")
-    public ResponseEntity<List<MapLogResponse>> requestMapLog(@RequestParam(value = "id") String id) {
-        User user = userService.getUserById(id);
+    public ResponseEntity<MapLogListResponse> requestMapLog(@RequestParam(value = "userId") String userId){
+        User user = userService.getUserById(userId);
         List<MapLogResponse> mapLogResponseList = unityService.getMapLogByUser(user);
 
-        return ResponseEntity.ok(mapLogResponseList);
+        return ResponseEntity.ok(MapLogListResponse.of(mapLogResponseList));
     }
 
     
