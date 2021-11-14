@@ -12,17 +12,11 @@ import java.time.LocalDateTime;
 @Builder
 public class AnimalsLogResponse {
 
-    String userId;
-
     String animalsId;
-
-    LocalDateTime regDt;
 
     public static AnimalsLogResponse of(AnimalsLog animalsLog) {
         return AnimalsLogResponse.builder()
                 .animalsId(animalsLog.getAnimals().getId())
-                .userId(animalsLog.getUser().getId())
-                .regDt(animalsLog.getRegDt())
                 .build();
     }
 }
