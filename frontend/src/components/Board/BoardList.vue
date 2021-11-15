@@ -2,7 +2,7 @@
   <div class="list-wrap">
     <div class="list-nav" v-show="boardDetail" >
       <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
-      <h2 class="imb-font-semi-bold">{{info.title}}</h2>
+      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
     </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
