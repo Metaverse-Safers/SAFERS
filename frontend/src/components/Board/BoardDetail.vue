@@ -1,5 +1,5 @@
 <template>
-    <div class='detail-box'>
+    <div class='detail-box mt-4'>
         <Swiper class="detail-swiper" :options="swiperOption" @click="commentGet">
             <SwiperSlide v-for="(data, idx) in info.fileList" v-bind:key="idx">
                 <img :src="data.filePath" class="detail-swiper-img"/>
@@ -7,7 +7,10 @@
             <div class="swiper-pagination" slot="pagination"></div>
             <div class="swiper-button-prev" slot="button-prev"></div>
             <div class="swiper-button-next" slot="button-next"></div>
-        </Swiper>                                 
+        </Swiper>      
+        <div class="imb-font-semi-bold p-3">
+            {{info.title}}
+        </div>                           
         <div class="detail-user">
             <img :src="info.profileUrl"/>
             <div>
@@ -31,7 +34,7 @@
         </div>
         <div class="detail-comment-register">
             <textarea class="imb-font-semi-bold detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
-            <div>
+            <div class="p-3">
                 <p class="imb-font-semi-bold detail-comment-register-button" @click="commentRegister">등록</p>
             </div>
         </div>
@@ -55,7 +58,7 @@
                 swiperOption: {
                     slidesPerView: 1,
                     spaceBetween: 30,
-                    loop: true,
+                    loop: false,
                     pagination: {
                         el: '.swiper-pagination',
                         clickable: true
@@ -185,6 +188,7 @@
         align-items: center;
         padding: 0 2px;
         border-top: 1px rgb(230, 230, 230) solid;
+        border-right: 1px rgb(230, 230, 230) solid;
     }
     .detail-comment-write {
         border: none;
