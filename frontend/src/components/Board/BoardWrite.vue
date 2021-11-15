@@ -32,7 +32,7 @@
         </div>
         <div v-else-if="menu == 'D02'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">얼룩말 검사</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="zebraPredict" :disabled="imageEmptyCheck">얼룩말 검사</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="zebraDisabled">게시물 등록</button>
         </div>
         <div v-else-if="menu == 'D03'" class="write-btn">
@@ -147,7 +147,11 @@
                         console.log(err);
                     });
                 }
-            }
+            },
+            zebraPredict(){
+
+            },
+            
         },
         computed: {
             ...mapGetters({
