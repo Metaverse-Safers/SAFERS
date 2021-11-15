@@ -2,7 +2,8 @@
   <div class="list-wrap">
     <div class="list-nav" v-show="boardDetail" >
       <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
-      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
+      <h2 class="imb-font-semi-bold">{{info.title}}</h2>
+      <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i>
     </div>
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
@@ -26,6 +27,7 @@
   import axios from "axios";
   import InfiniteLoading from 'vue-infinite-loading';
   import BoardDetail from "./BoardDetail.vue";
+  import { mapGetters } from "vuex";
   export default {
     components: {
       InfiniteLoading,
@@ -38,6 +40,11 @@
         boardList: [],
         page: 0
       }
+    },
+    computed: {
+        ...mapGetters({
+            userProfile: "user/userProfile"
+        })
     },
     methods:{
       infiniteHandler($state){
@@ -52,8 +59,14 @@
               setTimeout(() => {
                 for(let i=0; i<res.data.length; i++)
                 {
-                  if(res.data[i].fileList[0].filePath)
+                  if(res.data[i].fileList[0].filePath){
+                    if(res.data[i].userId == this.userProfile.id)
+                      res.data[i].isMine = true;
+                    else
+                      res.data[i].inMine = false;
                     this.boardList.push(res.data[i]);
+                  }
+
                 }
                 this.page++;
                 $state.loaded();
@@ -69,10 +82,30 @@
         this.info=data;
         this.boardDetail=true;
         this.$emit('detail',true);
+        console.log(this.info.isMine)
       },
       boardDetailFunc(){
         this.boardDetail=false;
         this.$emit('detail',false);
+      },
+      infiniteScrollRefresh(){
+        this.page = 0;
+        this.boardList = [];
+        this.infiniteId += 1 
+      },
+      async boardDelete(){
+        var confirm = false;
+        await this.$fire({title: "삭제하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
+        .then(function(result) {if(result.value) confirm = true})
+        if(confirm){
+            this.$fire({title: "삭제 되었습니다!", text: "삭제 완료", type: "success", timer: 1000, showConfirmButton: false})
+            this.boardDetailFunc();
+            axios
+            .patch('/api/board/delete/' + this.info.id)
+            .then(res => { // eslint-disable-line no-unused-vars
+            })
+            this.infiniteScrollRefresh();
+        }
       }
     }
   }
