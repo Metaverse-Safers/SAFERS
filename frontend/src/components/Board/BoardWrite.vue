@@ -20,9 +20,13 @@
                 <img :src="userProfile.profileUrl"/>
                 <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
             </div>
-            <div>
-                <input class="imb-font-semi-bold write-text write-title"  placeholder="제목..." v-model="boardInfo.title" required/>
-                <textarea class="imb-font-semi-bold write-text write-content"  placeholder="문구 입력..." v-model="boardInfo.content" required/>
+            <div class="imb-font-regular">
+                <select class="category-select-write p-2" v-model="menu">
+                    <option selected hidden value="0">어떤 종류의 글인가요?</option>
+                    <option :value="ca.code" v-for="ca in category" :key="ca.code">{{ca.name}}</option>
+                </select>
+                <input class="write-text write-title"  placeholder="이 글의 제목은 무엇인가요?" v-model="boardInfo.title" required/>
+                <textarea class="write-text write-content"  placeholder="이 글의 내용은 무엇인가요?" v-model="boardInfo.content" required/>
             </div>
         </form>
         <div class="write-btn">
@@ -62,7 +66,9 @@
                         nextEl: '.swiper-button-next',
                         prevEl: '.swiper-button-prev'
                     }
-                }
+                },
+                category:{},
+                menu:0,
             }
         },
         methods: {
@@ -101,6 +107,7 @@
                         uploadBoard.append("fileList", this.selectFiles[i]);
                     }
                     uploadBoard.append("content", this.boardInfo.content);
+                    uploadBoard.append("code", this.menu);
                     axios.post('/api/board', uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
                     .then(res => {  // eslint-disable-line no-unused-vars
                         this.$fire({title: "등록 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
@@ -124,9 +131,27 @@
         mounted() {
             this.userInfo = { ...this.userProfile };
         },
+        created(){
+            axios.get('/api/commoncode/category')
+            .then(res => {
+                this.category = res.data[0].code;
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
     }
 </script>
 <style>
+    .category-select-write{
+        width:100%;
+        border: none;
+        border-bottom: 1px rgb(220, 220, 220) solid;
+        color: rgb(94, 94, 94);
+    }
+    .category-select-write:focus{
+        outline: none;
+    }
     .write-wrap{
         height: 80%;
     }
@@ -195,7 +220,6 @@
         border: none;
         width: 100%;
         font-size: 1.5vh;
-        font-family: "IBMPlexSansKR-Regular";
     }
     .write-text:focus {
         outline: none;
@@ -207,7 +231,7 @@
     .write-content {
         resize: none;
         overflow: auto;
-        height: 90%;
+        height: 80%;
         border-top: 1px rgb(230, 230, 230) solid;
         padding: 10px;
     }

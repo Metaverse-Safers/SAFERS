@@ -17,4 +17,6 @@ public class CodeService {
     public Code getCodeById(String id) {
         return codeRepository.getById(id);
     }
+
+    public Code getCodeByCode(String code) {return codeRepository.findByCode(code).get();}
 }
