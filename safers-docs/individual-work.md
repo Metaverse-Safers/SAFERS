@@ -122,7 +122,7 @@
     <td>- 1인칭 카메라 위치 조정 <br> </td>
     <td> - 공통 채널 맵 디자인</td>
   </tr>
-    <tr>
+  <tr>
     <td align="center">211108(월)</td>
     <td></td>
     <td></td>
@@ -159,6 +159,46 @@
     <td></td>
     <td></td>
     <td>- 북극 퀘스트 구현</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211115(월)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>- 해안 맵, 퀘스트 구현 / 캐릭터 추가 작업 진행</td>
+  </tr>
+  <tr>
+    <td align="center">211116(화)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211117(수)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211118(목)</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td align="center">211119(금)</td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td></td>
     <td></td>
   </tr>
