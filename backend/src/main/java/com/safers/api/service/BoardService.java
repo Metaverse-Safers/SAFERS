@@ -80,7 +80,7 @@ public class BoardService {
         board.setId(id);
         // user -> id로 User 정보 가져오기
         User user = userService.getUserById(boardRegisterPostRequest.getUserId());
-        Code code = codeService.getCodeByName(boardRegisterPostRequest.getCode());
+        Code code = codeService.getCodeByCode(boardRegisterPostRequest.getCode());
 
         board.setUser(user);
         board.setTitle(boardRegisterPostRequest.getTitle());
@@ -281,7 +281,7 @@ public class BoardService {
     public List<BoardCommentGetResponse> findBoardCommentList(String boardId) {
         List<BoardCommentGetResponse> boardCommentGetResponses = new ArrayList<>();
         Board board = boardRepository.getById(boardId);
-        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByBoardEqualsAndIsDeleteEquals(board, false);
+        Optional<List<BoardComment>> commentList = boardCommentRepository.findAllByBoardEqualsAndIsDeleteEqualsOrderByRegDtDesc(board, false);
         if(!commentList.isPresent())
             return null;
         for(BoardComment boardComment : commentList.get()) {

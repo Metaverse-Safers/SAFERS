@@ -12,17 +12,11 @@ import java.time.LocalDateTime;
 @Builder
 public class MapLogResponse {
 
-    String userId;
-
     String mapId;
-
-    LocalDateTime regDt;
 
     public static MapLogResponse of(MapLog mapLog) {
         return MapLogResponse.builder()
                 .mapId(mapLog.getMap().getId())
-                .userId(mapLog.getUser().getId())
-                .regDt(mapLog.getRegDt())
                 .build();
     }
 }

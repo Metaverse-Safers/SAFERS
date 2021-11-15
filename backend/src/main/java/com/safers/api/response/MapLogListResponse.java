@@ -11,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class MapLogListResponse {
 
-    List<MapLogResponse> mapLogResponseList;
+    List<MapLogResponse> mapLogList;
 
     public static MapLogListResponse of(List<MapLogResponse> mapLogResponseList){
         MapLogListResponse response = new MapLogListResponse();
-        response.setMapLogResponseList(mapLogResponseList);
+        response.setMapLogList(mapLogResponseList);
         return response;
     }
 }
