@@ -18,4 +18,7 @@ export default {
   .imb-font-semi-bold{
     font-family: "IBMPlexSansKR-SemiBold";
   }
+  .imb-font-regular{
+    font-family: "IBMPlexSansKR-Regular";
+  }
 </style>
