@@ -7,16 +7,16 @@
     <!-- </div> -->
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" @click="boardDetailInfo(data)">
-        <img :src= data.fileList[0].filePath class="image__img">
-        <div class="image__overlay p-3">
-          <p class="image__title imb-font-semi-bold">{{data.title}}</p>
-          <p class="image__description imb-font-regular">
+        <img :src= data.fileList[0].filePath class="board-list-image-img">
+        <div class="board-list-image-overlay p-3">
+          <p class="board-list-image-title imb-font-semi-bold">{{data.title}}</p>
+          <p class="board-list-image-description imb-font-regular">
             {{data.nickName}}
           </p>
         </div>
       </div>
     </div>
-    <infinite-loading @infinite='infiniteHandler' spinner="bubbles" v-show="!boardDetail">
+    <infinite-loading ref="infiniteLoading" @infinite='infiniteHandler' spinner="bubbles" v-show="!boardDetail">
       <div 
         slot='no-more'
         style="color:rgb(100,100,100); font-size: 15px; padding:0px 0px 10px 0px;">
@@ -53,10 +53,11 @@
         })
     },
     methods:{
-      comeBack(){
-        // this.infiniteScrollRefresh();
-        // this.infiniteHandler();
+      async comeBack(){
+        this.boardDetail = false;
         this.boardDetailFunc();
+        this.infiniteScrollRefresh();
+        this.$refs.infiniteLoading.stateChanger.reset();
       },
       infiniteHandler($state){
         setTimeout(1000);
@@ -77,12 +78,10 @@
                       res.data[i].inMine = false;
                     this.boardList.push(res.data[i]);
                   }
-
                 }
                 this.page++;
                 $state.loaded();
               },700)
-              
             }
           })
           .catch(err => {
@@ -123,14 +122,14 @@
 </script>
 
 <style>
-.image__img{
+.board-list-image-img{
   display: block;
   width: 100%;
   height: 100%;
   background-size: cover;
 }
 
-.image__overlay {
+.board-list-image-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -146,28 +145,20 @@
   transition: opacity 0.25s;
 }
 
-.image__overlay {
+.board-list-image-overlay {
   opacity: 0;
 }
 
-.image__overlay:hover {
+.board-list-image-overlay:hover {
   opacity: 1;
 }
 
-.image__overlay--blur {
-  backdrop-filter: blur(5px);
-}
-
-.image__overlay--solid {
-  background: #c51f5d;
-}
-
-.image__title{
+.board-list-image-title{
   font-size: 1.8vh;
   word-break: keep-all;
 }
 
-.image__description{
+.board-list-image-description{
   font-size: 1.4vh;
   position:absolute;
   right: 1vw;
@@ -218,7 +209,7 @@
 	column-count: 6;
 	column-gap: 16px;
   padding-top: 10px;
-  border-top: 1px rgb(220, 220, 220) solid;
+  border-top: none !important;
 }
 
 .masonry-title{

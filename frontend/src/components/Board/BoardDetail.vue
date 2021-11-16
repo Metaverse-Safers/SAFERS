@@ -10,39 +10,41 @@
         <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i>
       </div>
     </div>
-    <div class="row line-top line-bottom">
-      <div class="col-8 board-detail-main bg-light">
-        <Swiper class="detail-swiper" :options="swiperOption" @click="commentGet">
-            <SwiperSlide v-for="(data, idx) in info.fileList" v-bind:key="idx">
-                <img :src="data.filePath" class="detail-swiper-img"/>
-            </SwiperSlide>
-            <div class="swiper-pagination" slot="pagination"></div>
-            <div class="swiper-button-prev" slot="button-prev"></div>
-            <div class="swiper-button-next" slot="button-next"></div>
-        </Swiper>
-      </div>
-      <div class="col bg-light pt-2">
-        <div class="row board-detail-content imb-font-regular">{{info.content}}</div>
-        <div class="row line-top detail-comment-wrap imb-font-regular pt-2">
-          <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
-                <div class="detail-comment">
-                    <img :src="list.profileUrl"/>
-                    <div>
-                        <div class="imb-font-semi-bold">{{list.nickName}}</div>
-                        <p class="imb-font-semi-bold detail-text">{{list.comment}}</p>
-                    </div>
-                </div>
-                <div>
-                  <i class="far fa-times fa-1x detail-comment-delete-button" v-show="list.mine" @click="commentDelete(list.id)"></i>
-                </div>
-                
-            </div>
+    <div class="p-2">
+      <div class="row line-top line-bottom line-left line-right">
+        <div class="col-8 board-detail-main bg-light">
+          <Swiper class="detail-swiper" :options="swiperOption" @click="commentGet">
+              <SwiperSlide v-for="(data, idx) in info.fileList" v-bind:key="idx">
+                  <img :src="data.filePath" class="detail-swiper-img"/>
+              </SwiperSlide>
+              <div class="swiper-pagination" slot="pagination"></div>
+              <div class="swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-button-next" slot="button-next"></div>
+          </Swiper>
         </div>
-        <div class="row">
-          <div class="detail-comment-register">
-            <input type="text" class="imb-font-semi-bold detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
-            <div>
-              <buttom class="btn imb-font-semi-bold detail-comment-register-button bg-light mt-2" @click="commentRegister">등록</buttom>
+        <div class="col bg-light pt-2">
+          <div class="row board-detail-content imb-font-regular">{{info.content}}</div>
+          <div class="row line-top detail-comment-wrap imb-font-regular pt-2">
+            <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
+                  <div class="detail-comment">
+                      <img :src="list.profileUrl"/>
+                      <div>
+                          <div class="imb-font-semi-bold">{{list.nickName}}</div>
+                          <p class="imb-font-semi-bold detail-text">{{list.comment}}</p>
+                      </div>
+                  </div>
+                  <div>
+                    <i class="far fa-times fa-1x detail-comment-delete-button" v-show="list.mine" @click="commentDelete(list.id)"></i>
+                  </div>
+                  
+              </div>
+          </div>
+          <div class="row">
+            <div class="detail-comment-register">
+              <input type="text" class="imb-font-semi-bold detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
+              <div>
+                <buttom class="btn imb-font-semi-bold detail-comment-register-button bg-light mt-2" @click="commentRegister">등록</buttom>
+              </div>
             </div>
           </div>
         </div>
@@ -247,7 +249,7 @@ export default {
   height: 10%;
   padding: 0 2px;
   border-top: 1px rgb(230, 230, 230) solid;
-  border-right: 1px rgb(230, 230, 230) solid;
+  /* border-right: 1px rgb(230, 230, 230) solid; */
 }
 .detail-comment-write {
   border: none;
@@ -303,6 +305,7 @@ export default {
 .left-bottom-fix:hover{
   /* background:  #e5e5e5; */
   box-shadow: 0px 0px 3px 3px #e5e5e5;
+  cursor: pointer;
 }
 .left-bottom-fix > i{
   width: 100%;
@@ -313,5 +316,11 @@ export default {
 }
 .line-bottom{
   border-bottom: 1px solid #e5e5e5;
+}
+.line-left{
+  border-left: 1px solid #e5e5e5;
+}
+.line-right{
+  border-right: 1px solid #e5e5e5;
 }
 </style>
