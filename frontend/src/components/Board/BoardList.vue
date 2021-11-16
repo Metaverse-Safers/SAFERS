@@ -26,6 +26,9 @@
     <div class="board-detail" v-if="boardDetail">
       <BoardDetail :info="info" v-on:comeback="comeBack"/>
     </div>
+    <div class="left-bottom-fix p-3" v-show="boardDetail" @click="boardDetailFunc">
+      <i class="fas fa-arrow-left fa-2x go-back"></i>
+    </div>
   </div>
 </template>
 
