@@ -1,13 +1,19 @@
 <template>
   <div class="list-wrap">
-    <div class="list-nav" v-show="boardDetail" >
-      <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
-      <h2 class="imb-font-semi-bold">{{info.title}}</h2>
-      <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i>
-    </div>
+    <!-- <div class="list-nav" v-show="boardDetail" > -->
+      <!-- <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i> -->
+      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
+      <!-- <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i> -->
+    <!-- </div> -->
     <div class="masonry" v-show="!boardDetail">
-      <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
-        <img :src= data.fileList[0].filePath @click="boardDetailInfo(data)">
+      <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" @click="boardDetailInfo(data)">
+        <img :src= data.fileList[0].filePath class="image__img">
+        <div class="image__overlay p-3">
+          <p class="image__title imb-font-semi-bold">{{data.title}}</p>
+          <p class="image__description imb-font-regular">
+            {{data.nickName}}
+          </p>
+        </div>
       </div>
     </div>
     <infinite-loading @infinite='infiniteHandler' spinner="bubbles" v-show="!boardDetail">
@@ -18,7 +24,7 @@
       </div>
     </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
-      <BoardDetail :info="info"/>
+      <BoardDetail :info="info" v-on:comeback="comeBack"/>
     </div>
   </div>
 </template>
@@ -47,6 +53,11 @@
         })
     },
     methods:{
+      comeBack(){
+        // this.infiniteScrollRefresh();
+        // this.infiniteHandler();
+        this.boardDetailFunc();
+      },
       infiniteHandler($state){
         setTimeout(1000);
         axios
@@ -112,6 +123,57 @@
 </script>
 
 <style>
+.image__img{
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+
+.image__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0, 0, 0, 0.6);
+  border-radius: 10px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center;
+  justify-content: center; */
+  transition: opacity 0.25s;
+}
+
+.image__overlay {
+  opacity: 0;
+}
+
+.image__overlay:hover {
+  opacity: 1;
+}
+
+.image__overlay--blur {
+  backdrop-filter: blur(5px);
+}
+
+.image__overlay--solid {
+  background: #c51f5d;
+}
+
+.image__title{
+  font-size: 1.8vh;
+  word-break: keep-all;
+}
+
+.image__description{
+  font-size: 1.4vh;
+  position:absolute;
+  right: 1vw;
+  bottom: 0;
+}
+
 .list-wrap{
   height: 100%;
 }
@@ -136,13 +198,19 @@
   cursor: pointer;
 }
 
+.mItem{
+  position: relative;
+}
+
 .mItem > img {
   width: 100%;
   border-radius: 10px;
 }
 
+.mItem:hover,
 .mItem > img:hover {
   filter: brightness(70%);
+  color: white;
   cursor: pointer;
 }
 
@@ -151,6 +219,27 @@
 	column-gap: 16px;
   padding-top: 10px;
   border-top: 1px rgb(220, 220, 220) solid;
+}
+
+.masonry-title{
+  position: absolute;
+  top: 1vh;
+  left: 1vw;
+  right: 1vh;
+  padding-right: 1vh;
+  width: 90%;
+  color: white;
+  z-index: 999;
+}
+
+.text-overflow-dllipisis{
+  display: inline-block;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  word-break: keep-all;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  font-size: 2vh;
 }
 
 .masonry .mItem {
@@ -186,6 +275,4 @@
     column-count: 2;
   }
 }
-
-
 </style>
