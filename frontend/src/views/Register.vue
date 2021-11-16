@@ -10,9 +10,10 @@
         </label>
         <input id="rg-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>
         <br />
-        <input class="rgText" type="text" v-model="userInfo.nickName" required/>
+        <input class="rgText" type="text" v-model="userInfo.nickName"/>
+        <p class="rgText-validation imb-font-regular" v-if="validationCheckNickname">닉네임은 한글 최대 7자, 영어 최대 13자입니다.</p>
       </form>
-      <img class="register-btn" @click="register" src="@/assets/images/registerBtn.png"/>
+      <button class="btn register-btn" type="button" @click="register" :disabled="registerVaildCheck"><img src="@/assets/images/registerBtn.png" class="register-btn"/></button>
     </div>
   </div>
 </template>
@@ -22,12 +23,15 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      userInfo: {},
+      userInfo: {
+        nickName: ""
+      },
       img: {
         selectFile: null,
         previewImgUrl: null, // 미리보기 이미지 URL
         isUploading: false, // 파일 업로드 체크
       },
+      inputFocus: false,
     };
   },
   methods: {
@@ -90,7 +94,19 @@ export default {
     ...mapGetters({
         token: "user/token",
         userProfile: "user/userProfile"
-    })
+    }),
+    registerVaildCheck(){
+      if(this.userInfo["nickName"].length > 0 && this.img.selectFile != null)
+        return false;
+      return true;
+    },
+    validationCheckNickname(){
+      const regExp1 = /^[가-힣]{1,7}$/g;
+      const regExp2 = /^[a-zA-Z]{1,13}$/g;
+      if(!regExp1.test(this.userInfo.nickName) && !regExp2.test(this.userInfo.nickName))
+        return true;
+      return false;
+    }
   },
   mounted() {
     this.userInfo = { ...this.userProfile };
@@ -145,6 +161,17 @@ export default {
   border-radius: 8px;
   width: 20vh;
 }
+.rgText-validation {
+  position: absolute;
+  z-index: 1;
+  top: 64.5%;
+  left: 49.5%;
+  transform: translate(-50%, -50%);
+  display: inline-block;
+  vertical-align: middle;
+  color:red;
+  font-size: 1.5vh;
+}
 .register-btn {
   width: 15vh;
   position: absolute;
@@ -152,8 +179,7 @@ export default {
   left: 49.5%;
   transform: translate(-50%, -50%);
 }
-.rg-img > p:hover,
-.register-btn:hover {
+.rg-img > p:hover {
   filter: brightness(80%);
   cursor: pointer;
 }

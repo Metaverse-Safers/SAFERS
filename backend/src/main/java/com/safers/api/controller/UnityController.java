@@ -11,6 +11,7 @@ import com.safers.db.entity.code.Code;
 import com.safers.db.entity.unity.Animals;
 import com.safers.db.entity.unity.Map;
 import com.safers.db.entity.unity.Mission;
+import com.safers.db.entity.unityLog.MissionLog;
 import com.safers.db.entity.user.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -136,5 +137,21 @@ public class UnityController {
         List<BoardUnityResponse> boardUnityResponses = boardService.findBoardByUserAndRegDateAndCode(user, regDate, code);
 
         return ResponseEntity.ok(BoardUnityListResponse.of(boardUnityResponses));
+    }
+
+    @PostMapping("/change")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "미션 로그 상태 변경 성공"),
+            @ApiResponse(code = 401, message = "인증 실패"),
+            @ApiResponse(code = 404, message = "사용자 없음"),
+            @ApiResponse(code = 500, message = "서버 에러 발생")
+    })
+    @ApiOperation(value = "미션 수행 상태 변경", notes = "유저 아이디와 미션 아이디, 코드값을 받은 후 해당 유저의 미션 로그 내 미션 아이디와 일치하는 값을 코드 값으로 변경한다.")
+    public ResponseEntity<MissionResponse> changeMissionLog(@RequestBody MissionRequest missionRequest) {
+        User user = userService.getUserById((missionRequest.getUserId()));
+        Mission mission = unityService.getMissionById(missionRequest.getMissionId());
+
+        MissionLog missionLog = unityService.updateMissionLog(user, mission, missionRequest.getCode());
+        return ResponseEntity.ok(MissionResponse.of(unityService.getMissionById(missionLog.getMission().getId())));
     }
 }
