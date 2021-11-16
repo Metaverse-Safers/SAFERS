@@ -207,7 +207,7 @@ import * as tmImage from '@teachablemachine/image';
             zebraPredict(){
 
             },
-            async cupPredict(){
+            cupPredict(){
                 this.bottleMobilenetML();
             }
         },
