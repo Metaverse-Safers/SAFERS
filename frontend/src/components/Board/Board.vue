@@ -1,11 +1,10 @@
 <template>
     <div class="border-main">
-      <div v-show="current == 'BoardList'">
+      <!-- <div v-show="current == 'BoardList'">
         <div class="board-list" v-show="!boardDetail">
           <h1 class="imb-font-semi-bold">게시판</h1>
-          <i class="fas fa-plus fa-2x" @click="current = 'BoardWrite'"></i>
         </div>
-      </div>
+      </div> -->
       <div class="board-write" v-show="current == 'BoardWrite'">
         <i class="fas fa-arrow-left fa-2x" @click="current = 'BoardList'"></i>
         <h2 class="imb-font-semi-bold">게시물 작성</h2>
@@ -13,6 +12,9 @@
       <!-- <keep-alive> -->
           <component :is="current" @detail="boardDetailT" @write="boardWrite"></component>
       <!-- </keep-alive> -->
+      <div class="right-bottom-fix p-3" v-show="!boardDetail && current != 'BoardWrite'">
+          <i class="fas fa-plus fa-2x" @click="current = 'BoardWrite'"></i>
+      </div>
     </div>
 </template>
 
@@ -43,6 +45,7 @@ export default {
       },
       boardWrite(data){
         this.current = data;
+        this.$forceUpdate;
       }
   }
 }
@@ -95,5 +98,29 @@ export default {
 .board-write > i:hover {
   filter: brightness(5%);
   cursor: pointer;
+}
+.right-bottom-fix{
+  position: absolute;
+  top: 88%;
+  right: 1vw;
+  display: inline-block;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  z-index: 999;
+  /* background:  #e5e5e5; */
+  background: #fff;
+  border: 3px solid #e5e5e5;
+  align-items: center;
+  text-align: center;
+}
+.right-bottom-fix:hover{
+  /* background:  #e5e5e5; */
+  box-shadow: 0px 0px 3px 3px #e5e5e5;
+  cursor: pointer;
+}
+.right-bottom-fix > i{
+  width: 100%;
+  height: 100%;
 }
 </style>
