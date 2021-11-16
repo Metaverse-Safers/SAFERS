@@ -10,9 +10,9 @@
         <i class="fas fa-arrow-left fa-2x" @click="current = 'BoardList'"></i>
         <h2 class="imb-font-semi-bold">게시물 작성</h2>
       </div>
-      <keep-alive>
+      <!-- <keep-alive> -->
           <component :is="current" @detail="boardDetailT" @write="boardWrite"></component>
-      </keep-alive>
+      <!-- </keep-alive> -->
     </div>
 </template>
 
