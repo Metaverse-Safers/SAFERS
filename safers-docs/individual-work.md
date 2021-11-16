@@ -176,7 +176,7 @@
     <td></td>
     <td></td>
     <td>- Write 미션 input field 조정<br>- 북극 동물 특징 조사<br>- BGM 및 효과음 선정🎵</td>
-    <td></td>
+    <td>- 맵별 카메라뷰 조정<br>- 캐릭터 애니메이션 작업 진행</td>
   </tr>
   <tr>
     <td align="center">211117(수)</td>
