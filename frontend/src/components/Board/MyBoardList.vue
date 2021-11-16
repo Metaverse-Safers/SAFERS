@@ -1,13 +1,19 @@
 <template>
   <div class="list-wrap">
     <div class="list-nav" v-show="boardDetail">
-      <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i>
-      <h2 class="imb-font-semi-bold">{{info.title}}</h2>
-      <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete"></i>
+      <!-- <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i> -->
+      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
+      <!-- <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete"></i> -->
     </div>
     <div class="masonry" v-show="!boardDetail">
-      <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" >
-        <img :src= data.fileList[0].filePath @click="boardDetailInfo(data)">
+      <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" @click="boardDetailInfo(data)">
+        <img :src= data.fileList[0].filePath class="board-list-image-img">
+        <div class="board-list-image-overlay p-3">
+          <p class="board-list-image-title imb-font-semi-bold">{{data.title}}</p>
+          <p class="board-list-image-description imb-font-regular">
+            {{data.nickName}}
+          </p>
+        </div>
       </div>
     </div>
     <infinite-loading @infinite='infiniteHandler' :identifier="infiniteId" spinner="bubbles" v-show="!boardDetail">
@@ -18,7 +24,10 @@
       </div>
     </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
-      <MyBoardDetail :info="info"/>
+      <MyBoardDetail :info="info" v-on:comeback="comeBack"/>
+    </div>
+    <div class="left-bottom-fix p-3" v-show="boardDetail" @click="boardDetailFunc">
+      <i class="fas fa-arrow-left fa-2x go-back"></i>
     </div>
   </div>
 </template>
@@ -26,7 +35,7 @@
 <script>
   import axios from "axios";
   import InfiniteLoading from 'vue-infinite-loading';
-  import MyBoardDetail from "./BoardDetail.vue";
+  import MyBoardDetail from "./MyBoardDetail.vue";
   import { mapGetters } from "vuex";
   export default {
     components: {
@@ -48,6 +57,12 @@
         })
     },
     methods:{
+      async comeBack(){
+        this.boardDetail = false;
+        this.boardDetailFunc();
+        this.infiniteScrollRefresh();
+        this.$refs.infiniteLoading.stateChanger.reset();
+      },
       infiniteHandler($state){
         setTimeout(1000);
         axios
@@ -60,8 +75,13 @@
               setTimeout(() => {
                 for(let i=0; i<res.data.length; i++)
                 {
-                  if(res.data[i].fileList[0].filePath)
+                  if(res.data[i].fileList[0].filePath){
+                    if(res.data[i].userId == this.userProfile.id)
+                      res.data[i].isMine = true;
+                    else
+                      res.data[i].inMine = false;
                     this.boardList.push(res.data[i]);
+                  }
                 }
                 this.page++;
                 $state.loaded();

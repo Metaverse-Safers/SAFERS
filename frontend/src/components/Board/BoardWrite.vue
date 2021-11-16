@@ -37,13 +37,13 @@
         </div>
         <div v-else-if="menu == 'D03'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">게시물 등록</button>
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="cupPredict" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="bottleDisabled">게시물 등록</button>
         </div>
         <div v-else-if="menu == 'D04'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">게시물 등록</button>
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="illustratedDisabled">게시물 등록</button>
         </div>
         <div v-else-if="menu == 'D05'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
@@ -52,12 +52,14 @@
         <div v-else-if="menu == 'D06'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">환경관심도 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">게시물 등록</button>
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="interestDisabled">게시물 등록</button>
         </div>
     </div>
 </template>
 
 <script>
+import * as mobilenet from '@tensorflow-models/mobilenet';
+import * as tmImage from '@teachablemachine/image';
 
     import axios from "axios";
     import { mapGetters } from "vuex";
@@ -95,10 +97,12 @@
                 isZebra: false,
                 isCup: false,
                 isIllustrated: false,
+                isInterest: false,
             }
         },
         methods: {
             previewFile(e) {
+                this.isCup = false;
                 this.selectFiles=[];
                 this.previewImgUrls=[];
                 // 선택된 파일이 있는가?
@@ -148,15 +152,74 @@
                     });
                 }
             },
+            async bottleMobilenetML(){
+                const findObject = [];
+                const correct = ["bottle", "mug", "cup"];
+                let length = document.getElementsByClassName('write-swiper-img').length;
+                mobilenet.load().then(model => {
+                        
+                    for (let i = 0; i < length; i++) {
+                        model.classify(document.getElementsByClassName("write-swiper-img").item(i)).then(predictions => {
+                            // console.log(i + '번째 라벨 = ', predictions);
+                            predictions.forEach(e=>{
+                                const temp = e.className.replace(',', '');
+                                const tempResult = temp.split(' ');
+                                tempResult.forEach(result => {
+                                    if(correct.includes(result)){
+                                        console.log(result + " 있따!");
+                                        this.isCup = true;
+                                    }
+                                    if(!findObject.includes(result))                                        
+                                        findObject.push(result);
+                                })
+                            })
+                            if(i==length-1){
+                                console.log('끝!');
+                                console.log(findObject)
+                                if(this.isCup)
+                                    console.log("텀블러/컵을 사진에서 찾았어요!")
+                                else
+                                    console.log("텀블러/컵이 없어요.")
+                            }
+                        });
+                    }
+                });
+            },
+            async teachableML(mlUrl){
+                const URL = mlUrl;
+                const modelURL = URL + "model.json";
+                const metadataURL = URL + "metadata.json";
+
+                const model = await tmImage.load(modelURL, metadataURL);
+                const maxPredictions = model.getTotalClasses();
+
+                
+                let length = document.getElementsByClassName('image-data').length;
+                for (let i = 0; i < length; i++) {
+                    const prediction = await model.predict(document.getElementsByClassName("image-data").item(i));
+                    const classPrediction = {};
+                    for (let p = 0; p < maxPredictions; p++) {
+                    classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
+                    }
+                    console.log(i+'번째 분류 = ', classPrediction);
+                }
+            },
             zebraPredict(){
 
             },
-            
+            async cupPredict(){
+                this.bottleMobilenetML();
+            }
         },
         computed: {
             ...mapGetters({
                 userProfile: "user/userProfile",
             }),
+            imageEmptyCheck(){
+              if (this.selectFiles.length > 0)
+                return false;
+              return true;
+            },
             simpleDisabled(){
               // simple data check function - menu selected, title write, content write, select image file minimum
               if(this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
@@ -169,11 +232,24 @@
                   return false;
               return true;
             },
-            imageEmptyCheck(){
-              if (this.selectFiles.length > 0)
-                return false;
+            bottleDisabled(){
+              // bottle image check function - menu selected, title write, content write, select image file minimum
+              if(this.isCup && this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
+                  return false;
               return true;
-            }
+            },
+            illustratedDisabled(){
+              // bottle image check function - menu selected, title write, content write, select image file minimum
+              if(this.isIllustrated && this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
+                  return false;
+              return true;
+            },
+            interestDisabled(){
+              // bottle image check function - menu selected, title write, content write, select image file minimum
+              if(this.isInterest && this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
+                  return false;
+              return true;
+            },
         },
         mounted() {
             this.userInfo = { ...this.userProfile };

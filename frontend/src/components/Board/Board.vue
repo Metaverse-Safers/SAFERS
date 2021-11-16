@@ -12,8 +12,8 @@
       <!-- <keep-alive> -->
           <component :is="current" @detail="boardDetailT" @write="boardWrite"></component>
       <!-- </keep-alive> -->
-      <div class="right-bottom-fix p-3" v-show="!boardDetail && current != 'BoardWrite'">
-          <i class="fas fa-plus fa-2x" @click="current = 'BoardWrite'"></i>
+      <div class="right-bottom-fix p-3" v-show="!boardDetail && current != 'BoardWrite'" @click="current = 'BoardWrite'">
+          <i class="fas fa-plus fa-2x" ></i>
       </div>
     </div>
 </template>
