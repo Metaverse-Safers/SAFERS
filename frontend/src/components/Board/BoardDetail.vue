@@ -17,9 +17,9 @@
               <SwiperSlide v-for="(data, idx) in info.fileList" v-bind:key="idx">
                   <img :src="data.filePath" class="detail-swiper-img"/>
               </SwiperSlide>
-              <div class="swiper-pagination" slot="pagination"></div>
-              <div class="swiper-button-prev" slot="button-prev"></div>
-              <div class="swiper-button-next" slot="button-next"></div>
+              <div class="swiper-pagination" slot="pagination" v-if="singleFileCheck"></div>
+              <div class="swiper-button-prev" slot="button-prev" v-if="singleFileCheck"></div>
+              <div class="swiper-button-next" slot="button-next" v-if="singleFileCheck"></div>
           </Swiper>
         </div>
         <div class="col bg-light pt-2">
@@ -43,15 +43,12 @@
             <div class="detail-comment-register">
               <input type="text" class="imb-font-semi-bold detail-comment-write detail-text" id="detail-textarea" placeholder="댓글 달기..." v-model="comment" required/>
               <div>
-                <buttom class="btn imb-font-semi-bold detail-comment-register-button bg-light mt-2" @click="commentRegister">등록</buttom>
+                <button class="btn imb-font-semi-bold detail-comment-register-button bg-light mt-2" @click="commentRegister">등록</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="left-bottom-fix p-3">
-      <i class="fas fa-arrow-left fa-2x go-back" @click="listComeBack"></i>
     </div>
   </div>
 </template>
@@ -92,11 +89,13 @@ export default {
     ...mapGetters({
       userProfile: "user/userProfile",
     }),
+    singleFileCheck(){
+      if (this.info.fileList.length == 1)
+        return false;
+      return true;
+    }
   },
   methods: {
-    listComeBack(){
-      this.$emit("comeback");
-    },
     commentGet() {
       axios.get("/api/board/comment/" + this.info.id).then((res) => {
         this.commentList = res.data;
