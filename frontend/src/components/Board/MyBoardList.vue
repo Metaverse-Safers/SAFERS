@@ -1,11 +1,8 @@
 <template>
   <div class="list-wrap">
-    <div class="list-nav" v-show="boardDetail">
-      <!-- <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i> -->
-      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
-      <!-- <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete"></i> -->
+    <div class="list-nav" v-if="boardDetail">
     </div>
-    <div class="masonry" v-show="!boardDetail">
+    <div class="masonry" v-if="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" @click="boardDetailInfo(data)">
         <img :src= data.fileList[0].filePath class="board-list-image-img">
         <div class="board-list-image-overlay p-3">
@@ -24,9 +21,10 @@
       </div>
     </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
-      <MyBoardDetail :info="info" v-on:comeback="comeBack"/>
+      <MyBoardDetail v-if="!editT" :info="info" v-on:comeback="comeBack" @edit="editFunc"/>
+      <MyBoardEdit v-else :info="info" @list="listFunc"/>
     </div>
-    <div class="left-bottom-fix p-3" v-show="boardDetail" @click="boardDetailFunc">
+    <div class="left-bottom-fix p-3" v-if="boardDetail" @click="boardDetailFunc">
       <i class="fas fa-arrow-left fa-2x go-back"></i>
     </div>
   </div>
@@ -36,11 +34,13 @@
   import axios from "axios";
   import InfiniteLoading from 'vue-infinite-loading';
   import MyBoardDetail from "./MyBoardDetail.vue";
+  import MyBoardEdit from "./BoardEdit.vue";
   import { mapGetters } from "vuex";
   export default {
     components: {
       InfiniteLoading,
       MyBoardDetail,
+      MyBoardEdit
     },
     data(){
       return{
@@ -48,7 +48,8 @@
         boardDetail: false,
         boardList: [],
         page: 0,
-        infiniteId: +new Date()
+        infiniteId: +new Date(),
+        editT: false
       }
     },
     computed: {
@@ -57,6 +58,14 @@
         })
     },
     methods:{
+      editFunc() {
+        this.editT = true;
+      },
+      listFunc() {
+        this.editT = false;
+        this.boardDetail = false;
+        this.$emit('detail',false);
+      },
       async comeBack(){
         this.boardDetail = false;
         this.boardDetailFunc();
@@ -99,8 +108,12 @@
         this.$emit('detail',true);
       },
       boardDetailFunc(){
-        this.boardDetail=false;
-        this.$emit('detail',false);
+        if(this.editT)
+          this.editT = false;
+        else{
+          this.boardDetail = false;
+          this.$emit('detail',false);
+        }
       },
       infiniteScrollRefresh(){
         this.page = 0;
@@ -126,90 +139,73 @@
 </script>
 
 <style>
-.list-wrap{
-  height: 100%;
-}
-
-.list-nav {
-  display: grid;
-  grid-template-columns: 1fr 11fr 1fr;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.list-nav > h2 {
-  justify-self: center;
-  margin-bottom: 0 !important;
-}
-
-.go-back {
-  justify-self: start;
-}
-
-.go-back:hover {
-  cursor: pointer;
-}
-
-.board-delete {
-  justify-self: end;
-  color: #5f0000;
-}
-
-.board-delete:hover {
-  color: #ff0000;
-  cursor: pointer;
-}
-
-.mItem > img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.mItem > img:hover {
-  filter: brightness(70%);
-  cursor: pointer;
-}
-
-.masonry {
-  column-count: 6;
-  column-gap: 16px;
-  padding-top: 10px;
-  border-top: 1px rgb(220, 220, 220) solid;
-}
-
-.masonry .mItem {
-  display: inline-block;
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-.board-detail{
-  height: 85%;
-}
-
-@media (max-width: 1600px) {
-  .masonry {
-    column-count: 5;
+  .list-wrap{
+    height: 100%;
   }
-}
-
-@media (max-width: 1200px) {
-  .masonry {
-    column-count: 4;
+  .list-nav {
+    display: grid;
+    grid-template-columns: 1fr 11fr 1fr;
+    align-items: center;
+    margin-bottom: 10px;
   }
-}
-
-@media (max-width: 800px) {
-  .masonry {
-    column-count: 3;
+  .list-nav > h2 {
+    justify-self: center;
+    margin-bottom: 0 !important;
   }
-}
-
-@media (max-width: 400px) {
-  .masonry {
-    column-count: 2;
+  .go-back {
+    justify-self: start;
   }
-}
-
-
+  .go-back:hover {
+    cursor: pointer;
+  }
+  .board-delete {
+    justify-self: end;
+    color: #5f0000;
+  }
+  .board-delete:hover {
+    color: #ff0000;
+    cursor: pointer;
+  }
+  .mItem > img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .mItem > img:hover {
+    filter: brightness(70%);
+    cursor: pointer;
+  }
+  .masonry {
+    column-count: 6;
+    column-gap: 16px;
+    padding-top: 10px;
+    border-top: 1px rgb(220, 220, 220) solid;
+  }
+  .masonry .mItem {
+    display: inline-block;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .board-detail{
+    height: 85%;
+  }
+  @media (max-width: 1600px) {
+    .masonry {
+      column-count: 5;
+    }
+  }
+  @media (max-width: 1200px) {
+    .masonry {
+      column-count: 4;
+    }
+  }
+  @media (max-width: 800px) {
+    .masonry {
+      column-count: 3;
+    }
+  }
+  @media (max-width: 400px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
 </style>

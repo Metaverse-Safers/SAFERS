@@ -1,10 +1,5 @@
 <template>
   <div class="list-wrap">
-    <!-- <div class="list-nav" v-show="boardDetail" > -->
-      <!-- <i class="fas fa-arrow-left fa-2x go-back" @click="boardDetailFunc"></i> -->
-      <!-- <h2 class="imb-font-semi-bold">{{info.title}}</h2> -->
-      <!-- <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i> -->
-    <!-- </div> -->
     <div class="masonry" v-show="!boardDetail">
       <div class="mItem" v-for="(data, idx) in boardList" v-bind:key="idx" @click="boardDetailInfo(data)">
         <img :src= data.fileList[0].filePath class="board-list-image-img">
@@ -24,7 +19,8 @@
       </div>
     </infinite-loading>
     <div class="board-detail" v-if="boardDetail">
-      <BoardDetail :info="info" v-on:comeback="comeBack"/>
+      <BoardDetail v-if="!editT" :info="info" v-on:comeback="comeBack" @edit="editFunc"/>
+      <BoardEdit class="board-edit-container" v-else :info="info" @list="listFunc"/>
     </div>
     <div class="left-bottom-fix p-3" v-show="boardDetail" @click="boardDetailFunc">
       <i class="fas fa-arrow-left fa-2x go-back"></i>
@@ -36,18 +32,21 @@
   import axios from "axios";
   import InfiniteLoading from 'vue-infinite-loading';
   import BoardDetail from "./BoardDetail.vue";
+  import BoardEdit from "./BoardEdit.vue";
   import { mapGetters } from "vuex";
   export default {
     components: {
       InfiniteLoading,
       BoardDetail,
+      BoardEdit
     },
     data(){
       return{
         info: [],
         boardDetail: false,
         boardList: [],
-        page: 0
+        page: 0,
+        editT: false
       }
     },
     computed: {
@@ -56,6 +55,15 @@
         })
     },
     methods:{
+      editFunc() {
+        this.editT = true;
+      },
+      listFunc() {
+        this.editT = false;
+        this.boardDetail = false;
+        this.comeBack();
+        this.$emit('detail',false);
+      },
       async comeBack(){
         this.boardDetail = false;
         this.boardDetailFunc();
@@ -95,11 +103,14 @@
         this.info=data;
         this.boardDetail=true;
         this.$emit('detail',true);
-        console.log(this.info.isMine)
       },
       boardDetailFunc(){
-        this.boardDetail=false;
-        this.$emit('detail',false);
+        if(this.editT)
+          this.editT = false;
+        else{
+          this.boardDetail = false;
+          this.$emit('detail',false);
+        }
       },
       infiniteScrollRefresh(){
         this.page = 0;
@@ -125,148 +136,129 @@
 </script>
 
 <style>
-.board-list-image-img{
-  display: block;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-}
-
-.board-list-image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0, 0.6);
-  border-radius: 10px;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center;
-  justify-content: center; */
-  transition: opacity 0.25s;
-}
-
-.board-list-image-overlay {
-  opacity: 0;
-}
-
-.board-list-image-overlay:hover {
-  opacity: 1;
-}
-
-.board-list-image-title{
-  font-size: 1.8vh;
-  word-break: keep-all;
-}
-
-.board-list-image-description{
-  font-size: 1.4vh;
-  position:absolute;
-  right: 1vw;
-  bottom: 0;
-}
-
-.list-wrap{
-  height: 100%;
-}
-
-.list-nav {
-  display: grid;
-  grid-template-columns: 1fr 11fr 1fr;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.list-nav > h2 {
-  justify-self: center;
-  margin-bottom: 0 !important;
-}
-
-.go-back {
-  justify-self: start;
-}
-
-.go-back:hover {
-  cursor: pointer;
-}
-
-.mItem{
-  position: relative;
-}
-
-.mItem > img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.mItem:hover,
-.mItem > img:hover {
-  filter: brightness(70%);
-  color: white;
-  cursor: pointer;
-}
-
-.masonry {
-	column-count: 6;
-	column-gap: 16px;
-  padding-top: 10px;
-  border-top: none !important;
-}
-
-.masonry-title{
-  position: absolute;
-  top: 1vh;
-  left: 1vw;
-  right: 1vh;
-  padding-right: 1vh;
-  width: 90%;
-  color: white;
-  z-index: 999;
-}
-
-.text-overflow-dllipisis{
-  display: inline-block;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  word-break: keep-all;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  font-size: 2vh;
-}
-
-.masonry .mItem {
-  display: inline-block;
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-.board-detail{
-  height: 85%;
-}
-
-@media (max-width: 1600px) {
-  .masonry {
-    column-count: 5;
+  .board-edit-container {
+    margin-top: 10px;
   }
-}
-
-@media (max-width: 1200px) {
-  .masonry {
-    column-count: 4;
+  .board-list-image-img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
   }
-}
-
-@media (max-width: 800px) {
-  .masonry {
-    column-count: 3;
+  .board-list-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(0, 0, 0, 0.6);
+    border-radius: 10px;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
+    transition: opacity 0.25s;
   }
-}
-
-@media (max-width: 400px) {
-  .masonry {
-    column-count: 2;
+  .board-list-image-overlay {
+    opacity: 0;
   }
-}
+  .board-list-image-overlay:hover {
+    opacity: 1;
+  }
+  .board-list-image-title{
+    font-size: 1.8vh;
+    word-break: keep-all;
+  }
+  .board-list-image-description{
+    font-size: 1.4vh;
+    position:absolute;
+    right: 1vw;
+    bottom: 0;
+  }
+  .list-wrap{
+    height: 100%;
+  }
+  .list-nav {
+    display: grid;
+    grid-template-columns: 1fr 11fr 1fr;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .list-nav > h2 {
+    justify-self: center;
+    margin-bottom: 0 !important;
+  }
+  .go-back {
+    justify-self: start;
+  }
+  .go-back:hover {
+    cursor: pointer;
+  }
+  .mItem{
+    position: relative;
+  }
+  .mItem > img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .mItem:hover,
+  .mItem > img:hover {
+    filter: brightness(70%);
+    color: white;
+    cursor: pointer;
+  }
+  .masonry {
+    column-count: 6;
+    column-gap: 16px;
+    padding-top: 10px;
+    border-top: none !important;
+  }
+  .masonry-title{
+    position: absolute;
+    top: 1vh;
+    left: 1vw;
+    right: 1vh;
+    padding-right: 1vh;
+    width: 90%;
+    color: white;
+    z-index: 999;
+  }
+  .text-overflow-dllipisis{
+    display: inline-block;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    word-break: keep-all;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: 2vh;
+  }
+  .masonry .mItem {
+    display: inline-block;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .board-detail{
+    height: 85%;
+  }
+  @media (max-width: 1600px) {
+    .masonry {
+      column-count: 5;
+    }
+  }
+  @media (max-width: 1200px) {
+    .masonry {
+      column-count: 4;
+    }
+  }
+  @media (max-width: 800px) {
+    .masonry {
+      column-count: 3;
+    }
+  }
+  @media (max-width: 400px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
 </style>

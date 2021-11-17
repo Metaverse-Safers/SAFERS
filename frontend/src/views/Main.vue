@@ -19,187 +19,181 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+  import { mapGetters } from "vuex";
 
-export default {
-  name: "Main",
-  components: {},
-  data() {
-    return {
-      loggedIn: true,
-    };
-  },
-  computed: {
-    ...mapGetters({
-      userProfile: "user/userProfile",
-    }),
-    getIsLoggin(){
-      return this.$store.getters["user/userProfile"];
-    }
-  },
-  mounted() {
-    // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
-    if (
-      this.userProfile == undefined ||
-      Object.keys(this.userProfile).length != 0
-    )
-      this.loggedIn = false;
-    console.log(this.userProfile);
-
-    // 홈화면 이동시 photonnetwork disconnect
-    localStorage.setItem("homeValid", 1);
-  },
-  methods: {
-    clickStart() {
-      let isLogin = this.$store.getters["user/isAuthenticated"];
-      if(isLogin){
-        this.$router.push("/world");
-      }
-      else{
-        this.$router.push("/info");
+  export default {
+    name: "Main",
+    components: {},
+    data() {
+      return {
+        loggedIn: true,
+      };
+    },
+    computed: {
+      ...mapGetters({
+        userProfile: "user/userProfile",
+      }),
+      getIsLoggin(){
+        return this.$store.getters["user/userProfile"];
       }
     },
-    async clickLogout() {
-      await this.$store.dispatch("user/requestLogout");
-      let isLogin = this.$store.getters["user/isAuthenticated"];
-      if(isLogin == undefined || isLogin == false){
-        this.loggedIn = true;
-        this.$fire({title: "다음에 또 놀러오세요!", text: "로그아웃 되었습니다", type: "success", timer: 2000, showConfirmButton: false})
-      } else {
+    mounted() {
+      // 정의되어 있지 않거나 빈 객체이면, 로그인이 되어 있지 않음
+      if (
+        this.userProfile == undefined ||
+        Object.keys(this.userProfile).length != 0
+      )
         this.loggedIn = false;
-        this.$fire({title: "문제가 생겼어요!", text: "로그아웃", type: "warning", timer: 2000, showConfirmButton: false})
-      }
+
+      // 홈화면 이동시 photonnetwork disconnect
+      localStorage.setItem("homeValid", 1);
     },
-  },
-  watch:{
-    getIsLoggin(){
-      console.log(this.loggedIn);
+    methods: {
+      clickStart() {
+        let isLogin = this.$store.getters["user/isAuthenticated"];
+        if(isLogin){
+          this.$router.push("/world");
+        }
+        else{
+          this.$router.push("/info");
+        }
+      },
+      async clickLogout() {
+        await this.$store.dispatch("user/requestLogout");
+        let isLogin = this.$store.getters["user/isAuthenticated"];
+        if(isLogin == undefined || isLogin == false){
+          this.loggedIn = true;
+          this.$fire({title: "다음에 또 놀러오세요!", text: "로그아웃 되었습니다", type: "success", timer: 2000, showConfirmButton: false})
+        } else {
+          this.loggedIn = false;
+          this.$fire({title: "문제가 생겼어요!", text: "로그아웃", type: "warning", timer: 2000, showConfirmButton: false})
+        }
+      },
     }
-  }
-};
+  };
 </script>
 
 <style>
-.log-btn {
-  margin: 3vh;
-  width: 14vh;
-  height: 4.5vh;
-  cursor: pointer;
-}
-.main-backgound {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
-  background-size: 160% 160%;
-  -webkit-animation: gradient 10s ease infinite;
-  animation: gradient 10s ease infinite;
-  overflow: hidden;
-}
-.main-content {
-  height: 90%;
-}
-.main-content > p {
-  cursor: default;
-}
-.main-content > p:nth-child(1) {
-  color: white;
-  font-size: 2.5vh;
-  position: absolute;
-  top: 22%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-animation: focus-in-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation: focus-in-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-}
-.main-content > p:nth-child(2) {
-  color: white;
-  font-size: 12vh;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.main-content > p:last-child{
-  color: white;
-  font-size: 2vh;
-  position: absolute;
-  top: 78%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -webkit-animation: fadein 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  -webkit-animation-delay: 3s;
-  animation: fadein 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  animation-delay: 3s;
-}
-.main-logo {
-  width: 35vh;
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: circlemove 1.5s infinite linear;
-}
-.main-nav {
-  display: flex;
-  justify-content: space-between;
-  height: 10%;
-}
-.main-question-mark {
-  margin: 3vh;
-  width: 4.5vh;
-  height: 4.5vh;
-  cursor: pointer;
-}
-.router-btn{
-  height: 10vh;
-}
-@keyframes circlemove {
-  0%, 100% { transform: translate(-50%, -50%); }
-  50% { transform: translate(-50%, -52%); }
-}
-@-webkit-keyframes focus-in-expand {
-  0% {
-    letter-spacing: -0.5em;
-    -webkit-filter: blur(12px);
-    filter: blur(12px);
-    opacity: 0;
+  .log-btn {
+    margin: 3vh;
+    width: 14vh;
+    height: 4.5vh;
+    cursor: pointer;
   }
-  100% {
-    -webkit-filter: blur(0px);
-    filter: blur(0px);
-    opacity: 1;
+  .main-backgound {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
+    background-size: 160% 160%;
+    -webkit-animation: gradient 10s ease infinite;
+    animation: gradient 10s ease infinite;
+    overflow: hidden;
   }
-}
-@keyframes focus-in-expand {
-  0% {
-    letter-spacing: -0.5em;
-    -webkit-filter: blur(12px);
-    filter: blur(12px);
-    opacity: 0;
+  .main-content {
+    height: 90%;
   }
-  100% {
-    -webkit-filter: blur(0px);
-    filter: blur(0px);
-    opacity: 1;
+  .main-content > p {
+    cursor: default;
   }
-}
-@keyframes fadein {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@-webkit-keyframes fadein {
-  /* Safari and Chrome */
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@-webkit-keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  .main-content > p:nth-child(1) {
+    color: white;
+    font-size: 2.5vh;
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-animation: focus-in-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: focus-in-expand 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  .main-content > p:nth-child(2) {
+    color: white;
+    font-size: 12vh;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .main-content > p:last-child{
+    color: white;
+    font-size: 2vh;
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-animation: fadein 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    -webkit-animation-delay: 3s;
+    animation: fadein 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation-delay: 3s;
+  }
+  .main-logo {
+    width: 35vh;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: circlemove 1.5s infinite linear;
+  }
+  .main-nav {
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+  }
+  .main-question-mark {
+    margin: 3vh;
+    width: 4.5vh;
+    height: 4.5vh;
+    cursor: pointer;
+  }
+  .router-btn{
+    height: 10vh;
+  }
+  @keyframes circlemove {
+    0%, 100% { transform: translate(-50%, -50%); }
+    50% { transform: translate(-50%, -52%); }
+  }
+  @-webkit-keyframes focus-in-expand {
+    0% {
+      letter-spacing: -0.5em;
+      -webkit-filter: blur(12px);
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  @keyframes focus-in-expand {
+    0% {
+      letter-spacing: -0.5em;
+      -webkit-filter: blur(12px);
+      filter: blur(12px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-filter: blur(0px);
+      filter: blur(0px);
+      opacity: 1;
+    }
+  }
+  @keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @-webkit-keyframes fadein {
+    /* Safari and Chrome */
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @-webkit-keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 </style>
