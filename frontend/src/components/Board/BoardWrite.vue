@@ -216,8 +216,6 @@
                     for (let p = 0; p < maxPredictions; p++) {
                         classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
                     }
-                    // console.log(i+'번째 분류 = ', classPrediction);
-
                     if (classPrediction["true"] > classPrediction["false"]){
                         console.log("환경관심도 미션 사진이 맞아요!")
                         this.isInterest = true;
