@@ -99,7 +99,6 @@ export default {
       })
     },
     imageDownload(){
-      console.log("클릭!");
       this.print();
     },
     async print() {
@@ -123,8 +122,8 @@ export default {
         container: '#btnKakao', // 카카오공유버튼ID
         objectType: 'feed',
         content: {
-          title: "[Safers] " + this.mbtiData.name +"로 환생했어!", // 보여질 제목
-          description: "넌 어떤 동물로 환생할까?", // 보여질 설명
+          title: "난 " + this.mbtiData.area + " 지역의 " + this.mbtiData.name +"로 환생했어!", // 보여질 제목
+          description: "넌 어떤 동물로 환생할까?\n새로운 세계 Safers로 초대할게!", // 보여질 설명
           imageUrl: this.mbtiData.imageUrl, // 콘텐츠 URL
           link: {
             mobileWebUrl: "https://k5a403.p.ssafy.io/info",
