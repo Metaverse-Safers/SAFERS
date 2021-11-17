@@ -8,14 +8,17 @@
         <label class="mypage-profile-img" className="input-file-button" for="mypage-profile-img-selctor">
           <img v-if="img.previewImgUrl" :src="img.previewImgUrl"/>
           <div/>
-          <p>프로필 사진 변경하기</p>
+          <p class="imb-font-regular">프로필 사진 변경하기</p>
         </label>
         <input id="mypage-profile-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>  
         <input class="mypage-text" type="text" v-model="userInfo.nickName" required>
       </form>
       <div class="mypage-btn">
-          <button type="button" @click="register" class="btn btn-outline-secondary imb-font-semi-bold">수정하기</button>
-          <button type="button" @click="withdrawal" class="btn btn-outline-danger imb-font-semi-bold">회원탈퇴</button>
+          <button type="button" @click="register" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="updateVaildCheck">수정하기</button>
+          <button type="button" @click="withdrawal" class="btn btn-outline-danger imb-font-semi-bold">회원탈퇴</button><br>
+      </div>
+      <div>
+          <p class="text-red imb-font-regular" v-if="validationCheckNickname">닉네임은 한글 최대 7자, 영어 최대 13자입니다.</p>
       </div>
     </div>
   </div>
