@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       userInfo: {
-        nickName: ""
+        nickName: "",
+        profileUrl: "",
       },
       img: {
         selectFile: null,
@@ -96,7 +97,7 @@ export default {
         userProfile: "user/userProfile"
     }),
     registerVaildCheck(){
-      if(this.userInfo["nickName"].length > 0 && this.img.selectFile != null)
+      if(this.userInfo["nickName"].length > 0 && (this.img.selectFile != null || this.userInfo.profileUrl != null))
         return false;
       return true;
     },
