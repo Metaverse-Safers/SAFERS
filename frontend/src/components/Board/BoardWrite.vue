@@ -51,7 +51,7 @@
         </div>
         <div v-else-if="menu == 'D03'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="cupPredict" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="bottlePredict" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="bottleDisabled">게시물 등록</button>
             <div id="bottle-loding-div" class="check-loading-div">
                 <img class="loading-image-icon" src="@/assets/icon/image.png" alt="">
@@ -73,6 +73,21 @@
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="illustratedPredict" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="illustratedDisabled">게시물 등록</button>
+            <div id="illustrated-loding-div" class="check-loading-div">
+                <img class="loading-image-icon" src="@/assets/icon/image.png" alt="">
+                <div class="wavy imb-font-semi-bold">
+                    <span style="--i:1;">미</span>
+                    <span style="--i:2;">션</span>
+                    <span style="--i:3;">&nbsp;</span>
+                    <span style="--i:4;">사</span>
+                    <span style="--i:5;">진</span>
+                    <span style="--i:8;">&nbsp;</span>
+                    <span style="--i:9;">확</span>
+                    <span style="--i:10;">인</span>
+                    <span style="--i:11;">&nbsp;</span>
+                    <span style="--i:12;">중</span>
+                </div>
+            </div>
         </div>
         <div v-else-if="menu == 'D05'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
@@ -139,16 +154,17 @@ import * as tmImage from '@teachablemachine/image';
                 category:{},
                 menu: 0,
                 isZebra: false,
-                isCup: false,
+                isBottle: false,
                 isIllustrated: false,
                 isInterest: false,
             }
         },
         methods: {
             previewFile(e) {
-                this.isCup = false;
-                this.isInterest = false;
                 this.isZebra = false;
+                this.isBottle = false;
+                this.isInterest = false;
+                this.isIllustrated = false;
                 this.selectFiles=[];
                 this.previewImgUrls=[];
                 // 선택된 파일이 있는가?
@@ -240,7 +256,7 @@ import * as tmImage from '@teachablemachine/image';
                     }
                 }
             },
-            async cupPredict(){
+            async bottlePredict(){
                 const findObject = [];
                 const correct = ["bottle", "mug", "cup"];
                 let length = document.getElementsByClassName('write-swiper-img').length;                
@@ -257,7 +273,7 @@ import * as tmImage from '@teachablemachine/image';
                                 tempResult.forEach(result => {
                                     if(correct.includes(result)){
                                         console.log(result + " 있따!");
-                                        this.isCup = true;
+                                        this.isBottle = true;
                                     }
                                     if(!findObject.includes(result))                                        
                                         findObject.push(result);
@@ -267,7 +283,7 @@ import * as tmImage from '@teachablemachine/image';
                                 document.getElementById("bottle-loding-div").style.display = "none";
                                 console.log('끝!');
                                 console.log(findObject)
-                                if(this.isCup)
+                                if(this.isBottle)
                                     this.$fire({title: "찾았어요!", text:"컵이나 텀블러가 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false});
                                 else 
                                     this.$fire({title: "못찾았어요..", text:"얼룩말의 미션을 들어주세요.", type: "warning", timer: 1500, showConfirmButton: false});
@@ -277,7 +293,43 @@ import * as tmImage from '@teachablemachine/image';
                 });
             },
             async illustratedPredict(){
+                const URI = "https://teachablemachine.withgoogle.com/models/"
+                const URL = URI + "0TuN2n1J6/";
+                const modelURL = URL + "model.json";
+                const metadataURL = URL + "metadata.json";
+                document.getElementById("illustrated-loding-div").style.display = "block";
 
+                const model = await tmImage.load(modelURL, metadataURL);
+                const maxPredictions = model.getTotalClasses();
+
+                let length = document.getElementsByClassName('write-swiper-img').length;
+                for (let i = 0; i < length; i++) {
+                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+
+                    const classPrediction = {};
+                    let maxLabel = null;
+                    let maxValue = 0.00;
+
+                    for (let p = 0; p < maxPredictions; p++) {
+                        classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
+                        if(maxValue < prediction[p].probability.toFixed(2)){
+                            maxLabel = prediction[p].className;
+                            maxValue = prediction[p].probability.toFixed(2);
+                        }
+                    }
+                    // console.log(classPrediction);
+
+                    if(maxLabel == 'illustracted')
+                        this.isIllustrated = true;
+                    
+                    if (i == length - 1){
+                        document.getElementById("illustrated-loding-div").style.display = "none";
+                        if (this.isIllustrated) 
+                            this.$fire({title: "찾았어요!", text:"도감 사진이 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false});
+                        else
+                            this.$fire({title: "못찾았어요..", text:"도감 사진이 최소 한장이 포함되있습니다!", type: "warning", timer: 1500, showConfirmButton: false});
+                    }
+                }
             },
             async interestPredict(){
                 const URI = "https://teachablemachine.withgoogle.com/models/"
@@ -335,7 +387,7 @@ import * as tmImage from '@teachablemachine/image';
             },
             bottleDisabled(){
               // bottle image check function - menu selected, title write, content write, select image file minimum
-              if(this.isCup && this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
+              if(this.isBottle && this.selectFiles.length > 0 && this.menu != "0" && this.boardInfo.title.length > 0 && this.boardInfo.content.length > 0)
                   return false;
               return true;
             },
@@ -370,8 +422,7 @@ import * as tmImage from '@teachablemachine/image';
     .check-loading-div{
         position: absolute;
         left: 35%;
-        top: 30%;   
-        /* background: crimson; */
+        top: 30%;
         z-index: 999;
         width: 20vw;
         height: 20vh;
