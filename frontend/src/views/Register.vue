@@ -93,7 +93,7 @@
           userProfile: "user/userProfile"
       }),
       registerVaildCheck(){
-        if(this.userInfo["nickName"].length > 0 && this.img.selectFile != null)
+        if(this.userInfo["nickName"].length > 0)
           return false;
         return true;
       },
