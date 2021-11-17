@@ -1,5 +1,5 @@
 <template>
-  <div class="unity-div">
+  <div class="unity-div" v-if="!isDestoryed">
     <Menu></Menu>
     <unity
       class="unity-screen"
@@ -24,6 +24,12 @@ export default {
       unityHeight: "",
     };
   },
+  computed: {
+    isDestroyed(){
+      return this.$store.getters["user/isDestroyed"];
+    },
+  },
+
   mounted() {
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
@@ -31,6 +37,7 @@ export default {
     // 게임화면 이동시 connect valid
     localStorage.setItem("homeValid", 0);
   },
+  
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
   },

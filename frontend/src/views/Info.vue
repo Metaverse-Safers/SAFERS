@@ -20,59 +20,54 @@
 </template>
 
 <script>
-import Main from "../components/Info/InfoMain.vue";
-import Footer from "../components/Info/InfoFooter.vue";
-import Survey from "../components/Info/InfoSurvey.vue";
-import Team from "../components/Info/InfoTeam.vue";
+  import Main from "../components/Info/InfoMain.vue";
+  import Footer from "../components/Info/InfoFooter.vue";
+  import Survey from "../components/Info/InfoSurvey.vue";
+  import Team from "../components/Info/InfoTeam.vue";
 
-export default {
-  name: "Info",
-  components: {
-    Main, Survey, Team, Footer
-  },
-  data(){
-    return {
-      current: 'Main'
+  export default {
+    name: "Info",
+    components: {
+      Main, Survey, Team, Footer
+    },
+    data(){
+      return {
+        current: 'Main'
+      }
+    }, methods:{
+      clickMain(){
+        this.$router.push("/");
+      }
     }
-  }, methods:{
-    clickMain(){
-      this.$router.push("/");
-    }
-  }
-};
+  };
 </script>
 
 <style>
-.site-header {
-  /* background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36); */
-  background: #E8FAFF;
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
-  opacity: 0.9;
-}
-
-.info-header-logo{
-  height: 60px;
-}
-
-.info-header-logo:hover{
-  filter: brightness(80%);
-  cursor: pointer;
-}
-
-.info-nav-menu {
-  padding-top: 13px;
-}
-
-.info-nav-menu > p{
-  color: #000000;
-  transition: color 0.15s ease-in-out;
-  display: inline-block;
-  margin-left: 20px;
-}
-
-.info-nav-menu > p:hover{
-  filter: brightness(80%);
-  cursor: pointer;
-}
+  .site-header {
+    /* background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36); */
+    background: #E8FAFF;
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    backdrop-filter: saturate(180%) blur(20px);
+    opacity: 0.9;
+  }
+  .info-header-logo{
+    height: 60px;
+  }
+  .info-header-logo:hover{
+    filter: brightness(80%);
+    cursor: pointer;
+  }
+  .info-nav-menu {
+    padding-top: 13px;
+  }
+  .info-nav-menu > p{
+    color: #000000;
+    transition: color 0.15s ease-in-out;
+    display: inline-block;
+    margin-left: 20px;
+  }
+  .info-nav-menu > p:hover{
+    filter: brightness(80%);
+    cursor: pointer;
+  }
 </style>

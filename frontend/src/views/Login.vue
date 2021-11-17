@@ -9,7 +9,7 @@
 </template>
 
 <script>
-    export default {
+  export default {
     name: "Login",
     methods: {
         kakaoLogin() {
@@ -18,48 +18,48 @@
             redirectUri: "https://k5a403.p.ssafy.io/login/callback", //배포용
         });
         },
-    }
-}
+      }
+  }
 </script>
 
 <style>
-.login-background {
-  background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
-  background-size: 160% 160%;
-  -webkit-animation: gradient 10s ease infinite;
-  animation: gradient 10s ease infinite;
-  width: 100vw;
-  height: 100vh;
-}
-.home-btn {
-  margin: 3.5vh;
-  width: 14vh;
-  height: 3vh;
-  float: left;
-}
-.login-btn {
-  width: 70vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.kakao-login {
-  width: 35vh;
-  position: absolute;
-  top: 68%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-}
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@-webkit-keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  .login-background {
+    background: linear-gradient(150deg, #ffc1a0, #f09f9c, #b572c2, #280f36);
+    background-size: 160% 160%;
+    -webkit-animation: gradient 10s ease infinite;
+    animation: gradient 10s ease infinite;
+    width: 100vw;
+    height: 100vh;
+  }
+  .home-btn {
+    margin: 3.5vh;
+    width: 14vh;
+    height: 3vh;
+    float: left;
+  }
+  .login-btn {
+    width: 70vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .kakao-login {
+    width: 35vh;
+    position: absolute;
+    top: 68%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @-webkit-keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 </style>

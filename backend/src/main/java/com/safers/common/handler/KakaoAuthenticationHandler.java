@@ -3,6 +3,7 @@ package com.safers.common.handler;
 import com.safers.api.service.KakaoService;
 import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,5 +27,11 @@ public class KakaoAuthenticationHandler implements HandlerInterceptor {
             throw new AuthorizationServiceException("토큰갱신 후 다시 요청해주세요");
 
         return true;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        response.setHeader("Access-Control-Expose-Headers", "ETag");
+        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 }

@@ -59,7 +59,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                .addPathPatterns("/api") // api 관련 Patterns
                .excludePathPatterns("/api/user/login")
                .excludePathPatterns("/api/user/token")
-               .excludePathPatterns("/api/user/token/refresh");
-
+               .excludePathPatterns("/api/user/token/refresh")
+               .excludePathPatterns("/api/unity");
     }
 }

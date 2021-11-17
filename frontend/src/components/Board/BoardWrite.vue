@@ -117,9 +117,8 @@
 </template>
 
 <script>
-import * as mobilenet from '@tensorflow-models/mobilenet';
-import * as tmImage from '@teachablemachine/image';
-
+    import * as mobilenet from '@tensorflow-models/mobilenet';
+    import * as tmImage from '@teachablemachine/image';
     import axios from "axios";
     import { mapGetters } from "vuex";
     import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
@@ -266,7 +265,6 @@ import * as tmImage from '@teachablemachine/image';
                         
                     for (let i = 0; i < length; i++) {
                         model.classify(document.getElementsByClassName("write-swiper-img").item(i)).then(predictions => {
-                            // console.log(i + '번째 라벨 = ', predictions);
                             predictions.forEach(e=>{
                                 const temp = e.className.replace(',', '');
                                 const tempResult = temp.split(' ');
