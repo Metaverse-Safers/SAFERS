@@ -38,7 +38,6 @@ export default {
     handleResize() {
       this.unityWidth = window.innerWidth * 0.5;
       this.unityHeight = window.innerHeight;
-      console.log(this.unityWidth);
     },
   },
 };

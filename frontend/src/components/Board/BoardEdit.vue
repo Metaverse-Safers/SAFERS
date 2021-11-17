@@ -1,57 +1,62 @@
 <template>
-    <div class="write-wrap">
-        <form class="write-box" enctype="multipart/form-data">
-            <div class="write-img">
-                <Swiper class="write-swiper" :options="swiperOption" v-if="previewImgUrls">
-                    <SwiperSlide class="write-swiper-slide" v-for="(data, idx) in previewImgUrls" v-bind:key="idx">
-                        <img :src="data" class="write-swiper-img"/>
-                    </SwiperSlide>
-                    <div class="swiper-pagination" slot="pagination"></div>
-                    <div class="swiper-button-prev" slot="button-prev"></div>
-                    <div class="swiper-button-next" slot="button-next"></div>
-                </Swiper>
-                <input id="rg-img-selctor" type="file" ref="selectFile" multiple style="display:none;" @change="previewFile" accept="image/*" required class="btn btn-outline-secondary imb-font-semi-bold" />
+    <div class="edit-container">
+        <div class="edit-header">
+            <h2 class="imb-font-semi-bold">게시물 수정</h2>
+        </div>
+        <div class="edit-wrap">
+            <form class="edit-box" enctype="multipart/form-data">
+                <div class="edit-img">
+                    <Swiper class="edit-swiper" :options="swiperOption" v-if="previewImgUrls">
+                        <SwiperSlide class="edit-swiper-slide" v-for="(data, idx) in previewImgUrls" v-bind:key="idx">
+                            <img :src="data" class="edit-swiper-img"/>
+                        </SwiperSlide>
+                        <div class="swiper-pagination" slot="pagination"></div>
+                        <div class="swiper-button-prev" slot="button-prev"></div>
+                        <div class="swiper-button-next" slot="button-next"></div>
+                    </Swiper>
+                    <input id="rg-img-selctor" type="file" ref="selectFile" multiple style="display:none;" @change="previewFile" accept="image/*" required class="btn btn-outline-secondary imb-font-semi-bold" />
+                </div>
+                <div class="edit-user">
+                    <img :src="userProfile.profileUrl"/>
+                    <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
+                </div>
+                <div class="imb-font-regular">
+                    <select class="category-select-edit p-2" v-model="menu">
+                        <option selected hidden value="0">어떤 종류의 글인가요?</option>
+                        <option :value="ca.code" v-for="ca in category" :key="ca.code">{{ca.name}}</option>
+                    </select>
+                    <input class="edit-text edit-title"  placeholder="이 글의 제목은 무엇인가요?" v-model="boardInfo.title" required/>
+                    <textarea class="edit-text edit-content"  placeholder="이 글의 내용은 무엇인가요?" v-model="boardInfo.content" required/>
+                </div>
+            </form>
+            <div v-if="menu == 0 || menu == 'D01'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">수정 완료</button>
             </div>
-            <div class="write-user">
-                <img :src="userProfile.profileUrl"/>
-                <div class="imb-font-semi-bold">{{userProfile.nickName}}</div>
+            <div v-else-if="menu == 'D02'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="zebraPredict" :disabled="imageEmptyCheck">얼룩말 검사</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="zebraDisabled">수정 완료</button>
             </div>
-            <div class="imb-font-regular">
-                <select class="category-select-write p-2" v-model="menu">
-                    <option selected hidden value="0">어떤 종류의 글인가요?</option>
-                    <option :value="ca.code" v-for="ca in category" :key="ca.code">{{ca.name}}</option>
-                </select>
-                <input class="write-text write-title"  placeholder="이 글의 제목은 무엇인가요?" v-model="boardInfo.title" required/>
-                <textarea class="write-text write-content"  placeholder="이 글의 내용은 무엇인가요?" v-model="boardInfo.content" required/>
+            <div v-else-if="menu == 'D03'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="cupPredict" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="bottleDisabled">수정 완료</button>
             </div>
-        </form>
-        <div v-if="menu == 0 || menu == 'D01'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">자유글 등록</button>
-        </div>
-        <div v-else-if="menu == 'D02'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="zebraPredict" :disabled="imageEmptyCheck">얼룩말 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="zebraDisabled">게시물 등록</button>
-        </div>
-        <div v-else-if="menu == 'D03'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="cupPredict" :disabled="imageEmptyCheck">텀블러/컵 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="bottleDisabled">게시물 등록</button>
-        </div>
-        <div v-else-if="menu == 'D04'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="illustratedPredict" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="illustratedDisabled">게시물 등록</button>
-        </div>
-        <div v-else-if="menu == 'D05'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">환경일기 등록</button>
-        </div>
-        <div v-else-if="menu == 'D06'" class="write-btn">
-            <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="interestPredict" :disabled="imageEmptyCheck">환경관심도 검사</button>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="interestDisabled">게시물 등록</button>
+            <div v-else-if="menu == 'D04'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="illustratedDisabled">수정 완료</button>
+            </div>
+            <div v-else-if="menu == 'D05'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="simpleDisabled">수정 완료</button>
+            </div>
+            <div v-else-if="menu == 'D06'" class="edit-btn">
+                <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">환경관심도 검사</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="interestDisabled">수정 완료</button>
+            </div>
         </div>
     </div>
 </template>
@@ -68,6 +73,7 @@
             Swiper,
             SwiperSlide
         },
+
         data() {
             return{
                 userInfo: {},
@@ -98,10 +104,14 @@
                 isInterest: false,
             }
         },
+
+        props: {
+            info: []
+        },
+
         methods: {
             previewFile(e) {
                 this.isCup = false;
-                this.isInterest = false;
                 this.selectFiles=[];
                 this.previewImgUrls=[];
                 // 선택된 파일이 있는가?
@@ -119,7 +129,7 @@
                             this.previewImgUrls.push(URL.createObjectURL(file));
                         }
                         else {
-                            alert("3MB 이하의 이미지 파일만 가능합니다.");
+                            this.$fire({title: "3MB 이하의 이미지 파일만 가능합니다.", type: "error", timer: 1000, showConfirmButton: false})
                         }
                     }
                 }
@@ -137,50 +147,28 @@
                     }
                     uploadBoard.append("content", this.boardInfo.content);
                     uploadBoard.append("code", this.menu);
-                    axios.post('/api/board', uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
+                    axios.patch('/api/board/' + this.info.id, uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
                     .then(res => {  // eslint-disable-line no-unused-vars
-                        this.$fire({title: "등록 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
+                        this.$fire({title: "수정 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
                         this.boardInfo.title="";
                         this.boardInfo.content="";
                         this.selectFiles=[];
                         this.previewImgUrls=[];
-                        this.$emit('write', 'BoardList');
+                        this.$emit("list");
                     })
                     .catch(err => {
                         console.log(err);
                     });
                 }
             },
-            async testTeachableML(){
-                const URI = "https://teachablemachine.withgoogle.com/models/"
-                const URL = URI + "R5YvC7gmJ/";
-                const modelURL = URL + "model.json";
-                const metadataURL = URL + "metadata.json";
-
-                const model = await tmImage.load(modelURL, metadataURL);
-                const maxPredictions = model.getTotalClasses();
-
-                let length = document.getElementsByClassName('write-swiper-img').length;
-                for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
-                    const classPrediction = {};
-                    for (let p = 0; p < maxPredictions; p++) {
-                    classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
-                    }
-                    console.log(i+'번째 분류 = ', classPrediction);
-                }
-            },
-            zebraPredict(){
-                this.testTeachableML();
-            },
-            async cupPredict(){
+            async bottleMobilenetML(){
                 const findObject = [];
                 const correct = ["bottle", "mug", "cup"];
-                let length = document.getElementsByClassName('write-swiper-img').length;
+                let length = document.getElementsByClassName('edit-swiper-img').length;
                 mobilenet.load().then(model => {
                         
                     for (let i = 0; i < length; i++) {
-                        model.classify(document.getElementsByClassName("write-swiper-img").item(i)).then(predictions => {
+                        model.classify(document.getElementsByClassName("edit-swiper-img").item(i)).then(predictions => {
                             predictions.forEach(e=>{
                                 const temp = e.className.replace(',', '');
                                 const tempResult = temp.split(' ');
@@ -196,35 +184,31 @@
                     }
                 });
             },
-            illustratedPredict(){
-
-            },
-            async interestPredict(){
-                const URI = "https://teachablemachine.withgoogle.com/models/"
-                const URL = URI + "MwA8PPduz/";
+            async teachableML(mlUrl){
+                const URL = mlUrl;
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
 
                 const model = await tmImage.load(modelURL, metadataURL);
                 const maxPredictions = model.getTotalClasses();
 
-                let length = document.getElementsByClassName('write-swiper-img').length;
+                let length = document.getElementsByClassName('image-data').length;
                 for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
-
+                    const prediction = await model.predict(document.getElementsByClassName("image-data").item(i));
                     const classPrediction = {};
                     for (let p = 0; p < maxPredictions; p++) {
-                        classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
-                    }
-                    if (classPrediction["true"] > classPrediction["false"]){
-                        console.log("환경관심도 미션 사진이 맞아요!")
-                        this.isInterest = true;
-                    }else{
-                        console.log("환경관심도 미션 사진이 아니에요!")
+                    classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
                     }
                 }
+            },
+            zebraPredict(){
+
+            },
+            async cupPredict(){
+                this.bottleMobilenetML();
             }
         },
+
         computed: {
             ...mapGetters({
                 userProfile: "user/userProfile",
@@ -265,9 +249,16 @@
               return true;
             },
         },
+
         mounted() {
             this.userInfo = { ...this.userProfile };
+            for(var i=0; i<this.info.fileList.length; i++)
+                this.previewImgUrls.push(this.info.fileList[i].filePath);
+            this.boardInfo.title = this.info.title;
+            this.boardInfo.content = this.info.content;
+            this.menu = this.info.code.code;
         },
+
         created(){
             axios.get('/api/commoncode/category')
             .then(res => {
@@ -280,31 +271,46 @@
     }
 </script>
 <style>
-    .category-select-write{
+    .edit-container {
+        height: 94%;
+    }
+    .edit-header {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        margin-bottom: 10px;
+        margin-top: -10px;
+    }
+    .edit-header > h2 {
+        grid-column: 2/3;
+        justify-self: center;
+        margin-bottom: 0 !important;
+    }
+    .category-select-edit{
         width:100%;
         border: none;
         border-bottom: 1px rgb(220, 220, 220) solid;
         color: rgb(94, 94, 94);
     }
-    .category-select-write:focus{
+    .category-select-edit:focus{
         outline: none;
     }
-    .write-wrap{
-        height: 80%;
+    .edit-wrap{
+        height: 100%;
     }
-    .write-box{
-        display: grid;
+    .edit-box{
+        display: grid;  
         grid-template-columns: 2fr 1fr;
         grid-template-rows: 1fr 10fr;
         border: 1px rgb(220, 220, 220) solid;
         height: 100%;
     }
-    .write-img{
+    .edit-img{
         border-right: 1px rgb(230, 230, 230) solid;
         grid-column: 1 / 2;
         grid-row: 1 / 3;
     }
-    .write-swiper {
+    .edit-swiper {
         width: 100%;
         height: 100%;
         text-align: center;
@@ -312,68 +318,57 @@
         border-right: 1px rgb(230, 230, 230) solid;
         background-color: rgb(250, 250, 250);
     }
-    .write-swiper-slide {
+    .edit-swiper-slide {
         width: 100% !important;
     }
-    .write-swiper-img {
+    .edit-swiper-img {
         height:100%; 
         width:100%; 
         object-fit: contain;
     }
-    /* .write-img-selector {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        font-size: 1.5vh;
-    }
-    .write-img-selector:hover {
-        color: rgb(200, 200, 200);
-        cursor: pointer;
-    } */
-    .write-btn{
+    .edit-btn{
         display: flex;
         align-items: center;
         justify-content: center;
         height: 10%;
         margin-top: 0.5vw;
     }
-    .write-user {
+    .edit-user {
         display: flex;
         align-items: center;
         padding: 2px;
         border-bottom: 1px rgb(230, 230, 230) solid;
     }
-    .write-user > img{
+    .edit-user > img{
         height: 3.5vh; 
         width: 3.5vh; 
         border-radius: 100px;
         margin-left: 10px;
         margin-right: 10px;
     }
-    .write-user > div{
+    .edit-user > div{
         font-size: 1.5vh;
     }
-    .write-text {
+    .edit-text {
         border: none;
         width: 100%;
         font-size: 1.5vh;
     }
-    .write-text:focus {
+    .edit-text:focus {
         outline: none;
     }
-    .write-title {
+    .edit-title {
         height: 10%;
         padding: 10px;
     }
-    .write-content {
+    .edit-content {
         resize: none;
         overflow: auto;
         height: 80%;
         border-top: 1px rgb(230, 230, 230) solid;
         padding: 10px;
     }
-    .write-content::-webkit-scrollbar {
+    .edit-content::-webkit-scrollbar {
         display: none;
     }
 </style>

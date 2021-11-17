@@ -7,6 +7,7 @@
         <p class="imb-font-regular">{{info.nickName}}</p>
       </div>
       <div class="col-4 is-mine-style">
+        <i class="far fa-edit fa-2x board-edit" @click="editClick" v-if="info.isMine"></i>
         <i class="far fa-trash-alt fa-2x board-delete" @click="boardDelete" v-if="info.isMine"></i>
       </div>
     </div>
@@ -23,7 +24,7 @@
           </Swiper>
         </div>
         <div class="col bg-light pt-2">
-          <div class="row board-detail-content imb-font-regular">{{info.content}}</div>
+          <div class="row board-detail-content imb-font-regular" v-html="handleNewLine(info.content)"></div>
           <div class="row line-top detail-comment-wrap imb-font-regular pt-2">
             <div class="detail-comment-list" v-for="(list, idx) in commentList" v-bind:key="idx">
                   <div class="detail-comment">
@@ -54,99 +55,105 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapGetters } from "vuex";
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
-export default {
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
-  data() {
-    return {
-      comment: "",
-      commentList: {},
-      swiperOption: {
-        slidesPerView: 1,
-        spaceBetween: 30,
-        loop: false,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-      },
-    };
-  },
-  props: {
-    info: [],
-  },
-  computed: {
-    ...mapGetters({
-      userProfile: "user/userProfile",
-    }),
-    singleFileCheck(){
-      if (this.info.fileList.length == 1)
-        return false;
-      return true;
-    }
-  },
-  methods: {
-    commentGet() {
-      axios.get("/api/board/comment/" + this.info.id).then((res) => {
-        this.commentList = res.data;
-        for (var i = 0; i < this.commentList.length; i++) {
-          if (this.commentList[i].userId == this.userProfile.id)
-            this.commentList[i].mine = true;
-          else this.commentList[i].mine = false;
-        }
-      });
+  import axios from "axios";
+  import { mapGetters } from "vuex";
+  import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+  import "swiper/css/swiper.css";
+  export default {
+    components: {
+      Swiper,
+      SwiperSlide,
     },
-    commentRegister() {
-      const uploadComment = new FormData();
-      uploadComment.append("board_id", this.info.id);
-      uploadComment.append("comment", this.comment);
-      uploadComment.append("userId", this.userProfile.id);
-      axios
-        .post("/api/board/comment/" + this.info.id, uploadComment)
-        .then((res) => {
+    data() {
+      return {
+        comment: "",
+        commentList: {},
+        swiperOption: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+          loop: false,
+          pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+          },
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          },
+        },
+      };
+    },
+    props: {
+      info: [],
+    },
+    computed: {
+      ...mapGetters({
+        userProfile: "user/userProfile",
+      }),
+      singleFileCheck(){
+        if (this.info.fileList.length == 1)
+          return false;
+        return true;
+      }
+    },
+    methods: {
+      handleNewLine(str) {    
+          return String(str).replace(/(?:\r\n|\r|\n)/g,"<br>");
+      },
+      editClick() {
+        this.$emit("edit");
+      },
+      commentGet() {
+        axios.get("/api/board/comment/" + this.info.id).then((res) => {
+          this.commentList = res.data;
+          for (var i = 0; i < this.commentList.length; i++) {
+            if (this.commentList[i].userId == this.userProfile.id)
+              this.commentList[i].mine = true;
+            else this.commentList[i].mine = false;
+          }
+        });
+      },
+      commentRegister() {
+        const uploadComment = new FormData();
+        uploadComment.append("board_id", this.info.id);
+        uploadComment.append("comment", this.comment);
+        uploadComment.append("userId", this.userProfile.id);
+        axios
+          .post("/api/board/comment/" + this.info.id, uploadComment)
+          .then((res) => {
+            // eslint-disable-line no-unused-vars
+            this.commentGet();
+            console.log(res);
+          });
+        document.getElementById("detail-textarea").value = "";
+        this.comment = "";
+      },
+      commentDelete(id) {
+        axios.patch("/api/board/comment/delete/" + id).then((res) => {
           // eslint-disable-line no-unused-vars
           this.commentGet();
           console.log(res);
         });
-      document.getElementById("detail-textarea").value = "";
-      this.comment = "";
+      },
+      async boardDelete(){
+        const $this = this;
+        await this.$fire({title: "삭제하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
+        .then(function(result) {
+          if(result.value) {
+            axios
+            .patch('/api/board/delete/' + $this.info.id)
+            .then(res => { // eslint-disable-line no-unused-vars
+              $this.$fire({title: "삭제 되었습니다!", text: "삭제 완료", type: "success", timer: 1000, showConfirmButton: false});
+              $this.$emit("comeback");
+            })
+          }
+        })
+      }
     },
-    commentDelete(id) {
-      axios.patch("/api/board/comment/delete/" + id).then((res) => {
-        // eslint-disable-line no-unused-vars
-        this.commentGet();
-        console.log(res);
-      });
+    mounted() {
+      this.commentGet();
     },
-    async boardDelete(){
-      const $this = this;
-      await this.$fire({title: "삭제하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
-      .then(function(result) {
-        if(result.value) {
-          axios
-          .patch('/api/board/delete/' + $this.info.id)
-          .then(res => { // eslint-disable-line no-unused-vars
-            $this.$fire({title: "삭제 되었습니다!", text: "삭제 완료", type: "success", timer: 1000, showConfirmButton: false});
-            $this.$emit("comeback");
-          })
-        }
-      })
-    }
-  },
-  mounted() {
-    this.commentGet();
-  },
-};
+  };
 </script>
 <style>
 .detail-box {
