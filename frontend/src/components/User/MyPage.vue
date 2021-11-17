@@ -92,7 +92,10 @@ export default {
       token: "user/token"
     }),
     updateVaildCheck(){
-      if(this.userInfo.nickName.length > 0 && (this.img.selectFile != null || this.userInfo.profileUrl != null))
+      const regExp1 = /^[가-힣]{1,7}$/g;
+      const regExp2 = /^[a-zA-Z]{1,13}$/g;
+      const check = regExp1.test(this.userInfo.nickName) || regExp2.test(this.userInfo.nickName);
+      if((this.userInfo.nickName.length > 0 && check) && (this.img.selectFile != null || this.userInfo.profileUrl != null))
         return false;
       return true;
     },
