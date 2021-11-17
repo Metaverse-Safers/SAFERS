@@ -1,5 +1,5 @@
 <template>
-  <div class="unity-div">
+  <div class="unity-div" v-if="!isDestoryed">
     <Menu></Menu>
     <unity
       class="unity-screen"
@@ -24,18 +24,20 @@ export default {
       unityHeight: "",
     };
   },
+  computed: {
+    isDestroyed(){
+      return this.$store.getters["user/isDestroyed"];
+    },
+  },
+
   mounted() {
     this.handleResize();
     window.addEventListener("resize", this.handleResize);
 
     // 게임화면 이동시 connect valid
     localStorage.setItem("homeValid", 0);
-  
-    // 뒤로가기 혹은, 다른 페이지로 넘어가기 전 거쳐가는 함수
-    this.$router.beforeEach(function(to, from, next) {
-      console.log(to +"에서" + from + "으로 가기전!" + next);  
-    });
   },
+  
   beforeDestroy() {
     window.removeEventListener("resize", this.handleResize);
   },

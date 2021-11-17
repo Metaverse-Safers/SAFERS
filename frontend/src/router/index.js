@@ -1,9 +1,11 @@
 import vue from 'vue'
+import VueRouter from 'vue-router'
 import router from 'vue-router'
+import store  from '../store'
 
 vue.use(router)
 
-export default new router({
+const route = new VueRouter({
   mode: 'history',
   routes: [
     // main 페이지
@@ -23,5 +25,17 @@ export default new router({
     { path: '/info', name: 'info', component: () => import("@/views/Info.vue") }
 
   ]
-
 })
+
+route.afterEach((to) => {
+  // 월드에서 나온 경우
+  if(store.getters["user/path"] == "/world"){
+    store.commit("user/SET_IS_DESTROYED", true);
+  }else{
+    store.commit("user/SET_IS_DESTROYED", false);
+  }
+  // 이동한 PATH 저장
+  store.commit("user/SET_PATH", to.path);
+})
+
+export default route;
