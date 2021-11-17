@@ -44,7 +44,7 @@ export default {
       Object.keys(this.userProfile).length != 0
     )
       this.loggedIn = false;
-    console.log(this.userProfile);
+    // console.log(this.userProfile);
 
     // 홈화면 이동시 photonnetwork disconnect
     localStorage.setItem("homeValid", 1);

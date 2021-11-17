@@ -8,14 +8,17 @@
         <label class="mypage-profile-img" className="input-file-button" for="mypage-profile-img-selctor">
           <img v-if="img.previewImgUrl" :src="img.previewImgUrl"/>
           <div/>
-          <p>프로필 사진 변경하기</p>
+          <p class="imb-font-regular">프로필 사진 변경하기</p>
         </label>
         <input id="mypage-profile-img-selctor" type="file" ref="selectFile" style="display: none" @change="previewFile" accept="image/*"/>  
         <input class="mypage-text" type="text" v-model="userInfo.nickName" required>
       </form>
       <div class="mypage-btn">
-          <button type="button" @click="register" class="btn btn-outline-secondary imb-font-semi-bold">수정하기</button>
-          <button type="button" @click="withdrawal" class="btn btn-outline-danger imb-font-semi-bold">회원탈퇴</button>
+          <button type="button" @click="register" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="updateVaildCheck">수정하기</button>
+          <button type="button" @click="withdrawal" class="btn btn-outline-danger imb-font-semi-bold">회원탈퇴</button><br>
+      </div>
+      <div>
+          <p class="text-red imb-font-regular" v-if="validationCheckNickname">닉네임은 한글 최대 7자, 영어 최대 13자입니다.</p>
       </div>
     </div>
     <!-- <img class="mypage-scene" src="@/assets/images/mypageScene.png"/> -->
@@ -32,7 +35,8 @@ export default {
         selectFile: null,
         previewImgUrl: null, // 미리보기 이미지 URL
         isUploading: false, // 파일 업로드 체크
-      }
+      },
+      validate: false,
     };
   },
   methods: {
@@ -87,6 +91,18 @@ export default {
       userProfile: "user/userProfile",
       token: "user/token"
     }),
+    updateVaildCheck(){
+      if(this.userInfo.nickName.length > 0 && (this.img.selectFile != null || this.userInfo.profileUrl != null))
+        return false;
+      return true;
+    },
+    validationCheckNickname(){
+      const regExp1 = /^[가-힣]{1,7}$/g;
+      const regExp2 = /^[a-zA-Z]{1,13}$/g;
+      if(!regExp1.test(this.userInfo.nickName) && !regExp2.test(this.userInfo.nickName))
+        return true;
+      return false;
+    }
   },
   mounted() {
     this.userInfo = { ...this.userProfile };
@@ -169,9 +185,15 @@ export default {
   margin: 3px;
 }
 .mypage-profile-img :hover,
-.mypage-btn:hover,
 .mypage-withdrawal-btn:hover {
   filter: brightness(80%);
   cursor: pointer;
+}
+.text-red{
+  color:red;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 70%;
 }
 </style>

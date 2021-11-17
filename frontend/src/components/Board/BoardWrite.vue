@@ -42,7 +42,7 @@
         </div>
         <div v-else-if="menu == 'D04'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="illustratedPredict" :disabled="imageEmptyCheck">동물도감 검사</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="illustratedDisabled">게시물 등록</button>
         </div>
         <div v-else-if="menu == 'D05'" class="write-btn">
@@ -51,7 +51,7 @@
         </div>
         <div v-else-if="menu == 'D06'" class="write-btn">
             <label className="input-file-button" for="rg-img-selctor" class="btn btn-outline-secondary imb-font-semi-bold">사진 선택</label>&nbsp;&nbsp;
-            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" :disabled="imageEmptyCheck">환경관심도 검사</button>&nbsp;&nbsp;
+            <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="interestPredict" :disabled="imageEmptyCheck">환경관심도 검사</button>&nbsp;&nbsp;
             <button type="button" class="btn btn-outline-secondary imb-font-semi-bold" @click="register" :disabled="interestDisabled">게시물 등록</button>
         </div>
     </div>
@@ -103,6 +103,7 @@ import * as tmImage from '@teachablemachine/image';
         methods: {
             previewFile(e) {
                 this.isCup = false;
+                this.isInterest = false;
                 this.selectFiles=[];
                 this.previewImgUrls=[];
                 // 선택된 파일이 있는가?
@@ -152,7 +153,29 @@ import * as tmImage from '@teachablemachine/image';
                     });
                 }
             },
-            async bottleMobilenetML(){
+            async testTeachableML(){
+                const URI = "https://teachablemachine.withgoogle.com/models/"
+                const URL = URI + "R5YvC7gmJ/";
+                const modelURL = URL + "model.json";
+                const metadataURL = URL + "metadata.json";
+
+                const model = await tmImage.load(modelURL, metadataURL);
+                const maxPredictions = model.getTotalClasses();
+
+                let length = document.getElementsByClassName('write-swiper-img').length;
+                for (let i = 0; i < length; i++) {
+                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+                    const classPrediction = {};
+                    for (let p = 0; p < maxPredictions; p++) {
+                    classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
+                    }
+                    console.log(i+'번째 분류 = ', classPrediction);
+                }
+            },
+            zebraPredict(){
+                this.testTeachableML();
+            },
+            async cupPredict(){
                 const findObject = [];
                 const correct = ["bottle", "mug", "cup"];
                 let length = document.getElementsByClassName('write-swiper-img').length;
@@ -185,30 +208,35 @@ import * as tmImage from '@teachablemachine/image';
                     }
                 });
             },
-            async teachableML(mlUrl){
-                const URL = mlUrl;
+            illustratedPredict(){
+
+            },
+            async interestPredict(){
+                const URI = "https://teachablemachine.withgoogle.com/models/"
+                const URL = URI + "MwA8PPduz/";
                 const modelURL = URL + "model.json";
                 const metadataURL = URL + "metadata.json";
 
                 const model = await tmImage.load(modelURL, metadataURL);
                 const maxPredictions = model.getTotalClasses();
 
-                
-                let length = document.getElementsByClassName('image-data').length;
+                let length = document.getElementsByClassName('write-swiper-img').length;
                 for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("image-data").item(i));
+                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+
                     const classPrediction = {};
                     for (let p = 0; p < maxPredictions; p++) {
-                    classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
+                        classPrediction[prediction[p].className] = prediction[p].probability.toFixed(2);
                     }
-                    console.log(i+'번째 분류 = ', classPrediction);
-                }
-            },
-            zebraPredict(){
+                    // console.log(i+'번째 분류 = ', classPrediction);
 
-            },
-            async cupPredict(){
-                this.bottleMobilenetML();
+                    if (classPrediction["true"] > classPrediction["false"]){
+                        console.log("환경관심도 미션 사진이 맞아요!")
+                        this.isInterest = true;
+                    }else{
+                        console.log("환경관심도 미션 사진이 아니에요!")
+                    }
+                }
             }
         },
         computed: {
