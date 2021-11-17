@@ -22,7 +22,11 @@ const route = new VueRouter({
     { path: '/world', name: 'world', meta: {requireAuth:true}, component: () => import("@/views/World.vue") },
 
     // information 페이지
-    { path: '/info', name: 'info', component: () => import("@/views/Info.vue") }
+    { path: '/info', name: 'info', component: () => import("@/views/Info.vue") },
+
+    // 404 페이지
+    { path: '/notfound', name: "NotFound", component: () => import("@/components/NotFound.vue")},
+    { path: '/:pathMatch(.*)*', redirect: '/notfound'},
 
   ]
 })
