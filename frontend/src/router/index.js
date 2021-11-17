@@ -16,7 +16,7 @@ const route = new VueRouter({
     { path: '/login/callback', name: 'kakaoCallback', component: () => import("@/components/User/KakaoCallback.vue") },
 
     // register 페이지
-    { path: '/register', name: 'register', meta: {requireAuth:true}, component: () => import("@/views/Register.vue") },
+    { path: '/register', name: 'register', component: () => import("@/views/Register.vue") },
 
     // world 페이지
     { path: '/world', name: 'world', meta: {requireAuth:true}, component: () => import("@/views/World.vue") },
