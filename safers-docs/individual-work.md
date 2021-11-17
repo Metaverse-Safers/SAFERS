@@ -184,7 +184,7 @@
     <td></td>
     <td></td>
     <td></td>
-    <td></td>
+    <td>- 유니티 화면 깨짐 이슈 진행</td>
   </tr>
   <tr>
     <td align="center">211118(목)</td>
