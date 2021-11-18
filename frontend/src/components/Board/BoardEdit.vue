@@ -190,7 +190,6 @@
                                 && file.size <= 3145728){
                             this.selectFiles.push(file);
                             this.previewImgUrls.push(URL.createObjectURL(file));
-                            console.log(file)
                         }
                         else {
                             this.$fire({title: "3MB 이하의 이미지 파일만 가능합니다.", type: "error", timer: 1000, showConfirmButton: false})
@@ -219,8 +218,7 @@
                     }
                     uploadBoard.append("content", this.boardInfo.content);
                     uploadBoard.append("code", this.menu);
-                    for (var pair of uploadBoard.entries()) { console.log(pair[0]+ ' : ' + pair[1]); }
-                    console.log(this.info.id)
+                    // for (var pair of uploadBoard.entries()) { console.log(pair[0]+ ' : ' + pair[1]); }
                     axios.patch('/api/board/' + this.info.id, uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
                     .then(res => {  // eslint-disable-line no-unused-vars
                         this.$fire({title: "수정 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
