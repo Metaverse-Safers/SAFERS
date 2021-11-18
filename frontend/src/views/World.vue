@@ -1,5 +1,5 @@
 <template>
-  <div class="unity-div" v-if="!isDestroyed">
+  <div class="unity-div">
     <Menu></Menu>
     <unity
       class="unity-screen"
