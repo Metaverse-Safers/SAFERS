@@ -64,6 +64,7 @@
       listFunc() {
         this.editT = false;
         this.boardDetail = false;
+        this.comeBack();
         this.$emit('detail',false);
       },
       async comeBack(){
