@@ -196,7 +196,15 @@
                         }
                     }
                 }
-            },  
+            },
+            async dataURLToBlob(url){
+                const response = await fetch(url);
+                const data = await response.blob();
+                const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
+                const filename = url.split("/").pop(); // url 구조에 맞게 수정할 것
+                const metadata = { type: `image/${ext}` };
+                return new File([data], filename, metadata);
+            },
             register() {
                 if (this.boardInfo.title == "" || this.selectFiles.length == 0 || this.boardInfo.content == ""){
                     this.$fire({title: "사진이나 내용을 넣어주세요", text: "사진이나 내용 없음", type: "error", timer: 1000, showConfirmButton: false})
@@ -210,6 +218,7 @@
                     }
                     uploadBoard.append("content", this.boardInfo.content);
                     uploadBoard.append("code", this.menu);
+                    // for (var pair of uploadBoard.entries()) { console.log(pair[0]+ ' : ' + pair[1]); }
                     axios.patch('/api/board/' + this.info.id, uploadBoard,  { headers: { 'Content-Type': 'multipart/form-data' } })
                     .then(res => {  // eslint-disable-line no-unused-vars
                         this.$fire({title: "수정 되었습니다!", text: "완료", type: "success", timer: 1000, showConfirmButton: false})
@@ -415,10 +424,15 @@
             },
         },
 
-        mounted() {
+        async mounted() {
             this.userInfo = { ...this.userProfile };
-            for(var i=0; i<this.info.fileList.length; i++)
+            for(var i=0; i<this.info.fileList.length; i++){
                 this.previewImgUrls.push(this.info.fileList[i].filePath);
+                this.selectFiles.push(await this.dataURLToBlob(this.info.fileList[i].filePath)
+                .then(function(result){
+                    return result;
+                }))
+            }
             this.boardInfo.title = this.info.title;
             this.boardInfo.content = this.info.content;
             this.menu = this.info.code.code;
