@@ -156,8 +156,9 @@ public class BoardService {
             board.setContent(boardRegisterPostRequest.getContent());
             board.setTitle(boardRegisterPostRequest.getTitle());
 
-            Code code = codeService.getCodeByName(boardRegisterPostRequest.getCode());
+            Code code = codeService.getCodeByCode(boardRegisterPostRequest.getCode());
             board.setCode(code);
+            boardRepository.save(board);
         }
         return board;
     }

@@ -77,8 +77,10 @@ public class BoardController {
             @ApiResponse(code = 404, message = "사용자 없음"),
             @ApiResponse(code = 500, message = "서버 에러 발생")
     })
-    @PatchMapping(value = "/{board_id}",consumes = {"multipart/form-data"})
+    @PatchMapping(value = "/{board_id}", consumes = {"multipart/form-data"})
     public ResponseEntity<? extends BaseResponse> updateBoard(@PathVariable(value = "board_id")String boardId, @ModelAttribute BoardRegisterPostRequest boardRegisterPostRequest) throws IOException {
+        System.out.println(boardId);
+        System.out.println(boardRegisterPostRequest.toString());
         Board board = boardService.updateBoard(boardId, boardRegisterPostRequest);
 
         return new ResponseEntity<>(BaseResponse.of(200, "게시글이 정상적으로 수정되었습니다"), HttpStatus.OK);
