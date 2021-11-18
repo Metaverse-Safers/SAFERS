@@ -157,6 +157,7 @@ SafersSafers
 ## 4️⃣ 프로젝트 산출물
 
 - MD와 Notion은 동일하게 정리되었습니다. 열람하시는 분이 더욱 편한 내용으로 확인해주세요.
+- 일부 자료는 md로 옮기기 너무 방대해 Notion 링크만 있습니다. 링크는 public하니 자유롭게 확인해주세요.
 
 <table>
   <tr>
@@ -200,59 +201,59 @@ SafersSafers
   <tr>
     <th rowspan="3">사전 학습 공유</th>
     <td>Unity 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Unity-2a7bb2b1f5604334a9b53822501619b5" target="_blank">Notion</a></td>
+    <td align="center"><a href="https://danghyeona.notion.site/Unity-2a7bb2b1f5604334a9b53822501619b5" target="_blank">Notion 확인하기</a></td>
   </tr>
   <tr>
     <td>AWS EC2 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/AWS-EC2-ecac85932996415390c9b6ce189b5efb" target="_blank">Notion</a></td>
+    <td align="center"><a href="https://danghyeona.notion.site/AWS-EC2-ecac85932996415390c9b6ce189b5efb" target="_blank">Notion 확인하기</a></td>
   </tr>
   <tr>
     <td>Jenkins CI/CD 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Jenkins-CI-CD-5c1a1367004747778659c26ed9fe9bd0" target="_blank">Notion</a></td>
+    <td align="center"><a href="https://danghyeona.notion.site/Jenkins-CI-CD-5c1a1367004747778659c26ed9fe9bd0" target="_blank">Notion 확인하기</a></td>
   </tr>
   <tr>
     <th rowspan="6">콘텐츠 설계</th>
     <td>멸종동물 사전 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/9bc92406487942a5bf23a1f03bd9b2e3?v=51171e7026ab4ab9b602e8fa6a8e53d2" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/preliminary-animal-research.md">MD </a> | <a href="https://danghyeona.notion.site/9bc92406487942a5bf23a1f03bd9b2e3?v=51171e7026ab4ab9b602e8fa6a8e53d2" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>미션 콘텐츠 사전 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/fcc97056c8f94defb16b8b1c6771ee02?v=6e334a7e64ce44548fbf0f54c9539cb1" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/preliminary-mission-contents.md">MD </a> | <a href="https://danghyeona.notion.site/fcc97056c8f94defb16b8b1c6771ee02?v=6e334a7e64ce44548fbf0f54c9539cb1" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>비회원 서비스 - 성격유형검사 설계</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/eae9f76854a24efa83806e02cabe33a2" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/personality-test.md">MD </a> | <a href="https://danghyeona.notion.site/eae9f76854a24efa83806e02cabe33a2" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>미션 스토리 라인 및 퀘스트 대사 설계</td>
-    <td align="center"><a href="https://danghyeona.notion.site/049ecf50eda44f2facd32067971eed63">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/final-mission-contents.md">MD </a> | <a href="https://danghyeona.notion.site/049ecf50eda44f2facd32067971eed63" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>동물 최종 확정 및 에셋 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/FIX-4bc7822f5cb94038a7b3040c9ca95ae6" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/final-animal-survey.md">MD </a> | <a href="https://danghyeona.notion.site/FIX-4bc7822f5cb94038a7b3040c9ca95ae6" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>서비스 BGM 선정</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/BGM-a39f3676822246869d6cd85bae0b974c" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/service-bgm.md">MD </a> | <a href="https://danghyeona.notion.site/BGM-a39f3676822246869d6cd85bae0b974c" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="2">개발 착수</th>
     <td>BackEnd - API Docs</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/3bc7d766250b409cb4be32d251d05c11?v=27c018c45cdb4602a8e038e4c7567e1c" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/api-docs.md">MD </a> | <a href="https://danghyeona.notion.site/3bc7d766250b409cb4be32d251d05c11?v=27c018c45cdb4602a8e038e4c7567e1c" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>Unity 미션 정보</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/d804440fbd2c42f0b59655996d93808e" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/uinity-mission-data.md">MD </a> | <a href="https://danghyeona.notion.site/d804440fbd2c42f0b59655996d93808e" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="1">테스트</th>
     <td>버그 리포트</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Bug-Report-bcce8f310e6f44a69d6625b84c0b4b79" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/bug-report.md">MD </a> | <a href="https://danghyeona.notion.site/Bug-Report-bcce8f310e6f44a69d6625b84c0b4b79" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="3">발표</th>
     <td>기획 발표 자료</td>
-    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/e50cc04f801e4401aa94878ba15a8300" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/planning-presentation.md">MD </a> | <a href="https://danghyeona.notion.site/e50cc04f801e4401aa94878ba15a8300" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>최종 발표 자료</td>

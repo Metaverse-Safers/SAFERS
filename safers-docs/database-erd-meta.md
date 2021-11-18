@@ -1,4 +1,4 @@
-[↩ Main로 돌아가기](https://lab.ssafy.com/s05-final/S05P31A403)
+[↩ Main로 돌아가기](../README.md)
 
 <br><br>
 
