@@ -62,10 +62,10 @@
    - Tensorflow Teachable Machine Image 0.8.5
    - Tensorflow core 3.11.0, Tensorflow backend wasm 3.11.0
 10. IDE&Tool
-   - intelliJ 21.1.2
-   - MySQL Workbench
-   - Visual Studio Code 1.58
-   - MobaXterm
+    - intelliJ 21.1.2
+    - MySQL Workbench
+    - Visual Studio Code 1.58
+    - MobaXterm
 
 <br><br>
 
