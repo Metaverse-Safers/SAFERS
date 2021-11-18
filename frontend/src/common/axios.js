@@ -31,7 +31,6 @@ http.interceptors.response.use((response) => response, async (error) => {
     const isAuthenticated = store.getters["user/isAuthenticated"]; 
 
     if(!isAuthenticated){
-      alert("로그인이 필요합니다!");
       router.push({ name: 'login' });
     }
     else{
@@ -42,9 +41,6 @@ http.interceptors.response.use((response) => response, async (error) => {
 
       return axios(originalRequest)
     }
-  }
-  else if(error.response.data.status == 500){
-    alert("서버에 오류가 발생하였습니다. 다시 시도해주세요.");
   }
 
   throw error;

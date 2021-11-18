@@ -6,6 +6,8 @@ const user = {
     token: {},
     userProfile: {},
     isAuthenticated: false,
+    path: "",
+    isDestroyed: false,
   },
   getters: {
     token({ token }) {
@@ -17,6 +19,12 @@ const user = {
     isAuthenticated({ isAuthenticated }) {
       return isAuthenticated;
     },
+    path({ path }) {
+      return path;
+    },
+    isDestroyed({ isDestroyed }) {
+      return isDestroyed;
+    }
   },
   mutations: {
     async SET_TOKEN(state, payload) {
@@ -30,7 +38,14 @@ const user = {
     },
     async WITHDRAWAL(state) {
       state.token = {};
+    },
+    async SET_PATH(state, payload) {
+      state.path = payload;
+    },
+    async SET_IS_DESTROYED(state, payload) {
+      state.isDestroyed = payload;
     }
+
   },
   actions: {
     /* AccessToken 요청 */
