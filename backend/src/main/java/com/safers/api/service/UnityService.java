@@ -219,7 +219,7 @@ public class UnityService {
         // 1. 미션 로그 수정
         MissionLog missionLog = updateMissionLog(user, mission, "C04");
         // 다음 미션이 존재할 때
-        if(mission.getNextMission() != null || mission.getNextMission() != "") {
+        if(mission.getNextMission() != null && mission.getNextMission() != "") {
             String[] nextMissions = mission.getNextMission().split("/");
             for (String id : nextMissions) {
                 System.out.println(id);
