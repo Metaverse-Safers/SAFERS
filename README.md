@@ -29,7 +29,7 @@
 2. 인원 (총 5인)
     - [당현아](https://github.com/eona1301) : 팀장, Backend, Frontend, AWS EC2, Machine Learning
     - [안상훈](https://github.com/ahnsang9) : Frontend
-    - [이상현](https://github.com/kimkuan) : Backend, AWS EC2, Unity
+    - [이상현](https://github.com/kimkuan) : Backend, Frontend, AWS EC2, Unity
     - [이영주](https://github.com/0JUUU) : Backend, AWS EC2, Unity
     - [정원석](https://github.com/JWeonseok) : Backend, Unity
 
@@ -165,90 +165,94 @@ SafersSafers
   </tr>
   <tr>
     <th colspan="2">6주간 진행한 개별 업무 수행</th>
-    <td align="center"><a href="safers-docs/individual-work.md">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/individual-work.md">확인하기</a></td>
   </tr>
   <tr>
     <th rowspan="3">기획</th>
     <td>브레인스토밍</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/brainstorming.md">MD </a> | <a href="https://danghyeona.notion.site/ad1b90b96341408da52c5e8ea1fa9728" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>서비스 확정 및 요구조건</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/requirements.md">MD </a> | <a href="https://danghyeona.notion.site/83498016717e478689f120624ffcedfe" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>프로젝트 계획서</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/project-plan.md">MD </a> | <a href="https://danghyeona.notion.site/871834c10898463d86a2fdb81150e499" target="_blank">Notion</a></td>
   </tr>
   <tr>
-    <th rowspan="3">개발 설계</th>
+    <th rowspan="4">개발 설계</th>
     <td>팀 컨벤션</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/team-convention.md">MD </a> | <a href="https://danghyeona.notion.site/ae3f42fafb58490cb7588f1e1ebe044b" target="_blank">Notion</a></td>
+  </tr>
+  <tr>
+    <td>서비스 디자인</td>
+    <td align="center"><a href="safers-docs/service-design.md">MD </a> | <a href="https://danghyeona.notion.site/d4fac1440f17411fbaa5e48c24f5173a" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>와이어프레임</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/wire-frame.md">MD </a> | <a href="https://danghyeona.notion.site/1a666ee3a6064e669f5d3bd7dd91d42b" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>ERD 구성 및 Meta Data 구성</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="safers-docs/database-erd-meta.md">MD </a> | <a href="https://danghyeona.notion.site/ERD-31f980214f9947bc9e0f9241c893a68a" target="_blank"> ERD Notion</a> | <a href="https://danghyeona.notion.site/Meta-Data-5d85f634be7540a3a8289bbbb56b3d81" target="_blank">Meta-Data Notion</a></td>
   </tr>
   <tr>
     <th rowspan="3">사전 학습 공유</th>
     <td>Unity 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Unity-2a7bb2b1f5604334a9b53822501619b5" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>AWS EC2 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/AWS-EC2-ecac85932996415390c9b6ce189b5efb" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>Jenkins CI/CD 학습</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Jenkins-CI-CD-5c1a1367004747778659c26ed9fe9bd0" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="6">콘텐츠 설계</th>
     <td>멸종동물 사전 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/9bc92406487942a5bf23a1f03bd9b2e3?v=51171e7026ab4ab9b602e8fa6a8e53d2" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>미션 콘텐츠 사전 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
-  </tr>
-  <tr>
-    <td>미션 스토리 라인 설계</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/fcc97056c8f94defb16b8b1c6771ee02?v=6e334a7e64ce44548fbf0f54c9539cb1" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>비회원 서비스 - 성격유형검사 설계</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/eae9f76854a24efa83806e02cabe33a2" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>미션 스토리 라인 및 퀘스트 대사 설계</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="https://danghyeona.notion.site/049ecf50eda44f2facd32067971eed63">MD </a> | <a href="" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>동물 최종 확정 및 에셋 조사</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/FIX-4bc7822f5cb94038a7b3040c9ca95ae6" target="_blank">Notion</a></td>
+  </tr>
+  <tr>
+    <td>서비스 BGM 선정</td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/BGM-a39f3676822246869d6cd85bae0b974c" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="2">개발 착수</th>
     <td>BackEnd - API Docs</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/3bc7d766250b409cb4be32d251d05c11?v=27c018c45cdb4602a8e038e4c7567e1c" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>Unity 미션 정보</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/d804440fbd2c42f0b59655996d93808e" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="1">테스트</th>
     <td>버그 리포트</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/Bug-Report-bcce8f310e6f44a69d6625b84c0b4b79" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <th rowspan="3">발표</th>
     <td>기획 발표 자료</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="">MD </a> | <a href="https://danghyeona.notion.site/e50cc04f801e4401aa94878ba15a8300" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>최종 발표 자료</td>
@@ -256,6 +260,6 @@ SafersSafers
   </tr>
   <tr>
     <td>프로젝트 서비스 UCC</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href=""> 보러가기 </a></td>
   </tr>
 </table>
