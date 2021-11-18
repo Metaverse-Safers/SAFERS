@@ -1,5 +1,5 @@
 <template>
-  <div class="unity-div" v-if="!isDestoryed()">
+  <div class="unity-div" v-if="!isDestoryed">
     <Menu></Menu>
     <unity
       class="unity-screen"
@@ -25,9 +25,7 @@ export default {
     };
   },
   computed: {
-    isDestroyed(){
-      return this.$store.getters["user/isDestroyed"];
-    },
+    isDestroyed: this.$store.getters["user/isDestroyed"],
   },
 
   mounted() {
