@@ -222,7 +222,9 @@ public class UnityService {
         for(String id : nextMissions) {
             System.out.println(id);
             Mission nextMission = missionRepository.getById(id);
-            updateMissionLog(user, nextMission, "C02");
+            // 다음 미션이 존재할 때
+            if(nextMission != null)
+                updateMissionLog(user, nextMission, "C02");
         }
 
         // 2. 동물 로그 추가
