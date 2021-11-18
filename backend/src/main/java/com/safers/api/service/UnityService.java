@@ -218,13 +218,14 @@ public class UnityService {
     public void completeMission(User user, Mission mission) {
         // 1. 미션 로그 수정
         MissionLog missionLog = updateMissionLog(user, mission, "C04");
-        String[] nextMissions = mission.getNextMission().split("/");
-        for(String id : nextMissions) {
-            System.out.println(id);
-            Mission nextMission = missionRepository.getById(id);
-            // 다음 미션이 존재할 때
-            if(nextMission != null)
+        // 다음 미션이 존재할 때
+        if(mission.getNextMission() != null || mission.getNextMission() != "") {
+            String[] nextMissions = mission.getNextMission().split("/");
+            for (String id : nextMissions) {
+                System.out.println(id);
+                Mission nextMission = missionRepository.getById(id);
                 updateMissionLog(user, nextMission, "C02");
+            }
         }
 
         // 2. 동물 로그 추가
