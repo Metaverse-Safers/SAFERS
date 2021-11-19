@@ -257,10 +257,10 @@ SafersSafers
   </tr>
   <tr>
     <td>최종 발표 자료</td>
-    <td align="center"><a href="">MD </a> | <a href="" target="_blank">Notion</a></td>
+    <td align="center"><a href="docs/final-presentation.md">MD </a> | <a href="https://danghyeona.notion.site/046ce67ac5b34870aacbb4666cf1059f" target="_blank">Notion</a></td>
   </tr>
   <tr>
     <td>프로젝트 서비스 UCC</td>
-    <td align="center"><a href=""> 보러가기 </a></td>
+    <td align="center"><a href="https://drive.google.com/file/d/1nKalr2eKJqup4hZIXWMmhVKT0p-5m5zi/view?usp=sharing"> 보러가기 </a></td>
   </tr>
 </table>
