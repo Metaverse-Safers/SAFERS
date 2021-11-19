@@ -20,7 +20,7 @@
           <div class="row">
             <div class="col text-right pt-5">
               <h3><b>당현아</b></h3>
-              <p>하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말</p>
+              <p>상상하던 가상세계를 직접 기획하고 구현하며 즐거웠습니다. 우리 팀원분들 항상 감사합니다.</p>
               <a class="info-img-link" href="https://github.com/eona1301" target="_black"><img class="link-icon" src="@/assets/icon/github.png" alt="github"></a>
               <a class="info-img-link" href="mailto:eona1301@gmail.com" target="_black"><img class="link-icon" src="@/assets/icon/email.png" alt="email"></a> 
               <a class="info-img-link" href="https://velog.io/@eona1301" target="_black"><img class="link-icon" src="@/assets/icon/world-wide-web.png" alt="web"></a> 
@@ -43,7 +43,7 @@
             </div>
             <div class="col pt-5">
               <h3><b>이상현</b></h3>
-              <p>하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말</p>
+              <p>좋은 팀원분들이 함께 했기에, 6주간 정말 몰입해서 재미있게 진행할 수 있었습니다. 떡잎방범대 최고!🤗</p>
               <a class="info-img-link" href="https://github.com/kimkuan" target="_black"><img class="link-icon" src="@/assets/icon/github.png" alt="github"></a>
               <a class="info-img-link" href="mailto:zxd9857@gmail.com" target="_black"><img class="link-icon" src="@/assets/icon/email.png" alt="email"></a>
             </div>
@@ -57,7 +57,7 @@
           <div class="row">
             <div class="col text-right pt-5">
               <h3><b>이영주</b></h3>
-              <p>하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말</p>
+              <p>좋은 팀원들을 만나서 재미있게 으쌰으쌰 열심히 달려왔던 것 같아요. 지난 6주간 정말 재미있었습니다.😀</p>
               <a class="info-img-link" href="https://github.com/0JUUU" target="_black"><img class="link-icon" src="@/assets/icon/github.png" alt="github"></a>
               <a class="info-img-link" href="mailto:clleo97@naver.com" target="_black"><img class="link-icon" src="@/assets/icon/email.png" alt="email"></a> 
               <a class="info-img-link" href="https://0juuu.tistory.com/" target="_black"><img class="link-icon" src="@/assets/icon/world-wide-web.png" alt="web"></a> 
@@ -80,7 +80,7 @@
             </div>
             <div class="col pt-5">
               <h3><b>안상훈</b></h3>
-              <p>하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말</p>
+              <p>안녕하세요 떡잎방범대 후니입니다.</p>
               <a class="info-img-link" href="https://github.com/ahnsang9" target="_black"><img class="link-icon" src="@/assets/icon/github.png" alt="github"></a>
               <a class="info-img-link" href="mailto:ahnsang9@naver.com" target="_black"><img class="link-icon" src="@/assets/icon/email.png" alt="email"></a>
             </div>
@@ -94,7 +94,7 @@
           <div class="row">
             <div class="col text-right pt-5">
               <h3><b>정원석</b></h3>
-              <p>하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말 하고싶은 말</p>
+              <p>저의 많은 부족한 부분들을 팀원분들이 채워주셔서 항상 감사한 마음으로 즐겁게 참여했습니다.</p>
               <a class="info-img-link" href="https://github.com/JWeonseok" target="_black"><img class="link-icon" src="@/assets/icon/github.png" alt="github"></a>
               <a class="info-img-link" href="mailto:weonseok125@naver.com" target="_black"><img class="link-icon" src="@/assets/icon/email.png" alt="email"></a> 
             </div>
