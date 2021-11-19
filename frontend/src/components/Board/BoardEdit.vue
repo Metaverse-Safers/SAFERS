@@ -243,9 +243,9 @@
                 const model = await tmImage.load(modelURL, metadataURL);
                 const maxPredictions = model.getTotalClasses();
 
-                let length = document.getElementsByClassName('write-swiper-img').length;
+                let length = document.getElementsByClassName('edit-swiper-img').length;
                 for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+                    const prediction = await model.predict(document.getElementsByClassName("edit-swiper-img").item(i));
 
                     const classPrediction = {};
                     let maxLabel = null;
@@ -278,13 +278,13 @@
             async bottlePredict(){
                 const findObject = [];
                 const correct = ["bottle", "mug", "cup"];
-                let length = document.getElementsByClassName('write-swiper-img').length;                
+                let length = document.getElementsByClassName('edit-swiper-img').length;                
                 document.getElementById("bottle-edit-loding-div").style.display = "block";
 
                 mobilenet.load().then(model => {
                         
                     for (let i = 0; i < length; i++) {
-                        model.classify(document.getElementsByClassName("write-swiper-img").item(i)).then(predictions => {
+                        model.classify(document.getElementsByClassName("edit-swiper-img").item(i)).then(predictions => {
                             predictions.forEach(e=>{
                                 const temp = e.className.replace(',', '');
                                 const tempResult = temp.split(' ');
@@ -320,9 +320,9 @@
                 const model = await tmImage.load(modelURL, metadataURL);
                 const maxPredictions = model.getTotalClasses();
 
-                let length = document.getElementsByClassName('write-swiper-img').length;
+                let length = document.getElementsByClassName('edit-swiper-img').length;
                 for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+                    const prediction = await model.predict(document.getElementsByClassName("edit-swiper-img").item(i));
 
                     const classPrediction = {};
                     let maxLabel = null;
@@ -359,9 +359,9 @@
                 const model = await tmImage.load(modelURL, metadataURL);
                 const maxPredictions = model.getTotalClasses();
 
-                let length = document.getElementsByClassName('write-swiper-img').length;
+                let length = document.getElementsByClassName('edit-swiper-img').length;
                 for (let i = 0; i < length; i++) {
-                    const prediction = await model.predict(document.getElementsByClassName("write-swiper-img").item(i));
+                    const prediction = await model.predict(document.getElementsByClassName("edit-swiper-img").item(i));
 
                     const classPrediction = {};
                     for (let p = 0; p < maxPredictions; p++) {
