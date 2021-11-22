@@ -7,6 +7,7 @@ import com.safers.db.entity.unityLog.AnimalsLog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"map"})
 public class Animals extends BaseEntity {
     @JsonBackReference
     @ManyToOne

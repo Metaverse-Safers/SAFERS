@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"code", "token"})
 public class User extends BaseEntity {
 
     @Column(name = "profile_url")

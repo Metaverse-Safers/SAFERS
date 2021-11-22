@@ -57,8 +57,8 @@ public class UnityService {
         List<MissionLog> missionLogList = new ArrayList<>();
         List<Mission> missionList = missionRepository.findAll();
 
-        Code disabled = codeRepository.getById("C01"); // 비활성화 코드
-        Code beforeStart = codeRepository.getById("C02");   // 미션 시작 전 & 활성화 코드
+        Code disabled = codeRepository.findByCode("C01").get(); // 비활성화 코드
+        Code beforeStart = codeRepository.findByCode("C02").get();   // 미션 시작 전 & 활성화 코드
         for (Mission mission : missionList) {
             MissionLog missionLog = new MissionLog();
             missionLog.setUser(user);
@@ -156,7 +156,7 @@ public class UnityService {
             return null;
 
         // code : C01(비활성화), C02(시작전), C03(진행중), C04(진행완료)
-        missionLog.setCode(codeRepository.findById(code).get());
+        missionLog.setCode(codeRepository.findByCode(code).get());
         missionLog.setRegDt(LocalDateTime.now());
         missionLogRepository.save(missionLog);
         return missionLog;

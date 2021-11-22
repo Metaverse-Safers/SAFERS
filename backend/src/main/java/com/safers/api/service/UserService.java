@@ -51,7 +51,7 @@ public class UserService {
         user.setKakaoId(kakaoId);
         user.setNickName(nickname);
         user.setProfileUrl(profileUrl);
-        user.setCode(codeRepository.findById("A01").get());
+        user.setCode(codeRepository.findByCode("A01").get());
         User newUser = userRepository.save(user);
 
         return newUser;
@@ -99,7 +99,7 @@ public class UserService {
      */
     @Transactional
     public User disconnectUser(User user) {
-        user.setCode(codeRepository.findById("A02").get()); // 탈퇴회원으로 변경
+        user.setCode(codeRepository.findByCode("A02").get()); // 탈퇴회원으로 변경
         userRepository.save(user);
         return user;
     }
@@ -111,7 +111,7 @@ public class UserService {
      */
     @Transactional
     public User reconnectUser(User user) {
-        user.setCode(codeRepository.findById("A01").get()); // 다시 일반회원으로 변경
+        user.setCode(codeRepository.findByCode("A01").get()); // 다시 일반회원으로 변경
         userRepository.save(user);
         return user;
     }

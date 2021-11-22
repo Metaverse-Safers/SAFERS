@@ -5,6 +5,7 @@ import com.safers.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -13,6 +14,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = {"board"})
 public class BoardImage extends BaseEntity {
     @Column(name = "file_path", columnDefinition = "TEXT")
     String filePath;

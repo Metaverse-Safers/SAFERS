@@ -77,10 +77,14 @@
           await this.$fire({title: "정말 탈퇴하시겠어요?", type: "question", timer: 9999999, showCancelButton: true})
           .then(function(result) {if(result.value) confirm = true})
           if(confirm){
-              this.$fire({title: "금방 돌아오실 거죠? ㅠㅠ", text: "탈퇴 완료", type: "success", timer: 3000, showConfirmButton: false})
-              await this.$store.dispatch("user/withdrawal", this.token.accessToken);
-              await this.$router.push({ name: "main"});
-              await window.location.reload();
+              const success = await this.$store.dispatch("user/withdrawal", this.token.accessToken);
+              if(success)
+                this.$fire({title: "금방 돌아오실 거죠? ㅠㅠ", text: "탈퇴 완료", type: "success", timer: 3000, showConfirmButton: false})
+              else
+                this.$fire({title: "로그인이 만료되었습니다!", text: "재로그인 후 다시 시도해주세요!", type: "error", timer: 3000, showConfirmButton: false});
+              
+              this.$router.push({ name: "main"});
+              window.location.reload();
           }
       }
     },
