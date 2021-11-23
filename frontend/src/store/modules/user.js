@@ -119,6 +119,7 @@ const user = {
 
     /* 회원 탈퇴 */
     async withdrawal({ commit }, data) {
+      var success = false;
       await http.delete("/user/", data)
         .then(function (result) {
           console.log(result)
@@ -128,10 +129,12 @@ const user = {
           commit("SET_IS_AUTHENTICATED", false);
           localStorage.removeItem("userId");
           localStorage.removeItem("nickname");
+          success = true;
         })
         .catch(function (error) {
           console.log(error)
         })
+      return success;
     }
   }
 }

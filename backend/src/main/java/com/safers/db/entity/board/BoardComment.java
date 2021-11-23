@@ -5,6 +5,7 @@ import com.safers.db.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@ToString(exclude = {"board"})
 public class BoardComment extends BaseEntity {
     @Column(name = "comment", columnDefinition = "TEXT")
     String comment;

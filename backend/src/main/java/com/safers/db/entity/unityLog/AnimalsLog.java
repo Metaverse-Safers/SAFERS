@@ -6,6 +6,7 @@ import com.safers.db.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -20,6 +21,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @IdClass(AnimalsLogID.class)
+@ToString(exclude = {"user", "animals"})
 public class AnimalsLog implements Serializable {
     @Id
     @JsonBackReference

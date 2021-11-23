@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import static java.util.Objects.isNull;
 
@@ -94,7 +95,6 @@ public class UserController {
     @PostMapping("/login")
     @ApiOperation(value = "카카오 로그인", notes = "로그인 후, 사용자 정보를 반환한다.")
     public ResponseEntity<UserResponse> login(@RequestBody UserTokenRequest request) {
-
         String accessToken = request.getAccessToken();
         String refreshToken = request.getRefreshToken();
 
@@ -109,21 +109,17 @@ public class UserController {
         // 1. 회원가입이 되어있지 않은 경우, 회원 정보 저장
         if(isNull(user)) {
             user = userService.createUser(accessToken, refreshToken, profile);
-            unityService.createMissionLog(user);        // 미션상태 초기화 C02 | C01로 초기화
-            unityService.createMapLog(user);            // 맵로그 초원만 등록
-            unityService.createAnimalsLog(user);        // 동물로그 굴토끼만 등록
         }
         // 2. 탈퇴회원인 경우, code만 변경
         else if("A02".equals(user.getCode().getCode())) {
             user.setProfileUrl(profileUrl);
             user = userService.reconnectUser(user);
-            unityService.createMissionLog(user);
-            unityService.createMapLog(user);
-            unityService.createAnimalsLog(user);
         }
 
-        // accessToken과 refreshToken 저장
-        userService.saveToken(user, accessToken, refreshToken);
+        unityService.createMissionLog(user);                    // 미션상태 초기화 C02 | C01로 초기화
+        unityService.createMapLog(user);                        // 맵로그 초원만 등록
+        unityService.createAnimalsLog(user);                    // 동물로그 굴토끼만 등록
+        userService.saveToken(user, accessToken, refreshToken); // accessToken과 refreshToken 저장
 
         return ResponseEntity.ok(UserResponse.of(user));
     }
@@ -144,16 +140,16 @@ public class UserController {
         userService.disconnectUser(user);
         userService.deleteToken(user);
         unityService.deleteMissionLog(user);
-        
+
         // 게시글 is_delete 처리
         List<Board> boardList = boardService.findBoardListByUserId(user);
-        for(Board board : boardList) {
+        for (Board board : boardList) {
             boardService.deleteBoard(board.getId());
         }
-        
+
         // 댓글 is_delete 처리
         List<BoardComment> boardCommentList = boardService.findBoardCommentByUserId(user.getId());
-        for(BoardComment boardComment : boardCommentList) {
+        for (BoardComment boardComment : boardCommentList) {
             boardService.deleteBoardComment(boardComment.getId());
         }
 
