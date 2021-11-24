@@ -250,7 +250,7 @@
                             this.$fire({title: "찾았어요!", text:"Safers의 얼룩말이 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false})
                         } else{
                             console.log("아무 관련 없는 사진인걸?")
-                            this.$fire({title: "못찾았어요..", text:"얼룩말의 미션을 들어주세요.", type: "warning", timer: 1500, showConfirmButton: false});
+                            this.$fire({title: "못찾았어요😥", text:"얼룩말의 미션을 들어주세요.", type: "warning", timer: 1500, showConfirmButton: false});
                         }
                     }
                 }
@@ -284,7 +284,7 @@
                                 if(this.isBottle)
                                     this.$fire({title: "찾았어요!", text:"컵이나 텀블러가 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false});
                                 else 
-                                    this.$fire({title: "못찾았어요..", text:"얼룩말의 미션을 들어주세요.", type: "warning", timer: 1500, showConfirmButton: false});
+                                    this.$fire({title: "못찾았어요😥", text:"고릴라의 미션을 들어주세요.", type: "warning", timer: 1500, showConfirmButton: false});
                             }
                         });
                     }
@@ -325,7 +325,7 @@
                         if (this.isIllustrated) 
                             this.$fire({title: "찾았어요!", text:"도감 사진이 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false});
                         else
-                            this.$fire({title: "못찾았어요..", text:"도감 사진이 최소 한장이 포함되있습니다!", type: "warning", timer: 1500, showConfirmButton: false});
+                            this.$fire({title: "못찾았어요😥", text:"도감 사진이 최소 한장이 포함되있습니다!", type: "warning", timer: 1500, showConfirmButton: false});
                     }
                 }
             },
@@ -357,7 +357,7 @@
                         if (this.isInterest) 
                             this.$fire({title: "찾았어요!", text:"미션 사진이 최소 한장이 포함되있습니다!", type: "success", timer: 1500, showConfirmButton: false});
                         else
-                            this.$fire({title: "못찾았어요..", text:"미션 사진이 최소 한장이 포함되있습니다!", type: "warning", timer: 1500, showConfirmButton: false});
+                            this.$fire({title: "못찾았어요😥", text:"미션 사진이 최소 한장이 포함되있습니다!", type: "warning", timer: 1500, showConfirmButton: false});
                     }
                 }
             }
