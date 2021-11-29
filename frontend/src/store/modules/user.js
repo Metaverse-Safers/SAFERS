@@ -52,7 +52,6 @@ const user = {
     async requestAccessToken({ commit }, code) {
       await http.get("/user/token?code=" + code)
         .then(function (result) {
-          console.log(result.data);
           commit("SET_TOKEN", result.data);
         })
         .catch(function (error) {
@@ -64,7 +63,6 @@ const user = {
     async requestProfile({ commit }, token) {
       await http.post("/user/login", token)
         .then(function (result) {
-          console.log(result.data);
           commit("SET_USER_PROFILE", result.data);
           commit("SET_IS_AUTHENTICATED", true);
           localStorage.setItem("userId", result.data.id); // Unity에서 얻기위한 UserId
@@ -78,8 +76,7 @@ const user = {
     /* 로그아웃 */
     async requestLogout({ commit }) {
       await http.get("/user/logout")
-        .then(function (result) {
-          console.log(result)
+        .then(function () {
           commit("SET_USER_PROFILE", {});
           commit("SET_TOKEN", {});
           commit("SET_IS_AUTHENTICATED", false);
@@ -95,7 +92,6 @@ const user = {
     async refreshToken({ commit }, refreshToken) {
       await http.post("/user/token/refresh", refreshToken)
         .then(function (result) {
-          console.log(result.data);
           commit("SET_TOKEN", result.data);
         })
         .catch(function (error) {
@@ -108,7 +104,6 @@ const user = {
     async requestUpdateProfile({ commit }, data) {
       await http.post("/user/", data, { headers: { 'Content-Type': 'multipart/form-data' } })
         .then(function (result) {
-          console.log(result)
           commit("SET_USER_PROFILE", result.data);
           localStorage.setItem("nickname", result.data.nickName);
         })
@@ -122,7 +117,6 @@ const user = {
       var success = false;
       await http.delete("/user/", data)
         .then(function (result) {
-          console.log(result)
           commit("WITHDRAWAL", result.data);
           commit("SET_USER_PROFILE", {});
           commit("SET_TOKEN", {});
