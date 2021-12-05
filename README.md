@@ -21,7 +21,7 @@
     - [Frontend](#frontend)
     - [Unity](#unity)
   - [4️⃣ 프로젝트 산출물](#4️⃣-프로젝트-산출물)
-
+  - [5️⃣ 프로젝트 결과](#5️⃣-프로젝트-결과)
 <br><br>
 
 ## 1️⃣ 프로젝트 소개
@@ -264,3 +264,9 @@ SafersSafers
     <td align="center"><a href="https://drive.google.com/file/d/1nKalr2eKJqup4hZIXWMmhVKT0p-5m5zi/view?usp=sharing"> 보러가기 </a></td>
   </tr>
 </table>
+
+<br><br>
+
+## 5️⃣ 프로젝트 결과
+- SSAFY 자율프로젝트 최우수상🥇 
+- SSAFY 결선발표회 진출
